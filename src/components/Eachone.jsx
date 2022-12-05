@@ -8,11 +8,11 @@ function EachOne(props) {
       {/*el bg no cambia */}
 
       <div>
-        <img
+        {/* <img
           className="w-full h-full object-cover"
           src={require(`./assets/aboutUs/${props.image}`)}
           alt="Foto perfil"
-        />
+        /> */}
 
         <div className="pb-7 ">
           <div className="p-2 flex justify-center">
