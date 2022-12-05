@@ -54,7 +54,7 @@ const About = () => {
           carrera="Full Stack developer"
           linkedin="https://www.linkedin.com/in/jorgeenriquecastaneda/"
           github="https://github.com/IvanaSDW"
-          image="avatar3.jpg"
+          image="jorge"
         />
         <EachOne
           nombre="Franco Romero"
@@ -63,7 +63,7 @@ const About = () => {
           carrera="Full Stack developer"
           linkedin="https://www.linkedin.com/in/franco-romero-945b66226/"
           github="https://github.com/Lleaguen"
-          image="avatar2.jpg"
+          image="franco"
         />
         <EachOne
           nombre="Silvi Bordon"
@@ -72,7 +72,7 @@ const About = () => {
           carrera="Full Stack developer"
           linkedin="www.linkedin.com/in/silvina-bordon"
           github="https://github.com/Silbordon"
-          image="avatar5.jpg"
+          image="silvi"
         />
         <EachOne
           nombre="Facundo Gomez"
@@ -81,7 +81,7 @@ const About = () => {
           carrera="Full Stack developer"
           linkedin="https://www.linkedin.com/in/facu-gomez-293a68238/"
           github="https://github.com/FacuuGomez"
-          image="avatar1.jpg"
+          image="facu"
         />
         <EachOne
           nombre="Erik Renata"
@@ -90,7 +90,7 @@ const About = () => {
           carrera="Full Stack developer"
           linkedin="https://www.linkedin.com/in/erik-retana-webdev/"
           github="https://github.com/Merzelert"
-          image="avatar4.jpg"
+          image="erik"
         />
         <EachOne
           nombre="Gervasio Jacob"
@@ -99,7 +99,7 @@ const About = () => {
           carrera="Full Stack developer"
           linkedin="https://www.linkedin.com/in/gervasio-jacob/"
           github="https://github.com/gervajac"
-          image="avatar7.png"
+          image="gerva"
         />
         <EachOne
           nombre="Sebastian Gomez"
@@ -108,7 +108,7 @@ const About = () => {
           carrera="Full Stack developer"
           linkedin="https://www.linkedin.com/in/sebastian-gomez-salinas-510586246/"
           github="https://github.com/sebastiangs23"
-          image="avatar6.jpg"
+          image="seba"
         />
       </div>
       <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 border-t-[1px] border-t-[#3F3E45] ">

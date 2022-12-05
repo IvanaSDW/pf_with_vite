@@ -366,9 +366,9 @@ const Profile = () => {
             </div>
           )}
         </div>
-        <div className="mt-80">
+        {/* <div className="mt-80">
           <Footer />
-        </div>
+        </div> */}
       </div>
       <div className="mt-80">
         <Footer />

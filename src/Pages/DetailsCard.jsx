@@ -126,21 +126,28 @@ export default function Details() {
                       {manga.averageRating ? manga.averageRating : 0}
                     </span>
                   </div>
-                  {/*                     
-                    <div className={styles.buttons}>
-                                <button className={styles.btns}>Buy</button>
-                                <button className={styles.btns}>Add to Cart</button>
-                            </div>
-                    {currentUser?.role === "MASTER"  ||
-                     currentUser?.role === "ADMIN"  &&
-                            <div className={styles.content}>
-                              <button className={styles.bttns} onClick={(id)=>{handleDelete(id);}}>Delete</button>
-                              <h2 className={styles.or}>Or</h2>
-                              <Link className={styles.bttns} to={`/form/${id}`}>Update?</Link>
-                            </div>
-               
-                        
-                        } */}
+
+                  <div className={styles.buttons}>
+                    <button className={styles.btns}>Buy</button>
+                    <button className={styles.btns}>Add to Cart</button>
+                  </div>
+                  {currentUser?.role === 'MASTER' ||
+                    (currentUser?.role === 'ADMIN' && (
+                      <div className={styles.content}>
+                        <button
+                          className={styles.bttns}
+                          onClick={(id) => {
+                            handleDelete(id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                        <h2 className={styles.or}>Or</h2>
+                        <Link className={styles.bttns} to={`/form/${id}`}>
+                          Update?
+                        </Link>
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>

@@ -30,7 +30,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <h2>Gevasio</h2>
+              <h2>Grevasio</h2>
             </a>
             <a
               href="mailto:silbordon.89@gmail.com"
