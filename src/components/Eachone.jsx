@@ -9,7 +9,7 @@ function EachOne(props) {
             <div >
                 <img className="w-full h-full object-cover"
                     src={require(`./assets/aboutUs/${props.image}`)}
-                    alt="Foto de sebas" />
+                    alt="Foto perfil" />
 
                 <div className="pb-7 " >
 

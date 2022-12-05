@@ -1,0 +1,4 @@
+.scroll::-webkit-scrollbar{
+    width: 7px;
+    background: black;
+}

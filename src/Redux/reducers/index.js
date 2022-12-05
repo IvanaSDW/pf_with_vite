@@ -19,6 +19,7 @@ import {
   DELETE_FROM_CART,
   SUM_TO_CART,
   REST_TO_CART,
+  UPDATE_MANGA,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
 } from "../actions";
 
@@ -250,6 +251,13 @@ const rootReducer = (state = initialState, action) => {
         firebaseUser: action.payload,
       };
     }
+    case UPDATE_MANGA:
+      return {
+        ...state,
+           mangas: state.mangas.map((item) =>
+           item.id === action.payload ? action.payload : item
+         ),
+      };
 
     default:
       return state;

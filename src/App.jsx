@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './Pages/Home.jsx';
+import Home from './Pages/Home';
 import Details from './Pages/DetailsCard';
 import NotFound from './components/404';
 import LandingPage from './components/LandingPage';
@@ -12,6 +12,7 @@ import Login from './Pages/Login';
 import Cart from './Pages/Cart';
 import Profile from './Pages/Profile';
 import AboutUs from './components/Aboutus';
+import Update from './Pages/Update';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/form/:id" element={<Update />} />
       </Routes>
     </BrowserRouter>
   );

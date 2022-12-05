@@ -11,7 +11,12 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import styles from "../components/checkout/css/estilos.module.css";
 import img from "../components/checkout/chip-tarjeta.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+import { resetCart } from "../Redux/actions";
+import { AiFillCreditCard } from 'react-icons/ai'
+import style from '../components/assets/Cards/loading.module.css';
 
 const stripePromise = loadStripe(
   "pk_test_51M9WmxAbUauCYI6I9Hz0llhbtG4PPPvvxlbTpc1nFuh7OzbiYpETElQtZiLsyffSiqWeVFPDWLPzabt7IFIYwJ8500x3f0qHBo"
@@ -23,15 +28,14 @@ const CheckoutForm = ({ payment, setPaymet,children,  totalPrice} ) => {
   const elements = useElements();
   const cart = useSelector((state) => state.cart);
   const [errorM, setErrorM] = useState("");
-  const [/*messSuccess*/, setMessSuccess] = useState('')
+  const [messSuccess, setMessSuccess] = useState('')
+  const [loading, setLoading] = useState(false);
 
   let description = cart.map(e=> e.canonicalTitle).toString()
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const hanleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(totalPrice)
-
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -51,16 +55,46 @@ const CheckoutForm = ({ payment, setPaymet,children,  totalPrice} ) => {
        description : description,
         cart : cart
       });
+      
+   
+      
+      
       if (data.error) {
-        setErrorM(data.error.raw.message);
+        setTimeout(() => {
+          setLoading(!loading).fadeOut(2000)   
+        }, 500);
+  
+        setTimeout(()=> {
+          setLoading(false)
+         setErrorM(data.error.raw.message);
+       }, 2500) 
       }
+    
+
+
       if(data.mess){
           setMessSuccess("succesfull payment")
+          dispatch(resetCart());
+          swal("Your payment was made successfully. During the first 24 hours, the logistics area will be contacted for the delivery of your purchase.", {
+            button: {
+              className:
+                "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+            },
+          });
+          navigate("/home");
       }
     }
 
     if (error) {
-      setErrorM(error.message);
+      setTimeout(() => {
+        setLoading(!loading).fadeOut(2000)   
+      }, 500);
+
+      setTimeout(()=> {
+        setLoading(false)
+        setErrorM(error.message);
+
+      }, 2500) 
     }
   };
 
@@ -76,8 +110,17 @@ const CheckoutForm = ({ payment, setPaymet,children,  totalPrice} ) => {
   //   setModal1(true)
   // }
 
+      function buy(){
+          setTimeout(() => {
+            setLoading(!loading).fadeOut(2000)   
+          }, 500);
+    
+         setLoading(false)
+          
+      }
+  
   return (
-    <div className="w-screen h-full flex justify-center  top-0 left-0 bg-black/90 fixed">
+    <div className="w-screen h-full flex justify-center  top-0 left-0 bg-black/70 fixed">
         <div className=" w-5/6  h-full  p-2 text-white absolute"> 
       
     <form onSubmit={hanleSubmit} className="w-full bg-white  absolute h-full  relative flex flex-col justify-center self-center rounded-md p-20">
@@ -131,7 +174,24 @@ const CheckoutForm = ({ payment, setPaymet,children,  totalPrice} ) => {
     <div className="flex justify-center mr-30 flex-col m-3">
       <h3 className="text-2xl self-center p-5 flex text-black">Total Pay : <p className="text-green-600">U$D{totalPrice.toFixed(2)}</p></h3>
         <p className="text-red-600 self-center p-2">{errorM}</p>
-      <button className="bg-purple-600 p-2 w-40 rounded-md hover:bg-purple-800  text-3xl self-center">BUY</button>
+
+      <button className={styles.btn} onClick={buy}>
+        <div className={styles.icon}>
+          <AiFillCreditCard/>
+        </div>
+       <span> 
+        BUY
+       </span>
+      </button>
+      {loading &&
+      <div value={loading} className="w-screen h-full flex justify-center self-center top-0  absolute  bg-black/70 "> 
+                        <div className="w-5/6 h-full top-0 fixed bg-black/75 p-2 text-white mt-8">
+                          <div className="w-full   mr-80 h-3 mt-80 flex flex-col justify-center self-center rounded-md p-20 ">
+                            <span  className={style.loader}></span>
+
+                          </div>
+                        </div>
+            </div>}
       </div>
     </form>
     </div>

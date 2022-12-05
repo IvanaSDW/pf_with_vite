@@ -8,6 +8,7 @@ export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES';
 export const GET_ALL_GENRES = 'GET_ALL_GENRES';
 export const DELETE_MANGA = 'DELETE_MANGA';
 export const LOADING_TYPE = 'LOADING_TYPE';
+export const UPDATE_MANGA = 'UPDATE_MANGA';
 //ORDER
 export const MANGA_DATE_ASC = 'MANGA_DATE_ASC';
 export const MANGA_DATE_DESC = 'MANGA_DATE_DESC';
@@ -282,3 +283,23 @@ export const setFirebaseUser = (firebaseUser) => {
     payload: firebaseUser ? firebaseUser : false,
   };
 };
+
+export function updateManga(mangaid, data) {
+  console.log(data, "DATSSSSSSSSSSSS")
+   return async function (dispatch) {
+   
+     try {
+       const json = await axios.put(
+         `https://backend-production-1a11.up.railway.app/manga/${mangaid}`, data );
+         console.log(json,"JAMEOSN")
+       return dispatch({
+         type: UPDATE_MANGA,
+         payload: json.data,
+       });
+     } catch (error) {
+       console.log(error);
+     }
+   };
+ }
+ 
+

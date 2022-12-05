@@ -54,10 +54,10 @@
 
 .left{
     display: flex;
+    font-family: Imported;
 }
 h1{
     margin: 0.5vh;
-    font-family: Imported;
 }
 .Span{
     -webkit-text-fill-color: #5f30a8;

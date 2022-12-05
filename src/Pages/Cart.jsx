@@ -16,6 +16,7 @@ import {
 import swal from "sweetalert";
 import Swal from "sweetalert2";
 import Checkout from "../components/Checkout.jsx";
+import styles from '../components/assets/cart/cart.module.css'
 
 export default function Cart() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +41,7 @@ export default function Cart() {
         const itemRest = cart.find((item) => item.mangaid === mangaid);
         if (itemRest.quantity === 1) {
             swal({
-                text: "For to Delete press x PELOTUDO",
+                text: 'To delete press "Remove".' ,
                 button: {
                     text: "Okey!",
                 },
@@ -102,8 +103,7 @@ export default function Cart() {
         useEffect(() => {
             dispatch(getMangas());
         }, [dispatch]);
-        
-        
+    
         const [payment, setPaymet] = useState(false); //para checkout
         return (
             <div>
@@ -111,7 +111,7 @@ export default function Cart() {
       <div className="flex flex-col  font-serif">
         
        
-        <div className="w-3/6 h-80 overflow-y-scroll border-gray-300 rounded-md  self-center border-2 mt-8 flex  justify-center ">
+        <div className="w-3/6 h-80 overflow-y-scroll rounded-md  self-center  mt-8 flex  justify-center ">
                 <Checkout
                     payment={payment}
                     setPaymet={setPaymet}
@@ -119,14 +119,14 @@ export default function Cart() {
                     totalPrice={totalPrice}>
                      <button onClick={() => setPaymet(!payment)} className="absolute text-purple-600 top-5 right-5 w-10 h-10 pointer border-2 border-purple-600 p-1 rounded-md hover:bg-purple-600 hover:text-white"> X </button>
                     </Checkout>
-                    
+          <div className={styles.scroll}>       
           <div className="w-full  h-7/12 ">
-            <div className="ml-3 h-6/12 flex flex-col justify-center font-serif">
+            <div className="m-3 h-6/12 flex flex-col justify-center font-serif">
               {cart.length ? 
                   cart.map((e) => {
                       return (
-                      <div className=" flex mt-3">
-                      <div className="w-10/12 border-gray-300 rounded-md border-2 flex font-serif  justify-between">
+                      <div className=" flex ">
+                      <div className="w-full border-gray-300 rounded-md mt-2 border-2 flex font-serif  justify-between">
                         <div className="w-20 m-3 ">
                           <img
                             value={quantity}
@@ -152,7 +152,7 @@ export default function Cart() {
                             >
 
                             </h3>
-                            <h3 className="text-green-400 text-3xl font-arial">
+                            <h3 className="text-green-400 text-3xl font-arial mt-2">
                             U$D {e.price}
                             </h3>
                           </div>
@@ -170,7 +170,7 @@ export default function Cart() {
                               +
                             </button>
                           </div>
-                          <div className="flex ">U$D
+                          <div className="flex "><span className="mt-2">U$D</span>
                           <span 
                           className=" mr-3 rounded-md p-2 bg-purple-600 ml-4 w-5/6 text-white "
                           onChange={(e) => setLocalStorage(e.target.value)}
@@ -184,6 +184,7 @@ export default function Cart() {
                                 Remove 
                                 </button>
 
+                     
              
                           
                         </div>
@@ -200,6 +201,7 @@ export default function Cart() {
             </div>
               
           </div>
+          </div>
         </div>
         <div className="flex flex-col justify-center">
         <button
@@ -209,22 +211,24 @@ export default function Cart() {
     
           Reset Cart
         </button>
-        <div className="w-2/6  self-center h-10/12 border-gray-300 rounded-md border-2 p-2   flex justify-center flex-col ">
+        <div className="w-2/6  self-center h-10/12  rounded-md p-2   flex justify-center flex-col ">
           <span className="text-6xl text-green-600 self-center ">
       
           U$D {totalPrice.toFixed(2)}
           </span>
+          {cart.length !== 0&&
           <button
             onClick={()=>setPaymet(true)}
             className="bg-purple-600 text-white m-5 mt-10 text-4xl p-5 rounded-md hover:bg-purple-400"
           >
             Go to pay!
           </button>
+}
         </div>
       </div>
       </div>
       <div className="mt-10">
-      <h1 className="text-4xl p-7">RECOMENDED :</h1>
+      <h1 className="text-4xl p-7 ">RECOMENDED :</h1>
       <div className="flex justify-center">
         <div className="flex overflow-x-scroll  w-8/12">
         {!payment && 

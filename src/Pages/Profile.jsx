@@ -36,6 +36,7 @@ const Profile = () => {
   }, [firebaseUser]);
 
   const [fieldsState, setFieldsState] = useState({});
+  const [fieldErrors, setFieldErrors] = useState({});
 
   useEffect(() => {
     setFieldsState((prevState) => {
@@ -78,6 +79,9 @@ const Profile = () => {
   //Personal data form state
 
   const handleFieldChange = (e) => {
+    setFieldErrors((prevErrors) => {
+      return {};
+    });
     setSomeChanged(true);
     setFieldsState((prevState) => {
       return {
@@ -87,7 +91,25 @@ const Profile = () => {
     });
   };
 
+  const validateInputs = () => {
+    let valid = true;
+    console.log('validate inputs called');
+    const validEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!fieldsState.email.match(validEmail)) {
+      valid = false;
+      setFieldErrors((prevErr) => {
+        return { ...prevErr, emailError: 'Email address badly formatted' };
+      });
+    } else {
+      setFieldErrors((prevErr) => {
+        return { ...prevErr, emailError: false };
+      });
+    }
+    return valid;
+  };
+
   const onSaveChanges = async () => {
+    if (!validateInputs()) return;
     axios
       .put(
         `https://backend-production-1a11.up.railway.app/user/${userData.id}`,
@@ -95,7 +117,7 @@ const Profile = () => {
       )
       .then((response) => {
         console.log('resp: ', response.data.updatedUser);
-        window.alert('Your data was succesfully updated!');
+        window.alert('Your data were succesfully updated!');
         setSomeChanged(false);
         setEditMode(false);
       })
@@ -200,9 +222,22 @@ const Profile = () => {
                   <div className="flex text-4xl p-2 ml-40">
                     <h2 className="text-4xl self-center">Personal Data ....</h2>
                     {editMode ? (
-                      <p onClick={() => setEditMode(false)}>Close</p>
+                      <p
+                        onClick={() => {
+                          setEditMode(false);
+                          setSomeChanged(false);
+                        }}
+                        className="text-red-300 cursor-pointer hover:text-red-600 italic"
+                      >
+                        cancel
+                      </p>
                     ) : (
-                      <AiFillEdit onClick={() => setEditMode(true)} />
+                      <AiFillEdit
+                        className="cursor-pointer hover:text-red-600"
+                        onClick={() => {
+                          setEditMode(true);
+                        }}
+                      />
                     )}
                   </div>
                   <form action="" className="flex flex-col w-full ml-10  m-5">
@@ -240,6 +275,11 @@ const Profile = () => {
                         value={fieldsState.email}
                         onChange={handleFieldChange}
                       />
+                      {fieldErrors.emailError && (
+                        <p className="italic text-red-600 text-sm">
+                          {fieldErrors.emailError}
+                        </p>
+                      )}
                       <label>Number Phone</label>
                       <input
                         disabled={!editMode}
@@ -311,7 +351,11 @@ const Profile = () => {
                         type="button"
                         disabled={!someChanged}
                         onClick={onSaveChanges}
-                        className="bg-purple-600 text-white h-10 rounded-md mt-3 hover:bg-purple-800"
+                        className={
+                          !someChanged
+                            ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3'
+                            : 'bg-purple-600 text-white h-10 rounded-md mt-3 hover:bg-purple-800'
+                        }
                       >
                         Save
                       </button>
@@ -321,6 +365,9 @@ const Profile = () => {
               </div>
             </div>
           )}
+        </div>
+        <div className="mt-80">
+          <Footer />
         </div>
       </div>
       <div className="mt-80">
