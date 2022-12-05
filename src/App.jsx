@@ -13,6 +13,7 @@ import Cart from './Pages/Cart';
 import Profile from './Pages/Profile';
 import AboutUs from './components/Aboutus';
 import Update from './Pages/Update';
+import About from './Pages/About';
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/form/:id" element={<Update />} />
+        <Route path="/aboutus" element={<About />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,12 +1,22 @@
 import React from 'react';
-import styles from './assets/NavBar/NavBar.module.css';
-import EachOne from './Eachone.jsx';
+import styles from '../components/assets/NavBar/NavBar.module.css';
+import EachOne from '../components/Eachone.jsx';
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import DarkMode from './assets/NavBar/darkMode';
+import DarkMode from '../components/assets/NavBar/darkMode';
 import formikImg from '../components/assets/tecnologies/formik.png';
+import stripeImg from '../components/assets/tecnologies/stripe.png';
+import jsImage from '../components/assets/tecnologies/js.png';
+import htmlImage from '../components/assets/tecnologies/html.png';
+import reactImage from '../components/assets/tecnologies/react.png';
+import reduxImage from '../components/assets/tecnologies/redux.png';
+import nodeImage from '../components/assets/tecnologies/node.png';
+import sequelizeImage from '../components/assets/tecnologies/sequelize.png';
+import postgresImage from '../components/assets/tecnologies/postgres.png';
+import firebaseImage from '../components/assets/tecnologies/firebase.png';
+import tailwindImage from '../components/assets/tecnologies/tailwind.png';
 
-const AboutUs = () => {
+const About = () => {
   return (
     <div className="">
       <div className={styles.navBar}>
@@ -112,52 +122,52 @@ const AboutUs = () => {
       <div className="md:mt-0 mt-6 justify-between items-center">
         <img
           className="w-[141px] h-[91px] inline-block ml-10 mr-10 mt-2 "
-          src={require('./assets/tecnologies/js.png')}
+          src={jsImage}
           alt=""
         />
         <img
           className="w-[81px] h-[91px] inline-block ml-10 mr-10 mt-2 "
-          src={require('./assets/tecnologies/html.png')}
+          src={htmlImage}
           alt=""
         />
         <img
           className="w-[140px] h-[91px] inline-block ml-10 mr-10 mt-2 "
-          src={require('./assets/tecnologies/react.png')}
+          src={reactImage}
           alt=""
         />
         <img
           className="w-[230px] h-[70px] inline-block ml-10 mr-10 mt-2 "
-          src={require('./assets/tecnologies/redux.png')}
+          src={reduxImage}
           alt=""
         />
         <img
           className="w-[161px] h-[91px] inline-block ml-10 mr-10 mt-2 "
-          src={require('./assets/tecnologies/node.png')}
+          src={nodeImage}
           alt=""
         />
         <img
           className="w-[191px] h-[91px] inline-block ml-10 mr-10 mt-2 "
-          src={require('./assets/tecnologies/sequelize.png')}
+          src={sequelizeImage}
           alt=""
         />
         <img
           className="w-[91px] h-[91px] inline-block ml-10 mr-10 mt-2"
-          src={require('./assets/tecnologies/postgres.png')}
+          src={postgresImage}
           alt=""
         />
         <img
           className="w-[250px] h-[75px] inline-block ml-10 mr-5 mt-2 "
-          src={require('./assets/tecnologies/firebase.png')}
+          src={firebaseImage}
           alt=""
         />
         <img
           className="w-[161px] h-[181px] inline-block ml-10 mr-5 mt-2 "
-          src={require('./assets/tecnologies/tailwind.png')}
+          src={tailwindImage}
           alt=""
         />
         <img
           className="w-[170px] h-[71px] inline-block ml-10 mr-5 mt-2 "
-          src={require('./assets/tecnologies/stripe.png')}
+          src={stripeImg}
           alt=""
         />
         <img
@@ -177,4 +187,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default About;
