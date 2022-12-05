@@ -1,0 +1,81 @@
+.landing{
+    overflow-y: hidden;
+    width: 100%;
+    height: 67.2vh;
+    background-image:url(./portada.jpg);
+    background-size: 100vh;
+    animation: moving 8s infinite linear alternate;
+}
+
+@keyframes moving{
+    from{
+        background-position: bottom right;
+    }
+    to{
+        background-position: top  left;
+    }
+}
+
+.overlay{
+    position: absolute;
+    width: 100%;
+    height: 67.2vh;
+    opacity: .78 ;
+    background-color: rgb(60, 26, 114);
+}
+
+.banerText{    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    position: fixed;
+    color: white;
+    margin-top: 20vh;
+}
+.title{
+    width: 100%;
+    margin-left: 140%;
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 4vh;
+}
+.colorTitle{
+    color:white;
+}
+.key{
+    color: rgb(60, 26, 114);
+    -webkit-text-stroke: .2vh white;
+}
+.overlay2{
+    border-radius: 1.25em;
+    margin-left: 31%;
+    margin-top: 20vh;
+    width: 70vh;
+    height: 35vh;
+    position: fixed;
+    opacity: .8;
+    background-color:  rgb(0, 0, 0);
+}
+.subTitles{
+    font-size: 2.5vh;
+    width: 100%;
+    margin-left: 150%;
+}
+.btn{
+    background-color: rgb(99, 45, 186);
+    margin-left: 145%;
+    margin-top: 2vh;
+    height: 7vh;
+    border-radius: 1000px;
+    width: 100%;
+}
+.key2{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 5vh;
+    padding-left: 15vh;
+    color: white;
+}
+
+.btn:hover{
+    background-color: rgb(131, 60, 246);
+    color: rgb(240, 240, 255);
+}

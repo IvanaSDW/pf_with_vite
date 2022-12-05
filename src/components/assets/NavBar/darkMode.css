@@ -1,0 +1,51 @@
+#darkMode{
+background: #4c4557;
+border-radius: 1000px;
+border: none;
+position: relative;
+cursor: pointer;
+display:flex;
+outline: none;
+width: 7vh;
+margin-top: 2;
+height: 5vh;
+margin-left: 3vh;
+transition: 2s;
+justify-content: space-between;
+padding-top: 0.4vh;
+}
+#darkMode::after{
+    content: "";
+    display: block;
+    width: 4vh;
+    height: 4vh;
+    position: absolute;
+    background-image: url("ringan.png");
+    background-size: 4vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    top: 3px;
+    left: 0;
+    right: unset;
+    border-radius: 100px;
+    transition: .3s ease all;
+    box-shadow:  0px 0px 2px 2px rgba(0, 0, 0, .2);
+ 
+    transition: 2s ease-in-out;
+}
+
+#darkMode.clicked{
+    filter:none !important;
+    
+    transition: 2s;
+}
+
+#darkMode.clicked::after{
+    right: 0;
+    left: unset;
+    
+    -webkit-transform: rotate(360deg);
+    transition: 2s ease-in-out;
+
+}

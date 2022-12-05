@@ -1,0 +1,78 @@
+@font-face{
+    font-family: Japan;
+    src: url(../NavBar/yama_moto/yamamoto.ttf);
+}
+
+.Footer{
+    width: 100%;
+    display: flex;
+    background-color: rgb(60, 26, 114);
+    color:white;
+    justify-content: space-between;
+    z-index: -0;
+}
+
+.btns{
+    color: transparent;
+    -webkit-text-stroke: 0.12vh white;
+    font-size: 3vh;
+    font-family: Japan;
+    margin-left: 8vh; 
+}
+
+.btns:hover{
+    color:white;
+    
+    -webkit-text-stroke: 0.12vh rgb(6, 182, 212);
+}
+
+.right{
+    display: flex;
+    width: 40%;
+    justify-content: center;
+}
+.left{
+    display: flex;
+    width: 40%;
+    justify-content: center;
+}
+.title{
+    color:white;
+    font-size: 3vh;
+    -webkit-text-stroke: 0.12vh rgb(6, 182, 212);
+   
+}
+
+.contact{
+    margin-left: 6vh;
+    padding:1vh;
+}
+
+.img{
+    width: 30vh;
+    border-radius: 100%;
+}
+.more{
+    padding: 1vh;
+}
+
+.title2{
+    color:white;
+    font-size: 3vh;
+    -webkit-text-stroke: 0.12vh rgb(6, 182, 212);
+    
+}
+
+h2{
+    color: rgb(6, 182, 212)red;
+}
+a{
+    cursor: pointer;
+}
+a:hover{
+    color: rgb(6, 182, 212);
+}
+.eas{
+    margin-right: 30vh;
+    margin-top: 27vh;
+}

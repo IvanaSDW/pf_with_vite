@@ -1,0 +1,9 @@
+.content{
+    width: 80%;
+    display: flex;
+}
+.sorry{
+    font-size: 7vh;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:rgb(240, 116, 211)
+}

@@ -1,0 +1,140 @@
+@font-face {
+    font-family: JAPAN2;
+    src: url(../NavBar/japan-gate-demo/Japan_Gate_demo.otf);
+}
+.filter{
+    margin-right: 40vh;
+}
+.detailsContain{
+    width: 100%;
+    background-image: url(../Cards/s-l500.jpg);
+    background-repeat: no-repeat;
+    background-size: 240vh;
+    height: 120vh;
+    top: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    position: relative;
+}
+.overlay{
+    position: absolute;
+    width: 100%;
+    height: 120vh;
+    opacity:.7 ;
+    background-color: rgb(0, 0, 0);
+}
+.port{
+    width: 100%;
+    display: flex;
+    opacity: .90;
+    justify-content: center;
+    margin-left: 40vh;
+    height: 60vh;
+}
+.prieces{
+    font-family: Georgia;
+    font-size: 4vh;   
+}
+b{
+    color: yellow;
+}
+.img{
+    margin-top: 3vh;
+}
+.details{
+    color: white;
+    width: 50%;
+    margin:10vh;
+    margin-left: 20vh;
+    margin-top: 4vh;
+}
+.title{
+    margin-left: 20vh;
+    font-size: 5vh;
+    color: aliceblue;
+    font-family: JAPAN2;
+}
+.rating{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2vh;
+}
+.stars{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    color: yellow;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+    margin-right: 70vh;
+    margin-top: 3vh;
+    width: 80%;
+}
+.btns{
+    background-color: rgb(9, 94, 221);
+    width: 30vh;
+    padding: 2vh;
+    margin-left: 5vh;
+    font-size: 3vh;
+    font-family: Imported;
+    color: aliceblue;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.btns:hover{
+    background-color: blue;
+}
+.recomend{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 41vh;
+    margin-top: 2vh;
+    margin-bottom: 10vh;
+}
+.recom{
+    font-size: 5vh;
+    padding-left: 4vh;
+    font-family: JAPAN2;
+}
+.cards{
+    width:70%;
+    height: 120%;
+    display: flex;
+    overflow-y: hidden;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+.card{
+    width: 100%;
+}
+
+.content{
+    width: 40%;
+    padding: 1vh;
+    margin-top: 2vh;
+    margin-left: 20vh;
+    border-radius: 30px;
+    opacity: .6;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: row;
+}
+.bttns{
+    margin-left: 3vh;
+}
+.or{
+    margin-left: 4vh;
+}
+
+.bttns:hover{
+    color: rgb(30, 30, 243);
+    text-decoration: underline;
+    box-shadow: white;
+}

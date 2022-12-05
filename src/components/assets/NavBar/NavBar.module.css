@@ -1,0 +1,76 @@
+
+@font-face{
+    font-family: Imported;
+    src: url(./yama_moto/yamamotol.ttf);
+  }
+.navBar{
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+    width: 100%;
+    height: 8vh;
+    background-color:  rgb(60, 26, 114);
+    background: linear-gradient(90deg, rgba(60, 26, 114) 0%, #5f30a8 60%, /*#00c4ff*/ rgb(6, 182, 212) 100%);
+    color: aliceblue;
+    display: flex;
+    justify-content: space-between;
+    
+    
+}   
+.ico{
+    width: 8vh;
+    margin-top: -1vh;
+    
+}
+.mid{
+    display: flex;
+}
+.Search{
+    color:  rgb(0, 0, 0);
+    box-shadow: blueviolet;
+    height: 5vh;
+    width: 60vh;
+    background: transparent;
+    border-radius: 1000vh;
+    border: 1px solid rgb(6, 182, 212);
+    font-size: 2vh;
+    padding-left: 2vh;
+    cursor: pointer;
+    transition: 2s;
+    font-family: Imported;
+}
+.Search:hover{
+    border: 1px solid #5f30a8 ;
+    color: #5f30a8;
+    transition: 2s;
+    background-color: aliceblue;
+}
+
+.buttons{
+    width: 10%;
+    display:flex;
+    margin-right: 2vh;
+    justify-content: space-around;
+}
+
+.left{
+    display: flex;
+}
+h1{
+    margin: 0.5vh;
+    font-family: Imported;
+}
+.Span{
+    -webkit-text-fill-color: #5f30a8;
+    -webkit-text-stroke: 0.12vh white;
+    font-size: 5vh;
+    
+}
+.iconBtn{
+    background: transparent;
+    border-style: none;
+    cursor: pointer;
+    color: white;
+}
+.iconBtn:hover{
+    color:#5f30a8;
+}

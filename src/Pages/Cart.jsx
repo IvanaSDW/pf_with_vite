@@ -1,0 +1,258 @@
+import React, { useState, useEffect } from "react";
+import NavBar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
+import img from "../components/assets/Cards/yugi.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import Card from "../components/Card.jsx";
+import {
+  getMangas,
+  resetCart,
+  DeleteCart,
+  sumItemToCart,
+  restItemToCart,
+  addItemToCart,
+} from "../Redux/actions/index.js";
+import swal from "sweetalert";
+import Swal from "sweetalert2";
+import Checkout from "../components/Checkout.jsx";
+
+export default function Cart() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const cart = useSelector((state) => state.cart);
+  const [quantity, setCurrent] = useState(window.localStorage.getItem("items"));
+  const setLocalStorage = (value) => {
+    try {
+      setCurrent(value);
+      window.localStorage.setItems("items", value);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  //// sum - resr product ////
+  
+  function sumContador(mangaid) {
+      dispatch(addItemToCart(mangaid));
+    }
+
+    function resContador(mangaid) {
+        const itemRest = cart.find((item) => item.mangaid === mangaid);
+        if (itemRest.quantity === 1) {
+            swal({
+                text: "For to Delete press x PELOTUDO",
+                button: {
+                    text: "Okey!",
+                },
+            });
+        } else {
+            dispatch(restItemToCart(mangaid));
+        }
+    }
+    
+    function handleResetCart() {
+        Swal.fire({
+            title: "Do you sure to delete all items?",
+            showDenyButton: true,
+            confirmButtonText: "Sure",
+            denyButtonText: `Cancel`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                dispatch(resetCart());
+            }
+        });
+    }
+    
+    function handleDelete(mangaid) {
+        swal({
+            title: "Are you sure?",
+            text: "Once remove from your cart!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                dispatch(DeleteCart(mangaid));
+                swal("Poof! Your product has been remove from your cart!", {
+                    icon: "success",
+                });
+            } else {
+                swal("Your product has been saved in your cart!");
+            }
+        });
+    }
+    
+    let totalPrice = 0;
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].price)
+        totalPrice = totalPrice + cart[i]?.quantity * cart[i]?.price;
+    }
+    
+    
+    ///// Recomended /////
+    const dispatch = useDispatch();
+    let { id } = useParams();
+    const mangas = useSelector((state) => state.mangas);
+    
+    // function handleDeleteItem(mangaid){
+        //     dispatch(deleteItemOfCart(mangaid))
+        // }
+        
+        useEffect(() => {
+            dispatch(getMangas());
+        }, [dispatch]);
+        
+        
+        const [payment, setPaymet] = useState(false); //para checkout
+        return (
+            <div>
+      <NavBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <div className="flex flex-col  font-serif">
+        
+       
+        <div className="w-3/6 h-80 overflow-y-scroll border-gray-300 rounded-md  self-center border-2 mt-8 flex  justify-center ">
+                <Checkout
+                    payment={payment}
+                    setPaymet={setPaymet}
+                    cart={cart}
+                    totalPrice={totalPrice}>
+                     <button onClick={() => setPaymet(!payment)} className="absolute text-purple-600 top-5 right-5 w-10 h-10 pointer border-2 border-purple-600 p-1 rounded-md hover:bg-purple-600 hover:text-white"> X </button>
+                    </Checkout>
+                    
+          <div className="w-full  h-7/12 ">
+            <div className="ml-3 h-6/12 flex flex-col justify-center font-serif">
+              {cart.length ? 
+                  cart.map((e) => {
+                      return (
+                      <div className=" flex mt-3">
+                      <div className="w-10/12 border-gray-300 rounded-md border-2 flex font-serif  justify-between">
+                        <div className="w-20 m-3 ">
+                          <img
+                            value={quantity}
+                            onChange={(e) => setLocalStorage(e.target.value)}
+                            src={e.posterImage ? e.posterImage.small.url : img}
+                            alt=""
+                            />
+                        </div>
+                        <div>
+                          <h1
+                            className="text-3xl font-serif mt-3"
+                            onChange={(e) => setLocalStorage(e.target.value)}
+                            value={quantity}
+                          >
+                            Product: {e.canonicalTitle}
+                          </h1>
+                          <div className="flex">
+                            <h3
+                              className="text-3xl font-serif"
+                             
+                              onChange={(e) => setLocalStorage(e.target.value)}
+                              value={quantity}
+                            >
+
+                            </h3>
+                            <h3 className="text-green-400 text-3xl font-arial">
+                            U$D {e.price}
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="flex flex-col ml-4">
+                          <div className=" flex">
+                            <button onClick={() => resContador(e.mangaid)} className="w-7  h-7 mr-3 rounded-md bg-purple-600 mt-3 text-white">-
+                            </button>
+                            <input type="text" className="w-10 h-7 p-2 rounded-md bg-purple-600 text-white p-3 mt-3" value={e.quantity}/>
+                           
+                            <button
+                              onClick={() => sumContador(e.mangaid)}
+                              className="w-7 h-7  rounded-md bg-purple-600 m-3 text-white"
+                            >
+                              +
+                            </button>
+                          </div>
+                          <div className="flex ">U$D
+                          <span 
+                          className=" mr-3 rounded-md p-2 bg-purple-600 ml-4 w-5/6 text-white "
+                          onChange={(e) => setLocalStorage(e.target.value)}
+                          value={quantity}
+                        >{(e.price * e.quantity).toFixed(2)}</span></div>
+                            
+                                <button
+                                onClick={() => handleDelete(e.mangaid)}
+                                className=" pt-1 ml-10 flex mt-3 justify-center  w-20  rounded-md hover:bg-red-500 mt-1 h-9 bg-red-600 border-red-600 border-2 text-white"
+                                >
+                                Remove 
+                                </button>
+
+             
+                          
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                ) : (
+                    <h1 className="text-5xl m-5 text-purple-600 font-mono">
+               
+                  You haven't added mangas to your cart yet
+                </h1>
+              )}
+            </div>
+              
+          </div>
+        </div>
+        <div className="flex flex-col justify-center">
+        <button
+          onClick={(mangaid) => handleResetCart(mangaid)}
+          className="  flex justify-center self-center w-80 p-7 text-3xl m-10 hover:bg-red-500 rounded-md bg-red-600 border-red-600 border-2 text-white"
+        >
+    
+          Reset Cart
+        </button>
+        <div className="w-2/6  self-center h-10/12 border-gray-300 rounded-md border-2 p-2   flex justify-center flex-col ">
+          <span className="text-6xl text-green-600 self-center ">
+      
+          U$D {totalPrice.toFixed(2)}
+          </span>
+          <button
+            onClick={()=>setPaymet(true)}
+            className="bg-purple-600 text-white m-5 mt-10 text-4xl p-5 rounded-md hover:bg-purple-400"
+          >
+            Go to pay!
+          </button>
+        </div>
+      </div>
+      </div>
+      <div className="mt-10">
+      <h1 className="text-4xl p-7">RECOMENDED :</h1>
+      <div className="flex justify-center">
+        <div className="flex overflow-x-scroll  w-8/12">
+        {!payment && 
+      
+      <div className="flex justify-center ">
+         {mangas.length &&
+            mangas.map((e) => {
+              return (
+                  <Card
+                    key={e.id}
+                    mangaid={e.mangaid}
+                    canonicalTitle={e.canonicalTitle}
+                    posterImage={e.posterImage ? e.posterImage.small.url : img}
+                    startDate={e.startDate}
+                    price={e.price}
+                    status={e.status}
+                    averageRating={e.averageRating}
+                  />
+               
+              );
+            })} </div>}
+        </div>
+      </div>
+      </div>
+      <div className="mt-9 bottom-0">
+        <Footer />
+      </div>
+    </div>
+  );
+}
+

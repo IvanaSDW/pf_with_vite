@@ -1,0 +1,44 @@
+.NotFound{
+    background-image: url(./okeyr.png);
+    background-position: right;
+    background-size: 44%;
+    background-repeat: no-repeat;
+    height: 59.2vh;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.left{
+    background-image: url(./okeyl.png);
+    background-position: left;
+    background-size: 44%;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 58.9vh;
+}
+.error{
+    font-size: 20vh;
+    display: flex;
+    justify-content: center;
+    font-family:monospace;
+    color: rgb(131, 98, 207);
+    -webkit-text-stroke: 1vh rgb(60, 26, 114);
+}
+.not{
+    font-size: 10vh;
+    display: flex;
+    justify-content: center;
+    font-family: Japan;
+    color: aliceblue;
+}
+
+.banner{
+    border-radius: 1000px;
+    margin-left: 30%;
+    background-color: blueviolet;
+    width: 40%;
+}
+
+.banner:hover{
+    background-color: rgb(154, 55, 246);
+}

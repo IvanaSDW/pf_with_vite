@@ -1,0 +1,41 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './Pages/Home.jsx';
+import Details from './Pages/DetailsCard';
+import NotFound from './components/404';
+import LandingPage from './components/LandingPage';
+import './App.css';
+import { React, useEffect } from 'react';
+import { FormAdmin } from './Pages/FormAdmin';
+import { useDispatch } from 'react-redux';
+import { getAllGenres, getAllCategories } from './Redux/actions';
+import Login from './Pages/Login';
+import Cart from './Pages/Cart';
+import Profile from './Pages/Profile';
+import AboutUs from './components/Aboutus';
+
+function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+    dispatch(getAllGenres());
+  }, [dispatch]);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/form" element={<FormAdmin />} />
+        <Route path="/manga/:id" element={<Details />} />
+        <Route path="*" element={<NotFound />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<AboutUs />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;

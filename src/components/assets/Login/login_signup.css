@@ -1,0 +1,58 @@
+.form-wrapper {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 50vh;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.auth-form-container,
+.login-form,
+.register-form {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+@media screen and (min-width: 600px) {
+  .auth-form-container {
+    padding: 5rem;
+    border: 1px solid white;
+    border-radius: 10px;
+    margin: 0.5rem;
+  }
+}
+
+.login-label {
+  text-align: left;
+  padding: 0.25rem 0;
+}
+
+.login-input {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  color: black;
+}
+
+.login-button {
+  border: none;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #7439db;
+}
+
+.link-btn {
+  background: none;
+  color: white;
+  text-decoration: underline;
+  padding: 20px 0%;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+}
