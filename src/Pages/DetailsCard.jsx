@@ -127,10 +127,10 @@ export default function Details() {
                     </span>
                   </div>
 
-                  <div className={styles.buttons}>
+                  {/* <div className={styles.buttons}>
                     <button className={styles.btns}>Buy</button>
                     <button className={styles.btns}>Add to Cart</button>
-                  </div>
+                  </div> */}
                   {currentUser?.role === 'MASTER' ||
                     (currentUser?.role === 'ADMIN' && (
                       <div className={styles.content}>
