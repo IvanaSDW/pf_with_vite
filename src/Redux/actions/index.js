@@ -239,7 +239,8 @@ export const loading = () => {
 };
 
 export const addItemToCart = (item, type) => {
-  console.log(item, type, "ITEM Y TYPEEEE")
+  console.log(item, "ITEM")
+  console.log(type, "TYPEEEE")
   try {
     return {
       type: ADD_TO_CART,

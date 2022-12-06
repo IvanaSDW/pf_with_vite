@@ -125,12 +125,12 @@ export default function Details() {
                 </div>
                 </div>
 
-            </div>
+            {/* </div>
           
          <h1 className={styles.recom}>RECOMENDED :</h1>
         <div className={styles.recomend}>
           <div className={styles.cards}>
-            {mangas.length && mangas.map((e) => {
+            {mangasDetail.length && mangasDetail.map((e) => {
                   return (
                     <div className={styles.card}>
                       <Card
@@ -147,7 +147,7 @@ export default function Details() {
                     </div>
                   );
                 })}
-          </div>
+          </div> */}
         </div> 
         <Footer />
       </div>
