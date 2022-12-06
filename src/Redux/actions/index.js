@@ -25,6 +25,7 @@ export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 export const SUM_TO_CART = 'SUM_TO_CART';
 export const REST_TO_CART = 'REST_TO_CART';
 export const ADD_TO_COUNT = 'ADD_TO_COUNT';
+export const GET_MANGAS_DETAIL = 'GET_MANGAS_DETAIL';
 
 
 export const getMangas = () =>{
@@ -33,6 +34,21 @@ export const getMangas = () =>{
         let response = await axios.get("https://backend-production-1a11.up.railway.app/manga");
         return dispatch({
             type : GET_MANGAS,
+            payload : response.data
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+}
+
+export const getMangasDetail = () =>{
+  return async function (dispatch) {
+    try {
+        let response = await axios.get("https://backend-production-1a11.up.railway.app/manga");
+        console.log(response, "RESPONSE DE LA ACTION ")
+        return dispatch({
+            type : GET_MANGAS_DETAIL,
             payload : response.data
         })
     } catch (err) {
@@ -222,11 +238,12 @@ export const loading = () => {
   };
 };
 
-export const addItemToCart = (item) => {
+export const addItemToCart = (item, type) => {
+  console.log(item, type, "ITEM Y TYPEEEE")
   try {
     return {
       type: ADD_TO_CART,
-      payload: item,
+      payload: {id: item, type: type},
     };
   } catch (err) {
     console.log(err);
