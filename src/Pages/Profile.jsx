@@ -1,16 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import firebase, { fetchUserData, logout } from '../domain/userService';
+import firebase, {
+  fetchUserData,
+  logout,
+  uploadFile,
+} from '../domain/userService';
 import { resetCart, setFirebaseUser } from '../Redux/actions';
 import '../components/assets/Profile/profile.css';
-import { useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
-import { AiFillHome } from 'react-icons/ai';
+import { AiFillHome, AiFillEdit } from 'react-icons/ai';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
-import { AiFillEdit } from 'react-icons/ai';
 import axios from 'axios';
 
 const Profile = () => {
@@ -37,6 +39,9 @@ const Profile = () => {
 
   const [fieldsState, setFieldsState] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});
+  const [avatarFile, setAvatarFile] = useState();
+
+  const photoUrl = useSelector((state) => state.firebaseUser.photoURL);
 
   useEffect(() => {
     setFieldsState((prevState) => {
@@ -51,6 +56,7 @@ const Profile = () => {
         city: userData.city,
         postalCode: userData.postalCode,
         country: userData.country,
+        userAvatar: userData.userAvatar,
       };
     });
   }, [userData]);
@@ -75,6 +81,31 @@ const Profile = () => {
       alert("You'r already on Data section");
     }
   }
+
+  const handleChangeAvatar = (e) => {
+    console.log('changing avatar...');
+    setAvatarFile(e.target.files[0]);
+  };
+
+  useEffect(() => {
+    console.log('avatar changed...uploading file..');
+    saveAvatar(avatarFile);
+  }, [avatarFile]);
+
+  const saveAvatar = async (file) => {
+    try {
+      const avatarUrl = await uploadFile(file);
+      setFieldsState((prevState) => {
+        return {
+          ...prevState,
+          userAvatar: avatarUrl,
+        };
+      });
+      saveAvatarInDb(avatarUrl);
+    } catch (e) {
+      console.log('error uploadin image: ', e);
+    }
+  };
 
   //Personal data form state
 
@@ -126,6 +157,20 @@ const Profile = () => {
       });
   };
 
+  const saveAvatarInDb = (avatarUrl) => {
+    axios
+      .put(
+        `https://backend-production-1a11.up.railway.app/user/${userData.id}`,
+        { userAvatar: avatarUrl }
+      )
+      .then((response) => {
+        window.alert('Your avatar was succesfully updated!');
+      })
+      .catch((err) => {
+        console.log('err: ', err.response.data);
+      });
+  };
+
   const mangas = useSelector((state) => state.mangas);
   // <input type="file" />
   return (
@@ -142,14 +187,26 @@ const Profile = () => {
             </div>
             <div className="flex">
               <div className=" flex ">
-                <h2 className="text-9xl">
-                  <button
-                    type="file"
-                    className="bg-gray-400 rounded-full mt-2 text-white"
-                  >
-                    <CgProfile />
-                  </button>
-                </h2>
+                <input
+                  type="file"
+                  className="bg-gray-400 text-white w-20 h-20"
+                  onChange={handleChangeAvatar}
+                />
+                {fieldsState.userAvatar ? (
+                  <img
+                    src={fieldsState.userAvatar}
+                    alt="avatar"
+                    className="object-contain w-20 h-20"
+                  />
+                ) : photoUrl ? (
+                  <img
+                    src={photoUrl}
+                    alt="avatar"
+                    className="object-contain w-20 h-20"
+                  />
+                ) : (
+                  <CgProfile />
+                )}
               </div>
               <div className=" flex mt-10 flex-col pl-20">
                 <h5 className="pl-5 text-4xl">
