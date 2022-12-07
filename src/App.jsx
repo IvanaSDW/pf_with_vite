@@ -14,6 +14,7 @@ import Profile from './Pages/Profile';
 import AboutUs from './components/Aboutus';
 import Update from './Pages/Update';
 import About from './Pages/About';
+import Cms from './Pages/Cms';
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/form/:id" element={<Update />} />
         <Route path="/aboutus" element={<About />} />
+        <Route path="/cms" element={<Cms />} />
       </Routes>
     </BrowserRouter>
   );
