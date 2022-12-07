@@ -2,8 +2,8 @@ import axios from 'axios';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { firebaseConfig } from './firebaseConfig';
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";  //1
-import { v4 } from "uuid" //2
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; //1
+import { v4 } from 'uuid'; //2
 const app = firebase.initializeApp(firebaseConfig); //3
 
 export const auth = firebase.auth();
@@ -133,12 +133,14 @@ export const fetchUserData = async () => {
 };
 
 //img store
-export const storage = getStorage(app)
+export const storage = getStorage(app);
 
 export async function uploadFile(file) {
-  const storageRef = ref(storage, v4())  //necesitamos ids unicos, pq se pisan
-  await uploadBytes(storageRef, file)
-  const url = await getDownloadURL(storageRef)
+  console.log('upload file service called ..');
+  if (!file) return;
+  const storageRef = ref(storage, v4()); //necesitamos ids unicos, pq se pisan
+  await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(storageRef);
   return url;
 }
 //
