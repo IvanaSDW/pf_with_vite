@@ -51,7 +51,7 @@ const CheckoutForm = ({ payment, setPaymet,children,  totalPrice} ) => {
       const { id } = paymentMethod;
       const { data } = await axios.post("https://backend-production-1a11.up.railway.app/checkout", {
         id,
-        amount: totalPrice * 100,
+        amount: (totalPrice.toFixed(2)) * 100,
        description : description,
         cart : cart
       });

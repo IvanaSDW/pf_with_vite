@@ -20,6 +20,7 @@ import {
   SUM_TO_CART,
   REST_TO_CART,
   UPDATE_MANGA,
+  GET_MANGAS_DETAIL,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
 } from "../actions";
 
@@ -36,6 +37,7 @@ const setCartLocalStorage = (cart) =>
 
 const initialState = {
   mangas: [],
+  mangasForDetail: [],
   mangasDetails: {},
   categories: [],
   genres: [],
@@ -52,6 +54,11 @@ const rootReducer = (state = initialState, action) => {
       return{
         ...state,
         mangas: action.payload
+      }
+     case GET_MANGAS_DETAIL:
+       return{
+         ...state,
+         mangasForDetail: action.payload,
       }
     case GET_ALL_MANGAS:
       return {
@@ -153,12 +160,16 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CART: {
-      const newItem = state.mangas.find(
-        (item) => item.mangaid === action.payload
+
+
+      const stateToFilter = action.payload.type === 'card_detail' ? state.mangasForDetail : state.mangas
+
+      const newItem = stateToFilter.find(
+        (item) => item.mangaid === action.payload.id
       );
 
       const ItemInCart = state.cart.find(
-        (item) => item.mangaid === action.payload
+        (item) => item.mangaid === action.payload.id
       );
 
       console.log(newItem, "nuevo item");
