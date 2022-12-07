@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 function Cms() {
 
-    const [downdrop, setDowndrop] = useState(true) //true contrae
+    const [downdrop, setDowndrop] = useState(true) 
     const handleClickDrop = () => {
         setDowndrop(downdrop => !downdrop)
     }
