@@ -11,10 +11,9 @@ import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillHome, AiFillEdit } from 'react-icons/ai';
 import Footer from '../components/Footer';
-import Card from '../components/Card';
 import axios from 'axios';
 import styles from '../components/assets/Profile/profile.module.css'
-
+// import { getOrderList } from '../Redux/actions';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -64,6 +63,12 @@ const Profile = () => {
 
   const [control, ControlModal] = useState(true);
   const [control2, ControlModal2] = useState(false);
+
+  const userFirebase = useSelector((state) => state.firebaseUser);
+
+  useEffect(()=>{
+    dispatch(getOrderList(userid))
+  },[dispatch, userid] )
 
   function controlView() {
     if (control2) {
@@ -172,7 +177,6 @@ const Profile = () => {
       });
   };
 
-  const mangas = useSelector((state) => state.mangas);
   
   return (
     <div>
@@ -216,7 +220,7 @@ const Profile = () => {
                   {userData.email}
                   <br />
                 </p>
-            <label htmlFor="file" className='change'>Change a profile photo</label>
+            <label htmlFor="file" className={styles.change}>Change a profile photo</label>
             <input
               type="file"
               placeholder='Change photo'
@@ -257,21 +261,7 @@ const Profile = () => {
                 
                 MY FAVs
                 <div className=" h-screen  flex  flex-row overflow-x-scroll overflow-y-hidden ">
-                  {mangas.length &&
-                    mangas.map((e) => {
-                      return (
-                        <div className="w-full ">
-                          <Card
-                            posterImage={
-                              e.posterImage && e.posterImage.small.url
-                            }
-                            startDate={e.startDate}
-                            price={e.price}
-                            averageRating={e.averageRating}
-                          />
-                        </div>
-                      );
-                    })}
+                
                 </div>
               </div>
             </div>

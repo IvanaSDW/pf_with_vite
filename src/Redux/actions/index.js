@@ -26,7 +26,8 @@ export const SUM_TO_CART = 'SUM_TO_CART';
 export const REST_TO_CART = 'REST_TO_CART';
 export const ADD_TO_COUNT = 'ADD_TO_COUNT';
 export const GET_MANGAS_DETAIL = 'GET_MANGAS_DETAIL';
-
+///GET ORDER LIST
+export const GET_ORDER = "GET_ORDER"
 
 export const getMangas = () =>{
   return async function (dispatch) {
@@ -320,4 +321,18 @@ export function updateManga(mangaid, data) {
    };
  }
  
-
+ export function getOrderList(userid) {
+  return async function (dispatch) {
+    try {
+      var json = await axios.get(
+        `https://backend-production-1a11.up.railway.app/user/${userid}`
+      );
+      return dispatch({
+        type: GET_ORDER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

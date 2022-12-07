@@ -21,6 +21,7 @@ import {
   REST_TO_CART,
   UPDATE_MANGA,
   GET_MANGAS_DETAIL,
+  GET_ORDER,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
 } from "../actions";
 
@@ -41,6 +42,7 @@ const initialState = {
   mangasDetails: {},
   categories: [],
   genres: [],
+  orderList: [],
   isLoading: false,
   cart: getCartLocalStorage(),
   firebaseUser: false,
@@ -79,6 +81,14 @@ const rootReducer = (state = initialState, action) => {
         mangasDetails: action.payload,
         isLoading: false,
       };
+
+    case GET_ORDER:
+      return{
+        ...state,
+        orderList:action.payload,
+        isLoading: false,
+      }
+
     case DELETE_DETAILS:
       return {
         ...state,
