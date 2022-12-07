@@ -18,6 +18,7 @@ import { useCurrentUser } from './domain/useCurrentUserHook';
 
 
 
+import Cms from './Pages/Cms';
 
 function App() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function App() {
         <Route path="/form/:id" 
                element={user.email === "admin@mail.com" ? <Update/> : <Navigate to='/home' /> }/>
         <Route path="/aboutus" element={<About />} />
+        <Route path="/cms" element={<Cms />} />
       </Routes>
     </BrowserRouter>
   );

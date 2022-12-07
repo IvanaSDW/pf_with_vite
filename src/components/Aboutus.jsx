@@ -74,7 +74,7 @@ const AboutUs = () => {
           image="avatar1.jpg"
         />
         <EachOne
-          nombre="Erik Renata"
+          nombre="Erik Retana"
           pais="México"
           mail="mailto:erik.retana.lopez@gmail.com"
           carrera="Full Stack developer"
