@@ -12,6 +12,7 @@ import {
   sumItemToCart,
   restItemToCart,
   addItemToCart,
+  filterMangaByDate,
 } from "../Redux/actions/index.js";
 import swal from "sweetalert";
 import Swal from "sweetalert2";
@@ -21,6 +22,7 @@ import styles from '../components/assets/cart/cart.module.css'
 export default function Cart() {
   const [currentPage, setCurrentPage] = useState(1);
   const cart = useSelector((state) => state.cart);
+  const dateList = useSelector((state) => state.DateListMangas)
   const [quantity, setCurrent] = useState(window.localStorage.getItem("items"));
   const setLocalStorage = (value) => {
     try {
@@ -102,6 +104,7 @@ export default function Cart() {
         
         useEffect(() => {
             dispatch(getMangas());
+            dispatch(filterMangaByDate());
         }, [dispatch]);
     
         const [payment, setPaymet] = useState(false); //para checkout
@@ -228,14 +231,14 @@ export default function Cart() {
       </div>
       </div>
       <div className="mt-10">
-      <h1 className="text-4xl p-7 ">RECOMENDED :</h1>
+      <h1 className="text-4xl p-7 ">NEW MANGAS :</h1>
       <div className="flex justify-center">
         <div className="flex overflow-x-scroll  w-8/12">
         {!payment && 
       
       <div className="flex justify-center ">
-         {mangas.length &&
-            mangas.map((e) => {
+         {dateList.length &&
+            dateList.slice(0, 5).map((e) => {
               return (
                   <Card
                     key={e.id}
