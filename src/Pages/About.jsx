@@ -84,7 +84,7 @@ const About = () => {
           image="facu"
         />
         <EachOne
-          nombre="Erik Renata"
+          nombre="Erik Retana"
           pais="México"
           mail="mailto:erik.retana.lopez@gmail.com"
           carrera="Full Stack developer"
