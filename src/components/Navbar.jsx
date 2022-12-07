@@ -4,6 +4,7 @@ import styles from './assets/NavBar/NavBar.module.css';
 import { Link } from 'react-router-dom';
 import Logo from './assets/NavBar/ico2.png';
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
+import { MdAdminPanelSettings } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { getMangByName } from '../Redux/actions';
 import { BiBookAdd } from 'react-icons/bi';
@@ -57,11 +58,18 @@ export default function Navbar({
         </div>
         <div className={styles.buttons}>
           {currentUser?.role === 'ADMIN' ? (
-            <Link to="/form">
-              <button className={styles.iconBtn}>
-                <BiBookAdd style={{ fontSize: 20, marginTop: 7 }} />
-              </button>
-            </Link>
+            <>
+              <Link to="/cms">
+                <button className={styles.iconBtn} >
+                  <MdAdminPanelSettings style={{ fontSize: 20, marginTop: 7 }} />
+                </button>
+              </Link>
+              <Link to="/form">
+                <button className={styles.iconBtn}>
+                  <BiBookAdd style={{ fontSize: 20, marginTop: 7 }} />
+                </button>
+              </Link>
+            </>
           ) : null}
           <Link to={firebaseUser ? '/profile' : '/login'}>
             <button className={styles.iconBtn}>
