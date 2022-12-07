@@ -17,6 +17,7 @@ export const MANGA_PRICE_DESC = 'MANGA_PRICE_ASC';
 //FILTER
 export const FILTER_MANGA_BY_CATEGORY = 'FILTER_MANGA_BY_CATEGORY';
 export const FILTER_MANGA_BY_GENRE = 'FILTER_MANGA_BY_CATEGORY';
+export const FILTER_MANGA_BY_DATE = 'FILTER_MANGA_BY_DATE';
 // export const FILTER_ANIME_BY_GENRE = "FILTER_ANIME_BY_CATEGORY"
 // CART
 export const ADD_TO_CART = 'ADD_TO_CART';
@@ -231,6 +232,23 @@ export const filterMangaByGenres = (genre, pageNumber) => {
   };
 };
 
+export const filterMangaByDate = () => {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(
+        `https://backend-production-1a11.up.railway.app/manga?sort=dateDesc`
+      );
+
+      return dispatch({
+        type: FILTER_MANGA_BY_DATE,
+        payload: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export const loading = () => {
   return {
     type: LOADING_TYPE,
@@ -296,6 +314,7 @@ export const DeleteCart = (mangaid) => {
 export const SET_FIREBASE_USER = 'SET_FIREBASE_USER';
 
 export const setFirebaseUser = (firebaseUser) => {
+
   return {
     type: SET_FIREBASE_USER,
     payload: firebaseUser ? firebaseUser : false,
