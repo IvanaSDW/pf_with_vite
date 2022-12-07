@@ -164,7 +164,7 @@ const Profile = () => {
         { userAvatar: avatarUrl }
       )
       .then((response) => {
-        window.alert('Your avatar was succesfully updated!');
+        console.log('Your avatar was succesfully updated!');
       })
       .catch((err) => {
         console.log('err: ', err.response.data);
