@@ -55,32 +55,17 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
         "https://backend-production-1a11.up.railway.app/checkout",
         {
           id,
-          amount: totalPrice * 100,
+          amount: Math.round(totalPrice * 100),
           description: description,
           cart: cart,
         }
       );
-      // console.log(userFirebase);
-      // console.log(data);
-      // const order = await axios.post(
-      //   `https://backend-production-1a11.up.railway.app/order/user/${userId}`,
-      //   {
-      //     items: cart.map((item) => {
-      //       return {
-      //         mangaMangaid: item.mangaid,
-      //         quantity: item.quantity,
-      //         price: Number(item.price),
-      //       };
-      //     }),
-      //     total: totalPrice,
-      //     status:
-      //       data.payment.status === "succeeded" ? "completed" : "rejected",
-      //     email,
-      //   }
-      // );
+
+      console.log(totalPrice);
+      console.log(totalPrice *100);
+      console.log((totalPrice * 100).toFixed(2));
       let userId = userFirebase.uid;
-      let email = userFirebase._delegate.email;
-      
+
       if (data.error) {
         setTimeout(() => {
           setLoading(!loading).fadeOut(2000);
@@ -100,9 +85,8 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
                 price: Number(item.price),
               };
             }),
-            total: totalPrice,
+            total: totalPrice.toFixed(2),
             status: "rejected",
-            email,
           }
         );
       }
@@ -120,9 +104,8 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
                 price: Number(item.price),
               };
             }),
-            total: totalPrice,
+            total: totalPrice.toFixed(2),
             status: "completed",
-            email,
           }
         );
         swal(
