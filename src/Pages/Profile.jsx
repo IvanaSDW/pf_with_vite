@@ -7,13 +7,14 @@ import firebase, {
   uploadFile,
 } from '../domain/userService';
 import { resetCart, setFirebaseUser } from '../Redux/actions';
-import '../components/assets/Profile/profile.css';
 import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillHome, AiFillEdit } from 'react-icons/ai';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
 import axios from 'axios';
+import styles from '../components/assets/Profile/profile.module.css'
+
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -172,7 +173,7 @@ const Profile = () => {
   };
 
   const mangas = useSelector((state) => state.mangas);
-  // <input type="file" />
+  
   return (
     <div>
       <div className="">
@@ -187,26 +188,21 @@ const Profile = () => {
             </div>
             <div className="flex">
               <div className=" flex ">
-                <input
-                  type="file"
-                  className="bg-gray-400 text-white w-20 h-20"
-                  onChange={handleChangeAvatar}
-                />
                 {fieldsState.userAvatar ? (
                   <img
-                    src={fieldsState.userAvatar}
-                    alt="avatar"
-                    className="object-contain w-20 h-20"
+                  src={fieldsState.userAvatar}
+                  alt="avatar"
+                  className=" w-40 h-40  rounded-full "
                   />
-                ) : photoUrl ? (
-                  <img
+                  ) : photoUrl ? (
+                    <img
                     src={photoUrl}
                     alt="avatar"
-                    className="object-contain w-20 h-20"
-                  />
-                ) : (
-                  <CgProfile />
-                )}
+                    className=" w-40 h-40 rounded-full "
+                    />
+                    ) : (
+                      <CgProfile />
+                      )}
               </div>
               <div className=" flex mt-10 flex-col pl-20">
                 <h5 className="pl-5 text-4xl">
@@ -220,6 +216,14 @@ const Profile = () => {
                   {userData.email}
                   <br />
                 </p>
+            <label htmlFor="file" className='change'>Change a profile photo</label>
+            <input
+              type="file"
+              placeholder='Change photo'
+              className={styles.inputFile}
+              onChange={handleChangeAvatar}
+              id="file"
+            />
               </div>
             </div>
             <div>
@@ -233,7 +237,7 @@ const Profile = () => {
           </div>
           <div className="flex justify-evenly h-80 p-20 ">
             <button
-              className="bg-purple-600 hover:bg-white h-10 p-3 pl-7 pr-7 rounded-md text-white hover:text-purple-600"
+              className="bg-purple-600 hover:bg-white h-10 p-3 pl-7 pr-7  rounded-md text-white hover:text-purple-600"
               onClick={controlView}
             >
               My Favs
@@ -246,10 +250,11 @@ const Profile = () => {
               Personal data
             </button>
           </div>
+          <div>
           {control && (
-            <div className="flex justify-center mt-5 h-40" value={control}>
-              <div className="border-2 border-purple-600 rounded-md  w-9/12 h-full absolute self-center ">
-                {' '}
+            <div className="flex justify-center 2xl:mt-80 xl:mt-40 h-40" value={control}>
+              <div className="border-2 border-purple-600 rounded-md  2xl:w-9/12 h-full absolute self-center ">
+                
                 MY FAVs
                 <div className=" h-screen  flex  flex-row overflow-x-scroll overflow-y-hidden ">
                   {mangas.length &&
@@ -273,11 +278,11 @@ const Profile = () => {
           )}
 
           {control2 && (
-            <div className="flex justify-center mt-5 h-60" value={control2}>
+            <div className="flex justify-center mt-8 h-60" value={control2}>
               <div className="border-2 border-purple-600 rounded-md  w-6/12  absolute self-center">
                 <div className="flex flex-col text-purple-500">
-                  <div className="flex text-4xl p-2 ml-40">
-                    <h2 className="text-4xl self-center">Personal Data ....</h2>
+                  <div className="flex text-4xl p-2 2xl:ml-60 xl:ml-10 xl:pl-40">
+                    <h2 className="text-4xl self-center ">Personal Data ....</h2>
                     {editMode ? (
                       <p
                         onClick={() => {
@@ -297,15 +302,15 @@ const Profile = () => {
                       />
                     )}
                   </div>
-                  <form action="" className="flex flex-col w-full ml-10  m-5">
-                    <div className="flex flex-col  mr-40 ml-20 w-100">
+                  <form action="" className="flex flex-col 2xl:ml-20 w-full xl:ml-20  m-5">
+                    <div className="flex flex-col  2xl:ml-60 xl:ml-20">
                       <div className="flex">
-                        <div className="flex flex-col  mr-2 ">
+                        <div className="flex flex-col  2xl:mr-7 xl:mr-0">
                           <label>First Name</label>
                           <input
                             disabled={!editMode}
                             type="text"
-                            className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
                             name="firstname"
                             value={fieldsState.firstname}
                             onChange={handleFieldChange}
@@ -316,7 +321,7 @@ const Profile = () => {
                           <input
                             disabled={!editMode}
                             type="text"
-                            className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
                             name="lastname"
                             value={fieldsState.lastname}
                             onChange={handleFieldChange}
@@ -327,7 +332,7 @@ const Profile = () => {
                       <input
                         disabled={!editMode}
                         type="email"
-                        className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                        className="border-2 border-purple-600 2xl:w-6/12 rounded-md p-2 text-gray-800 xl:w-4/6 "
                         name="email"
                         value={fieldsState.email}
                         onChange={handleFieldChange}
@@ -341,30 +346,30 @@ const Profile = () => {
                       <input
                         disabled={!editMode}
                         type="text"
-                        className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                        className="border-2 border-purple-600 2xl:w-6/12 xl:w-4/6  rounded-md p-2 text-gray-800"
                         name="phone"
                         value={fieldsState.phone}
                         onChange={handleFieldChange}
                       />
 
                       <div className="flex">
-                        <div className="flex flex-col mr-2">
+                        <div className="flex flex-col 2xl:mr-7 xl:mr-0">
                           <label>Address</label>
                           <input
                             disabled={!editMode}
                             type="text"
-                            className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
                             name="addressLine1"
                             value={fieldsState.addressLine1}
                             onChange={handleFieldChange}
                           />
                         </div>
-                        <div className="flex flex-col mr-10">
+                        <div className="flex flex-col 2xl:mr-10 xl:mr-0">
                           <label>Address2</label>
                           <input
                             disabled={!editMode}
                             type="text"
-                            className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
                             name="addressLine2"
                             value={fieldsState.addressLine2}
                             onChange={handleFieldChange}
@@ -372,23 +377,23 @@ const Profile = () => {
                         </div>
                       </div>
                       <div className="flex">
-                        <div className="flex flex-col mr-2  ">
+                        <div className="flex flex-col 2xl:mr-7  ">
                           <label> city</label>
                           <input
                             disabled={!editMode}
                             type="text"
-                            className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                            className="border-2  xl:w-5/6 xl:mr-0 border-purple-600 rounded-md p-2 text-gray-800"
                             name="city"
                             value={fieldsState.city}
                             onChange={handleFieldChange}
                           />
                         </div>
-                        <div className="flex flex-col mr-10">
+                        <div className="flex flex-col ">
                           <label>Postal Code</label>
                           <input
                             disabled={!editMode}
                             type="text"
-                            className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
                             name="postalCode"
                             value={fieldsState.postalCode}
                             onChange={handleFieldChange}
@@ -399,7 +404,7 @@ const Profile = () => {
                       <input
                         disabled={!editMode}
                         type="text"
-                        className="border-2 border-purple-600 rounded-md p-2 text-gray-800"
+                        className="border-2 2xl:w-6/12 border-purple-600 xl:w-4/6 rounded-md p-2 text-gray-800"
                         name="country"
                         value={fieldsState.country}
                         onChange={handleFieldChange}
@@ -410,8 +415,8 @@ const Profile = () => {
                         onClick={onSaveChanges}
                         className={
                           !someChanged
-                            ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3'
-                            : 'bg-purple-600 text-white h-10 rounded-md mt-3 hover:bg-purple-800'
+                            ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3 xl:w-4/6 2xl:w-6/12'
+                            : 'bg-purple-600 text-white h-10 rounded-md 4mt-3 xl:4/6 hover:bg-purple-800 2xl:w-8/12'
                         }
                       >
                         Save
@@ -421,7 +426,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-          )}
+          )}</div>
         </div>
         {/* <div className="mt-80">
           <Footer />
