@@ -60,11 +60,8 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
           cart: cart,
         }
       );
-      console.log(paymentMethod);
-      console.log(userFirebase);
-      let userId = userFirebase.uid;
-      let email = userFirebase._delegate.email;
-      console.log(data);
+      // console.log(userFirebase);
+      // console.log(data);
       // const order = await axios.post(
       //   `https://backend-production-1a11.up.railway.app/order/user/${userId}`,
       //   {
@@ -81,7 +78,9 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
       //     email,
       //   }
       // );
-
+      let userId = userFirebase.uid;
+      let email = userFirebase._delegate.email;
+      
       if (data.error) {
         setTimeout(() => {
           setLoading(!loading).fadeOut(2000);
