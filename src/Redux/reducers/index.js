@@ -21,6 +21,7 @@ import {
   REST_TO_CART,
   UPDATE_MANGA,
   GET_MANGAS_DETAIL,
+  FILTER_MANGA_BY_DATE,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
 } from "../actions";
 
@@ -38,6 +39,7 @@ const setCartLocalStorage = (cart) =>
 const initialState = {
   mangas: [],
   mangasForDetail: [],
+  DateListMangas: [],
   mangasDetails: {},
   categories: [],
   genres: [],
@@ -149,6 +151,13 @@ const rootReducer = (state = initialState, action) => {
         totalNumberOfPages: action.payload.totalPages,
         isLoading: false,
       };
+
+      case FILTER_MANGA_BY_DATE:
+      return {
+        ...state,
+        DateListMangas: action.payload, 
+      };
+
     case FILTER_MANGA_BY_GENRE:
       return {
         ...state,
@@ -257,12 +266,14 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case SET_FIREBASE_USER: {
+      console.log(action.payload, "PAYOAASDdddddddDDDDDDDDD")
       return {
         ...state,
         firebaseUser: action.payload,
       };
     }
     case UPDATE_MANGA:
+    
       return {
         ...state,
            mangas: state.mangas.map((item) =>
