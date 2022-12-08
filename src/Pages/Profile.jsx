@@ -13,7 +13,7 @@ import { AiFillHome, AiFillEdit } from 'react-icons/ai';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import styles from '../components/assets/Profile/profile.module.css'
-// import { getOrderList } from '../Redux/actions';
+import { getOrderList } from '../Redux/actions';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -65,10 +65,11 @@ const Profile = () => {
   const [control2, ControlModal2] = useState(false);
 
   const userFirebase = useSelector((state) => state.firebaseUser);
-
+  let userid = userData.id;
+ console.log(userData)
   useEffect(()=>{
-    dispatch(getOrderList(userid))
-  },[dispatch, userid] )
+      dispatch(getOrderList(userid))
+    },[dispatch, userid] )
 
   function controlView() {
     if (control2) {
@@ -210,7 +211,7 @@ const Profile = () => {
               </div>
               <div className=" flex mt-10 flex-col pl-20">
                 <h5 className="pl-5 text-4xl">
-                  {userData.firstname?.toUpperCase()}{' '}
+                  {userData.firstname?.toUpperCase()}
                   {userData.lastname?.toUpperCase()}
                 </h5>
                 {/* <h5 className="card-title">
@@ -261,7 +262,7 @@ const Profile = () => {
                 
                 MY FAVs
                 <div className=" h-screen  flex  flex-row overflow-x-scroll overflow-y-hidden ">
-                
+                  {}
                 </div>
               </div>
             </div>
@@ -295,7 +296,7 @@ const Profile = () => {
                   <form action="" className="flex flex-col 2xl:ml-20 w-full xl:ml-20  m-5">
                     <div className="flex flex-col  2xl:ml-60 xl:ml-20">
                       <div className="flex">
-                        <div className="flex flex-col  2xl:mr-7 xl:mr-0">
+                        <div className="flex flex-col  2xl:mr-12 xl:mr-0">
                           <label>First Name</label>
                           <input
                             disabled={!editMode}
@@ -322,7 +323,7 @@ const Profile = () => {
                       <input
                         disabled={!editMode}
                         type="email"
-                        className="border-2 border-purple-600 2xl:w-6/12 rounded-md p-2 text-gray-800 xl:w-4/6 "
+                        className="border-2 border-purple-600 2xl:w-7/12 rounded-md p-2 text-gray-800 xl:w-4/6 "
                         name="email"
                         value={fieldsState.email}
                         onChange={handleFieldChange}
@@ -336,19 +337,19 @@ const Profile = () => {
                       <input
                         disabled={!editMode}
                         type="text"
-                        className="border-2 border-purple-600 2xl:w-6/12 xl:w-4/6  rounded-md p-2 text-gray-800"
+                        className="border-2 border-purple-600 2xl:w-7/12 xl:w-4/6  rounded-md p-2 text-gray-800"
                         name="phone"
                         value={fieldsState.phone}
                         onChange={handleFieldChange}
                       />
 
                       <div className="flex">
-                        <div className="flex flex-col 2xl:mr-7 xl:mr-0">
+                        <div className="flex flex-col 2xl:mr-12 xl:mr-0">
                           <label>Address</label>
                           <input
                             disabled={!editMode}
                             type="text"
-                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                            className="border-2 border-purple-600  xl:w-5/6 rounded-md p-2 text-gray-800"
                             name="addressLine1"
                             value={fieldsState.addressLine1}
                             onChange={handleFieldChange}
@@ -367,7 +368,7 @@ const Profile = () => {
                         </div>
                       </div>
                       <div className="flex">
-                        <div className="flex flex-col 2xl:mr-7  ">
+                        <div className="flex flex-col 2xl:mr-12 ">
                           <label> city</label>
                           <input
                             disabled={!editMode}
@@ -394,7 +395,7 @@ const Profile = () => {
                       <input
                         disabled={!editMode}
                         type="text"
-                        className="border-2 2xl:w-6/12 border-purple-600 xl:w-4/6 rounded-md p-2 text-gray-800"
+                        className="border-2 2xl:w-7/12 border-purple-600 xl:w-4/6 rounded-md p-2 text-gray-800"
                         name="country"
                         value={fieldsState.country}
                         onChange={handleFieldChange}
@@ -405,8 +406,8 @@ const Profile = () => {
                         onClick={onSaveChanges}
                         className={
                           !someChanged
-                            ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3 xl:w-4/6 2xl:w-6/12'
-                            : 'bg-purple-600 text-white h-10 rounded-md 4mt-3 xl:4/6 hover:bg-purple-800 2xl:w-8/12'
+                            ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3 xl:w-4/6 2xl:w-7/12'
+                            : 'bg-purple-600 text-white h-10 rounded-md 4mt-3 xl:4/6 hover:bg-purple-800 2xl:w-7/12'
                         }
                       >
                         Save

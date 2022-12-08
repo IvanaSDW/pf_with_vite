@@ -343,9 +343,8 @@ export function updateManga(mangaid, data) {
  export function getOrderList(userid) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(
-        `https://backend-production-1a11.up.railway.app/user/${userid}`
-      );
+      var json = await axios.get(`https://backend-production-1a11.up.railway.app/order/user/${userid}`);
+      console.log(json);
       return dispatch({
         type: GET_ORDER,
         payload: json.data,
