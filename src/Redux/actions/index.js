@@ -340,14 +340,14 @@ export function updateManga(mangaid, data) {
    };
  }
  
- export function getOrderList(userid) {
+ export function getOrderList(userId) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(`https://backend-production-1a11.up.railway.app/order/user/${userid}`);
-      console.log(json);
+      var order1 = await axios.get(`https://backend-production-1a11.up.railway.app/order/user/${userId}`);
+   
       return dispatch({
         type: GET_ORDER,
-        payload: json.data,
+        payload: order1.data,
       });
     } catch (error) {
       console.log(error);

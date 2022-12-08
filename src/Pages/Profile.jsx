@@ -64,12 +64,22 @@ const Profile = () => {
   const [control, ControlModal] = useState(true);
   const [control2, ControlModal2] = useState(false);
 
-  const userFirebase = useSelector((state) => state.firebaseUser);
-  let userid = userData.id;
- console.log(userData)
-  useEffect(()=>{
-      dispatch(getOrderList(userid))
-    },[dispatch, userid] )
+  // const order = useSelector((state) => state.firebaseUser);
+  let userId = userData.id;
+//  console.log(userid)
+const [order, setOrder] = useState([])  
+const getOrderList = async () => {
+  var  order1 = await axios.get(`https://backend-production-1a11.up.railway.app/order/user/${userId}`);
+  setOrder(order1.data)
+}
+console.log(order)
+useEffect( ()=>{
+    getOrderList()
+    },[] )
+
+
+const manga = useSelector((state) => state.mangas);
+
 
   function controlView() {
     if (control2) {
@@ -245,9 +255,9 @@ const Profile = () => {
               className="bg-purple-600 hover:bg-white h-10 p-3 pl-7 pr-7  rounded-md text-white hover:text-purple-600"
               onClick={controlView}
             >
-              My Favs
+            MY FAVs
+             
             </button>
-
             <button
               className="bg-purple-600 hover:bg-white h-10 p-3 pl-7 pr-7 rounded-md text-white hover:text-purple-600"
               onClick={control2View}
@@ -262,7 +272,14 @@ const Profile = () => {
                 
                 MY FAVs
                 <div className=" h-screen  flex  flex-row overflow-x-scroll overflow-y-hidden ">
-                  {}
+                <p>{order.length && order.map((e)=>{
+                  e.orderItems.map((e)=> e.filter())
+                   var mangas = manga.find(()=>{
+                    e.orderItems.mangaMangaid === manga.mangaid ? manga.canonicalTitle : "Le erraste pete";
+                  })
+                  console.log(mangas);
+                })}</p>
+                  
                 </div>
               </div>
             </div>
