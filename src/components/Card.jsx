@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import img from './assets/Cards/yugi.jpg';
+import imgSoldOut from './assets/Cards/soldOut.jpeg'
 import { addItemToCart } from '../Redux/actions';
-import { useDispatch /*, useSelector-*/ } from 'react-redux';
-//import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 
 const Card = ({
   mangaid,
@@ -14,10 +14,10 @@ const Card = ({
   startDate,
   price,
   averageRating,
+  stockQty
 }) => {
+  
   const dispatch = useDispatch();
-  //const carrito = useSelector((state => state.cart))
-
   function handleAddToCart(mangaid) {
     dispatch(addItemToCart(mangaid));
   }

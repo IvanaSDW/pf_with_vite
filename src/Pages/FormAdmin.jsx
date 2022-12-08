@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { postManga } from "../Redux/actions";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { IoMdArrowRoundBack } from "react-icons/io"
-import { uploadFile } from "../domain/userService";//1
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { uploadFile } from "../domain/userService"; //1
 
 export const FormAdmin = () => {
   const allGenres = useSelector((state) => state.genres);
@@ -14,18 +14,18 @@ export const FormAdmin = () => {
 
   const [genresChoose, setGenresChoose] = useState([]);
   const [categoryChoose, setCategoryChoose] = useState([]);
-  const [urlStorage, setUrlStorage] = useState("") //2
+  const [urlStorage, setUrlStorage] = useState(""); //2
   const [file, setFile] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await uploadFile(file)
-      setUrlStorage(result)
-      console.log(result)
+      const result = await uploadFile(file);
+      setUrlStorage(result);
+      console.log(result);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,10 +40,10 @@ export const FormAdmin = () => {
     setCategoryChoose([]);
   };
 
-  const handlerChangeImage = (setFieldValue) => { //3
+  const handlerChangeImage = (setFieldValue) => {
+    //3
     setFieldValue("posterImage", urlStorage);
   };
-
 
   return (
     <div className=" h-full">
@@ -51,7 +51,10 @@ export const FormAdmin = () => {
         New Mangas
       </h2>
       <Link to="/home">
-        <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">  <IoMdArrowRoundBack /></button>
+        <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
+          {" "}
+          <IoMdArrowRoundBack />
+        </button>
       </Link>
       {/* section form */}
       <Formik
@@ -66,6 +69,7 @@ export const FormAdmin = () => {
           genre: "",
           category: "",
           ageRating: "",
+          stockQty: "",
         }}
         validate={(itemsValue) => {
           let errorsBox = {};
@@ -117,6 +121,15 @@ export const FormAdmin = () => {
             errorsBox.price = "The price must be a valid number";
           }
 
+          if (!itemsValue.stockQty) {
+            errorsBox.stockQty = "Stock is needed";
+          } else if (
+            itemsValue.stockQty <= 0 ||
+            !/^(?:[1-9]\d{0,9}|0)$/.test(itemsValue.stockQty)
+          ) {
+            errorsBox.stockQty = "The stock must be a valid number";
+          }
+
           if (!itemsValue.startDate) {
             errorsBox.startDate = "Start Date is needed";
           } else if (
@@ -124,7 +137,8 @@ export const FormAdmin = () => {
               itemsValue.startDate
             )
           ) {
-            errorsBox.startDate = "The date format is wrong, should be: YYYY-MM-DD";
+            errorsBox.startDate =
+              "The date format is wrong, should be: YYYY-MM-DD";
           }
 
           return errorsBox;
@@ -380,6 +394,27 @@ export const FormAdmin = () => {
                 )}
               </div>
 
+              <div className="mb-5">
+                <label
+                  htmlFor="stockQty"
+                  className="block  uppercase font-bold mt-2"
+                >
+                  Stock
+                </label>
+                <Field
+                  className="border-2 w-full text-black p-2 mt-2 placeholder-gray-400 rounded-sm"
+                  type="text"
+                  id="stockQty"
+                  name="stockQty"
+                  placeholder="4"
+                />
+                {touched.stockQty && errors.stockQty && (
+                  <div className="block  text-red-500 font-bold mt-1">
+                    {errors.stockQty}
+                  </div>
+                )}
+              </div>
+
               <div>
                 <label
                   htmlFor="synopsis"
@@ -425,25 +460,27 @@ export const FormAdmin = () => {
                 alt={values.canonicalTitle}
               />
 
-              <div>{/*4 */}
+              <div>
+                {/*4 */}
                 <form onSubmit={handleSubmit}>
-                  <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-                  <span className="bg-blue-400 px-1.5 py-0.5 rounded-md text-xl text-black p-2 ml-5 mr-5 hover:text-white " >
-                    <button >
-                      URL format
-                    </button>
+                  <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                  <span className="bg-blue-400 px-1.5 py-0.5 rounded-md text-xl text-black p-2 ml-5 mr-5 hover:text-white ">
+                    <button>URL format</button>
                   </span>
 
-                  <span className="bg-blue-400 text-xl mb-4 hover:text-white  mt-5 cursor-pointer rounded-md " >
-                    <button className=""
-                      onClick={() => handlerChangeImage(setFieldValue)}  >
+                  <span className="bg-blue-400 text-xl mb-4 hover:text-white  mt-5 cursor-pointer rounded-md ">
+                    <button
+                      className=""
+                      onClick={() => handlerChangeImage(setFieldValue)}
+                    >
                       Rellenar Campo
                     </button>
                   </span>
                 </form>
               </div>
-
-
 
               <div class="px-4 py-3 flex flex-col">
                 <p class="text-1xl font-bold text-gray-700 mb-4">
@@ -518,6 +555,12 @@ export const FormAdmin = () => {
                   Price:
                   <span className="pl-2 dark:text-gray-400 italic">
                     $ {values.price}
+                  </span>
+                </p>
+                <p class="text-1xl font-bold text-gray-700 mb-4">
+                  Stock:
+                  <span className="pl-2 dark:text-gray-400 italic">
+                    {values.stockQty}
                   </span>
                 </p>
               </div>

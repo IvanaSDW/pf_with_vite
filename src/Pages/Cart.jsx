@@ -31,6 +31,7 @@ export default function Cart() {
     }
   };
 
+  console.log("carrito silvi", cart);
   //// sum - resr product ////
   
   function sumContador(mangaid) {
