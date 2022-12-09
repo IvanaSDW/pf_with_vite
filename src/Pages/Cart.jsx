@@ -17,7 +17,7 @@ import {
 import swal from "sweetalert";
 import Swal from "sweetalert2";
 import Checkout from "../components/Checkout.jsx";
-import styles from '../components/assets/cart/cart.module.css'
+import styles from '../components/assets/cart/cart.module.css';
 
 export default function Cart() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,10 +33,36 @@ export default function Cart() {
     }
   };
 
+  console.log("carrito silvi", cart);
   //// sum - resr product ////
   
   function sumContador(mangaid) {
+    const itemCart = cart.find((item) => item.mangaid === mangaid);
+    if (itemCart.stockQty === itemCart.quantity + 1) {
       dispatch(addItemToCart(mangaid));
+      swal(
+        "This is the last unit available. Let's go!! do not waste time :)",
+        {
+          button: {
+            className:
+              "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+          },
+        }
+      );
+    } else if(itemCart.stockQty === itemCart.quantity){
+      swal(
+        "This is the last unit available.",
+        {
+          button: {
+            className:
+              "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+          },
+        }
+      );
+
+    }else{
+      dispatch(addItemToCart(mangaid));
+    }
     }
 
     function resContador(mangaid) {
