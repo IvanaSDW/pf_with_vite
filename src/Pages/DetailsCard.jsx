@@ -74,7 +74,7 @@ export default function Details() {
         );
       }
 
-      if (itemInCart.stockQty === itemInCart.quantity) {
+      if (itemInCart.stockQty === itemInCart.quantity || itemInCart.stockQty < itemInCart.quantity) {
         swal("Oops!! unavailable. Soon we will have more stock.", {
           button: {
             className:
@@ -82,9 +82,12 @@ export default function Details() {
           },
         });
       }
+      if(itemInCart.stockQty > itemInCart.quantity){
+        dispatch(addItemToCart(mangaid, "card_detail"));
+      }
     }
 
-    if (!itemInCart && itemInCart.stockQty > 0) {
+    if (!itemInCart && manga.stockQty > 0) {
       dispatch(addItemToCart(mangaid, "card_detail"));
     }
 

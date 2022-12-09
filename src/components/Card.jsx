@@ -38,13 +38,17 @@ const Card = ({
         );
       }
 
-      if (stockQty === ItemInCart.quantity) {
+      if (stockQty === ItemInCart.quantity || stockQty < ItemInCart.quantity) {
         swal("Oops!! unavailable. Soon we will have more stock.", {
           button: {
             className:
               "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
           },
         });
+      }
+
+      if(stockQty > ItemInCart.quantity){
+        dispatch(addItemToCart(mangaid));
       }
     }
 
