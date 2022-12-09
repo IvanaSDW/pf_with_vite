@@ -23,6 +23,7 @@ const CardSection = ({
     dispatch(getAllMangas(currentPage, mangaState));
   }, [dispatch, currentPage]);
 
+  console.log(mangas);
   // const [currentPage, setCurrentPage] = useState(1);
   const [mangasPerPage] = useState(6);
 
@@ -77,6 +78,7 @@ const CardSection = ({
                     price={e.price}
                     status={e.status}
                     averageRating={e.averageRating}
+                    stockQty={e.stockQty}
                   />
                 );
               })

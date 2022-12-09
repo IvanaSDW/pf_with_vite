@@ -26,11 +26,9 @@ export default function Details() {
   const manga = useSelector((state) => state.mangasDetails);
   const mangas = useSelector((state) => state.mangas);
   const mangasDetail = useSelector((state) => state.mangasForDetail);
-  
+  const cart = useSelector((state) => state.cart);
   const isLoading = useSelector((state) => state.isLoading);
   const navigate = useNavigate();
-
-  console.log(mangas, "MANGASSSSSSSSSSS")
 
   const currentUser = useCurrentUser();
   console.log('current user: ', currentUser);
@@ -43,8 +41,6 @@ export default function Details() {
     };
   }, [dispatch, mangaid]);
 
-
-  console.log(mangasDetail, "MANGASDETAIL")
 
   function handleDelete(e) {
     e.preventDefault();
@@ -60,9 +56,43 @@ export default function Details() {
   }
   const [currentPage, setCurrentPage] = useState(1);
 
+ 
   function handleAddToCart(mangaid) {
-    dispatch(addItemToCart(mangaid, "card_detail"));
+    const itemInCart = cart.find((item) => item.mangaid === mangaid);
+
+    if (itemInCart) {
+      if (itemInCart.stockQty === itemInCart.quantity + 1) {
+        dispatch(addItemToCart(mangaid, "card_detail"));
+        swal(
+          "This is the last unit available. Let's go!! do not waste time :)",
+          {
+            button: {
+              className:
+                "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+            },
+          }
+        );
+      }
+
+      if (itemInCart.stockQty === itemInCart.quantity || itemInCart.stockQty < itemInCart.quantity) {
+        swal("Oops!! unavailable. Soon we will have more stock.", {
+          button: {
+            className:
+              "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+          },
+        });
+      }
+      if(itemInCart.stockQty > itemInCart.quantity){
+        dispatch(addItemToCart(mangaid, "card_detail"));
+      }
+    }
+
+    if (!itemInCart && manga.stockQty > 0) {
+      dispatch(addItemToCart(mangaid, "card_detail"));
+    }
+
   }
+
 
   if(!isLoading){
     return(
