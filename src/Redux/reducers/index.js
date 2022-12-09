@@ -87,7 +87,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_ORDER:
       return{
         ...state,
-        orderList: json.payload,
+        orderList: order1.payload,
         isLoading: false,
       }
 

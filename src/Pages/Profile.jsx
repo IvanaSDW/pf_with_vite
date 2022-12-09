@@ -13,7 +13,7 @@ import { AiFillHome, AiFillEdit } from 'react-icons/ai';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import styles from '../components/assets/Profile/profile.module.css'
-import { getOrderList } from '../Redux/actions';
+//  import { getOrderList } from '../Redux/actions';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -64,21 +64,24 @@ const Profile = () => {
   const [control, ControlModal] = useState(true);
   const [control2, ControlModal2] = useState(false);
 
-  // const order = useSelector((state) => state.firebaseUser);
-  let userId = userData.id;
-//  console.log(userid)
-const [order, setOrder] = useState([])  
-const getOrderList = async () => {
-  var  order1 = await axios.get(`https://backend-production-1a11.up.railway.app/order/user/${userId}`);
-  setOrder(order1.data)
+  
+  const user = useSelector((state) => state.firebaseUser);
+ let userId = user.uid;
+  
+  const [order, setOrder] = useState([])  
+
+  const getOrderList = async (userId) => {
+    const order1 = await axios.get(`https://backend-production-1a11.up.railway.app/order/user/${userId}`);
+    setOrder(order1.data)
+    console.log(order1.data, "     DSDS D    PUTOO")
 }
-console.log(order)
-useEffect( ()=>{
-    getOrderList()
-    },[] )
 
+// const order1 = useSelector((state)=> state.orderList)
 
-const manga = useSelector((state) => state.mangas);
+useEffect(()=>{
+  getOrderList(userId)
+},[] )
+
 
 
   function controlView() {
@@ -123,6 +126,22 @@ const manga = useSelector((state) => state.mangas);
       console.log('error uploadin image: ', e);
     }
   };
+
+
+
+/////////Details order complete***/////
+const [view, setView] = useState(false)
+
+function viewMore(){
+  setView(!view)
+}
+
+////// ADD REVIEW/////////
+const [review, setReview] = useState(false)
+
+function addReview(){
+  setReview(!review)
+}
 
   //Personal data form state
 
@@ -252,39 +271,81 @@ const manga = useSelector((state) => state.mangas);
           </div>
           <div className="flex justify-evenly h-80 p-20 ">
             <button
-              className="bg-purple-600 hover:bg-white h-10 p-3 pl-7 pr-7  rounded-md text-white hover:text-purple-600"
+              className="bg-purple-600 hover:bg-white h-10 pb-1  pl-7 pr-7  rounded-md text-white hover:text-purple-600"
               onClick={controlView}
             >
-            MY FAVs
+            My order list
              
             </button>
             <button
-              className="bg-purple-600 hover:bg-white h-10 p-3 pl-7 pr-7 rounded-md text-white hover:text-purple-600"
+              className="bg-purple-600 hover:bg-white h-10 pb-1 pl-7 pr-7  rounded-md text-white hover:text-purple-600"
               onClick={control2View}
             >
-              Personal data
+             My Personal data
             </button>
           </div>
-          <div>
+          <div className='pb-20'>
           {control && (
-            <div className="flex justify-center 2xl:mt-80 xl:mt-40 h-40" value={control}>
-              <div className="border-2 border-purple-600 rounded-md  2xl:w-9/12 h-full absolute self-center ">
+            <div className="flex justify-center 2xl:mt-60 xl:mt-5 h-60  " value={control}>
+              <div className="border-2 border-purple-600 rounded-md  2xl:w-9/12  absolute self-center ">
                 
-                MY FAVs
-                <div className=" h-screen  flex  flex-row overflow-x-scroll overflow-y-hidden ">
-                <p>{order.length && order.map((e)=>{
-                  e.orderItems.map((e)=> e.filter())
-                   var mangas = manga.find(()=>{
-                    e.orderItems.mangaMangaid === manga.mangaid ? manga.canonicalTitle : "Le erraste pete";
-                  })
-                  console.log(mangas);
-                })}</p>
-                  
+                
+                <div className=" h-screen w-full hove:shadow-2 overflow-y-scroll">
+                      {order.length &&
+                        order.map((e)=>{
+                          return(
+                          <>
+                          <div className=' flex justify-center m-6 pr-20'>
+                          {e.orderItems.length && e.orderItems.slice(0, 3).map((e)=>{
+                            return(
+                            <div className='flex flex-wrap pr-20 '>
+                              <img src= {e.mangaPosterImage} alt="" className='w-20 rounded-full'/>      
+                                <div className='flex flex-col ml-4 mt-5'>
+                                  <p > Name : {e.mangaTitle}</p>
+                                  <p > Quantity : {e.quantity}</p>
+                                  <p className='flex ' > Price x unity:   <p className='text-green-600 pl-2'>usd {e.price}</p></p>
+                                  </div>
+                            </div>
+                            
+                            )})} 
+                          <div>
+                          <p>Status: {e.status === "completed" ? <p className='text-green-600'>{e.status}</p> : <p className='text-red-600'>{e.status}</p>}</p>
+                          <p className='flex'>Total Price: </p><p className='text-green-600 '>usd {e.total}</p>
+                          <button className='text-purple-400 hover:underline' onClick={addReview}>Add Review</button>
+                            </div>
+                            {e.orderItems.length > 3 && <button className='text-yellow-600 hover:underline  absolute right-10 top-60' onClick={viewMore} >More details...</button>}
+                              {view && e.orderItems.length > 3 &&
+                                <div className='flex flex-row w-full p-60 h-full fixed top-0 left-0 bg-black/60'>
+                              {e.orderItems.map((e)=>{
+                                return(
+                                  <>
+                                  <div className='flex flex-row h-80 w-full bg-white relative justify-center items-center'>  
+                                  <div className='flex  text-black flex-row'>
+                                    <img src= {e.mangaPosterImage} alt="" className='w-20 rounded-full'/>      
+                                      <div className='flex flex-col ml-4 mt-5'>
+                                        <p > Name : {e.mangaTitle}</p>
+                                        <p > Quantity : {e.quantity}</p>
+                                        <p className='flex ' > Price x unity:   <p className='text-green-600 pl-2'>usd {e.price}</p></p>
+                                        </div>
+                                  </div>
+                                  </div>
+                                  <button onClick={viewMore} className='absolute bg-purple-600 right-60 p-5'>Exit.</button>
+
+                                  </>
+                                )
+                              })}
+                              </div>
+                              }
+                          </div>
+
+                            <div className='w-full border-2 border-gray-500'></div>
+                          </>)
+                        })  }
                 </div>
               </div>
             </div>
           )}
-
+          
           {control2 && (
             <div className="flex justify-center mt-8 h-60" value={control2}>
               <div className="border-2 border-purple-600 rounded-md  w-6/12  absolute self-center">
@@ -435,11 +496,17 @@ const manga = useSelector((state) => state.mangas);
               </div>
             </div>
           )}</div>
+          {review &&
+          <div>
+              <div className='flex flex-row w-full p-60 h-full fixed top-0 left-0 bg-black/60'>
+              <div className='flex flex-row h-80 w-full bg-white relative justify-center items-center'>
+              <button onClick={addReview} className='absolute bg-purple-600 right-60 p-5' >CERRAR REVIEW</button>
+              AQUI VA EL FORM REVIEW
+              </div>
+              </div>
+          </div>}
         </div>
-        {/* <div className="mt-80">
-          <Footer />
-        </div> */}
-      </div>
+              </div>
       <div className="mt-80">
         <Footer />
       </div>
