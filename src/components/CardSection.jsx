@@ -23,7 +23,7 @@ const CardSection = ({
     dispatch(getAllMangas(currentPage, mangaState));
   }, [dispatch, currentPage]);
 
-  console.log("mangas en cardSections", mangas);
+  console.log(mangas);
   // const [currentPage, setCurrentPage] = useState(1);
   const [mangasPerPage] = useState(6);
 

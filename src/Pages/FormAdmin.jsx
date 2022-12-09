@@ -468,7 +468,7 @@ export const FormAdmin = () => {
                     onChange={(e) => setFile(e.target.files[0])}
                   />
                   <span className="bg-blue-400 px-1.5 py-0.5 rounded-md text-xl text-black p-2 ml-5 mr-5 hover:text-white ">
-                    <button>URL format</button>
+                    <button>1- URL format</button>
                   </span>
 
                   <span className="bg-blue-400 text-xl mb-4 hover:text-white  mt-5 cursor-pointer rounded-md ">
@@ -476,7 +476,7 @@ export const FormAdmin = () => {
                       className=""
                       onClick={() => handlerChangeImage(setFieldValue)}
                     >
-                      Rellenar Campo
+                      2- Rellenar Campo
                     </button>
                   </span>
                 </form>
