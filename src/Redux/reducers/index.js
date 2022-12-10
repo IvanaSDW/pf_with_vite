@@ -6,6 +6,7 @@ import {
   GET_MANGA_BY_NAME,
   GET_ALL_CATEGORIES,
   GET_ALL_GENRES,
+  GET_PROMOS,
   DELETE_MANGA,
   MANGA_DATE_ASC,
   MANGA_DATE_DESC,
@@ -23,7 +24,6 @@ import {
   GET_MANGAS_DETAIL,
   FILTER_MANGA_BY_DATE,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
-  GET_PROMOS,
   GET_USERS,
   DELETE_PROMO
 } from "../actions";
@@ -41,6 +41,7 @@ const setCartLocalStorage = (cart) =>
 
 const initialState = {
   mangas: [],
+  promos: [],
   mangasForDetail: [],
   DateListMangas: [],
   mangasDetails: {},
@@ -306,6 +307,11 @@ const rootReducer = (state = initialState, action) => {
         users: action.payload
 
       };
+      case GET_PROMOS:
+      return{
+        ...state,
+        promos: action.payload
+      }
 
     default:
       return state;
