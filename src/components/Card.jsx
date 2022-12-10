@@ -17,6 +17,8 @@ const Card = ({
   price,
   averageRating,
   stockQty,
+  promotion,
+  discount,
 }) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
@@ -77,6 +79,12 @@ const Card = ({
         <h3 className="z-50 duration-1000 transition ease-in-out text-white bg-slate-800 border-none rounded-b-2xl px-3 text-2xl font-bold absolute bottom-1 group-hover:relative group-hover:top-0 group-hover:translate-y-3 shadow-2xl p-1">
           {canonicalTitle}
         </h3>
+        <div className="absolute left-0 bg-red-600 box-border text-white font-sans	text-xl font-semibold mt-16  px-11 rounded-br-3xl " >  
+        <span>{discount === 0.6 ? "-60%" : null || discount === 0.5 ? "-50%" : null || discount? "OFERT MANGA" : null}</span>
+      </div>
+      <div className="absolute left-0 bottom-36 bg-green-600 box-border text-white font-sans	text-xl font-semibold mt-16  px-11  rounded-lg " >  
+        <span>{discount? "SALE: $" : null}{discount ? (price * discount).toFixed(2) : null}</span>
+      </div>
         <div className="invisible group-hover:visible z-50 flex flex-col justify-between bg-black opacity-75 w-full p-4 border-none rounded-b-2xl transition ease-out duration-1000 group-hover:translate-y-2">
           <p className="text-white text-xs">Start Date: {startDate}</p>
           <p className="text-white text-xs">Status: {status}</p>
@@ -126,9 +134,12 @@ const Card = ({
             </span>
           </div>
           <div className="flex items-center justify-between pt-2">
-            <span className="text-2xl font-bold text-gray-900 dark:text-white">
-              {price}
-            </span>
+          <span className="text-2xl font-bold text-red-400 dark:text-white line-through decoration-red-600">
+            {discount? price : null}
+          </span>
+          <span className="text-2xl font-bold text-gray-100 dark:text-white ">
+            {discount? null : price}
+          </span>
             <button
               onClick={() => handleAddToCart(mangaid)}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -229,6 +240,11 @@ const Card = ({
             <span className="text-2xl font-bold text-gray-900 dark:text-white">
               {price}
             </span>
+            <Link to={`/manga/${mangaid}`}>
+              <button className="text-white text-base text-center font-bold">
+                +
+              </button>
+            </Link>
           </div>
         </div>
       </div>

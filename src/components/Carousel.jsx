@@ -1,45 +1,43 @@
 import data from '../data/data'
 import {FiChevronRight, FiChevronLeft} from 'react-icons/fi'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getPromos } from "../Redux/actions";
 
 export const Carousel = () => {
-    const slider = data;
     const [activeSlider, setActiveSlider] = useState(1);
+    const dispatch = useDispatch();
+    const promos = useSelector((state) => state.promos);
 
-    const prevSliderHandler = (id) => {
-        if (id === 1) {
-            setActiveSlider(slider.length)
-        } else if (id > 1){
-            setActiveSlider(activeSlider - 1)
-        } else {
-            setActiveSlider(slider.length - 1)
+    useEffect (()=>{
+        dispatch(getPromos());
+    }, [dispatch])
+    
+    const prevSliderHandler = () => {
+            setActiveSlider(activeSlider === promos.length - 1 ? 0 : activeSlider + 1)
         }
-    }
 
-    const nextSliderHandler = (id) => {
-        if (id === slider.length) {
-            setActiveSlider(1)
-        } else if (id < slider.length){
-            setActiveSlider(activeSlider + 1)
-        } else {
-            setActiveSlider(slider.length - 1)
+    const nextSliderHandler = () => {
+            setActiveSlider(activeSlider === 0 ? promos.length -1 : activeSlider - 1)
         }
-    }
-
+        
     return (
         <div className='w-full mt-2' >
-            {slider.map((item) => {
-                const { id, image } = item
-                return <div key={id} className={activeSlider === id ? 'flex justify-between items-center' : 'hidden'}>
+            {promos.map((item, index) => {
+                const { name, description, categories } = item
+                return <div key={index} className={activeSlider === index ? 'flex justify-between items-center' : 'hidden'}>
                     <button className='text-6xl absolute left-0 bg-white rounded-full text-blue-600 hover:bg-blue-600 hover:text-white' 
-                            onClick={() => prevSliderHandler(id)}>
+                            onClick={prevSliderHandler}>
                         <FiChevronLeft/>
                     </button>
-                    <div className='text-6xl w-full'>
-                        <img src={image} alt='' className='h-80 w-screen'/>
+                    <div className='text-3xl w-full'>
+                        <img src={'https://cdn.pixabay.com/photo/2017/12/20/16/49/christmas-3030279__340.jpg'} alt='' className='h-80 w-screen'/>
+                        <h5 className='text-center'>
+                            <b className='text-purple-700'>{name.toUpperCase()}</b> : {description} on our volumes of the categories <b className='text-purple-700'>{categories[0].title.toUpperCase()}</b> 
+                        </h5>
                     </div>
                     <button className='text-6xl absolute right-0 bg-white rounded-full text-blue-600 hover:bg-blue-600 hover:text-white' 
-                            onClick={() => nextSliderHandler(id)}>
+                            onClick={nextSliderHandler}>
                         <FiChevronRight/>
                     </button>
                 </div>
