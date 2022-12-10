@@ -25,8 +25,6 @@ const CardSection = ({
     dispatch(getMangasOnSale())
   }, [dispatch, currentPage]);
 
-  console.log(mangas);
-  // const [currentPage, setCurrentPage] = useState(1);
   const [mangasPerPage] = useState(6);
 
   const currentManga = mangas;

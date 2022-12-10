@@ -6,6 +6,7 @@ import {
   GET_MANGA_BY_NAME,
   GET_ALL_CATEGORIES,
   GET_ALL_GENRES,
+  GET_PROMOS,
   DELETE_MANGA,
   MANGA_DATE_ASC,
   MANGA_DATE_DESC,
@@ -23,7 +24,6 @@ import {
   GET_MANGAS_DETAIL,
   FILTER_MANGA_BY_DATE,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
-  GET_PROMOS,
   GET_USERS,
   MANGA_ON_SALE,
   DELETE_PROMO
@@ -42,6 +42,7 @@ const setCartLocalStorage = (cart) =>
 
 const initialState = {
   mangas: [],
+  promos: [],
   mangasForDetail: [],
   DateListMangas: [],
   mangasDetails: {},
@@ -68,7 +69,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         mangasForDetail: action.payload,
-      }
+      };
     case GET_ALL_MANGAS:
       return {
         ...state,
@@ -176,9 +177,10 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CART: {
-
-
-      const stateToFilter = action.payload.type === 'card_detail' ? state.mangasForDetail : state.mangas
+      const stateToFilter =
+        action.payload.type === "card_detail"
+          ? state.mangasForDetail
+          : state.mangas;
 
       const newItem = stateToFilter.find(
         (item) => item.mangaid === action.payload.id
@@ -210,11 +212,17 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case SUM_TO_CART: {
-      const ItemInCart = state.cart.find((item) => item.mangaid === action.payload);
-      return ItemInCart && {
-        ...state,
-        cart: state.cart.map((item) => ItemInCart && { ...item, quantity: item.quantity + 1 })
-      }
+      const ItemInCart = state.cart.find(
+        (item) => item.mangaid === action.payload
+      );
+      return (
+        ItemInCart && {
+          ...state,
+          cart: state.cart.map(
+            (item) => ItemInCart && { ...item, quantity: item.quantity + 1 }
+          ),
+        }
+      );
 
       // setCartLocalStorage(state.cart);
 
@@ -273,14 +281,13 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case SET_FIREBASE_USER: {
-      console.log(action.payload, "PAYOAASDdddddddDDDDDDDDD")
+      console.log(action.payload, "PAYOAASDdddddddDDDDDDDDD");
       return {
         ...state,
         firebaseUser: action.payload,
       };
     }
     case UPDATE_MANGA:
-
       return {
         ...state,
         mangas: state.mangas.map((item) =>
@@ -314,6 +321,11 @@ const rootReducer = (state = initialState, action) => {
              mangasOnSale: action.payload,
         };
   
+      case GET_PROMOS:
+      return{
+        ...state,
+        promos: action.payload
+      }
 
     default:
       return state;

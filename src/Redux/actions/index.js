@@ -9,7 +9,6 @@ export const GET_ALL_GENRES = 'GET_ALL_GENRES';
 export const DELETE_MANGA = 'DELETE_MANGA';
 export const LOADING_TYPE = 'LOADING_TYPE';
 export const UPDATE_MANGA = 'UPDATE_MANGA';
-export const GET_PROMOS = "GET_PROMOS";
 export const GET_USERS = "GET_USERS";
 export const DELETE_PROMO = "DELETE_PROMO";
 //ORDER
@@ -31,6 +30,7 @@ export const REST_TO_CART = 'REST_TO_CART';
 export const ADD_TO_COUNT = 'ADD_TO_COUNT';
 export const GET_MANGAS_DETAIL = 'GET_MANGAS_DETAIL';
 export const MANGA_ON_SALE = 'MANGA_ON_SALE';
+export const GET_PROMOS = 'GET_PROMOS'
 
 
 export const getMangas = () =>{

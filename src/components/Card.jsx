@@ -240,6 +240,11 @@ const Card = ({
             <span className="text-2xl font-bold text-gray-900 dark:text-white">
               {price}
             </span>
+            <Link to={`/manga/${mangaid}`}>
+              <button className="text-white text-base text-center font-bold">
+                +
+              </button>
+            </Link>
           </div>
         </div>
       </div>

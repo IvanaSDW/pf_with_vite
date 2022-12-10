@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getDetails,
   deleteDetails,
@@ -8,6 +8,7 @@ import {
   getMangas,
   addItemToCart,
   getMangasDetail,
+<<<<<<< HEAD
   getMangasOnSale,
 } from '../Redux/actions/index';
 import { useParams, Link, useNavigate } from 'react-router-dom';
@@ -20,6 +21,19 @@ import swal from 'sweetalert';
 import styleLoading from '../../src/components/assets/Cards/loading.module.css';
 import Footer from '../components/Footer';
 import { useCurrentUser } from '../domain/useCurrentUserHook';
+=======
+} from "../Redux/actions/index";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import styles from "../components/assets/Details/Details.module.css";
+import Card from "../components/Card";
+import img from "../components/assets/Cards/yugi.jpg";
+import { FaStar } from "react-icons/fa";
+import swal from "sweetalert";
+import styleLoading from "../../src/components/assets/Cards/loading.module.css";
+import Footer from "../components/Footer";
+import { useCurrentUser } from "../domain/useCurrentUserHook";
+>>>>>>> 0d28e129ec54e2bcc728ff4e06f91b8dc1fc29e6
 
 export default function Details() {
   const dispatch = useDispatch();
@@ -33,7 +47,7 @@ export default function Details() {
   const navigate = useNavigate();
 
   const currentUser = useCurrentUser();
-  console.log('current user: ', currentUser);
+  // console.log("current user: ", currentUser);
   useEffect(() => {
     dispatch(loading());
     dispatch(getMangasDetail());
@@ -44,22 +58,20 @@ export default function Details() {
     };
   }, [dispatch, mangaid]);
 
-
   function handleDelete(e) {
     e.preventDefault();
     dispatch(deleteManga(mangaid));
     dispatch(deleteDetails(mangaid));
-    swal('Your Manga was deleted Successfully', {
+    swal("Your Manga was deleted Successfully", {
       button: {
         className:
-          'bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl',
+          "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
       },
     });
-    navigate('/home');
+    navigate("/home");
   }
   const [currentPage, setCurrentPage] = useState(1);
 
- 
   function handleAddToCart(mangaid) {
     const itemInCart = cart.find((item) => item.mangaid === mangaid);
 
@@ -77,7 +89,10 @@ export default function Details() {
         );
       }
 
-      if (itemInCart.stockQty === itemInCart.quantity || itemInCart.stockQty < itemInCart.quantity) {
+      if (
+        itemInCart.stockQty === itemInCart.quantity ||
+        itemInCart.stockQty < itemInCart.quantity
+      ) {
         swal("Oops!! unavailable. Soon we will have more stock.", {
           button: {
             className:
@@ -85,7 +100,7 @@ export default function Details() {
           },
         });
       }
-      if(itemInCart.stockQty > itemInCart.quantity){
+      if (itemInCart.stockQty > itemInCart.quantity) {
         dispatch(addItemToCart(mangaid, "card_detail"));
       }
     }
@@ -93,7 +108,6 @@ export default function Details() {
     if (!itemInCart && manga.stockQty > 0) {
       dispatch(addItemToCart(mangaid, "card_detail"));
     }
-
   }
 const id = manga.mangaid
 const discount = promotions.has(id)
@@ -135,32 +149,47 @@ console.log(numDiscount, "data")
                     </div> 
                      
                     <div className={styles.buttons}>
-                                <Link to="/cart">
-                                <button onClick={() => handleAddToCart(mangaid)} className={styles.btns}>
-                                  Buy
-                                  </button>
-                                </Link>
-                                <button onClick={() => handleAddToCart(mangaid)}  className={styles.btns}>
-                                  Add to Cart
-                                  </button>
-                            </div>
-                    {currentUser?.role === "MASTER"  ||
-                     currentUser?.role === "ADMIN"  &&
-                            <div className={styles.content}>
-                              <button className={styles.bttns} onClick={(id)=>{handleDelete(id);}}>Delete</button>
-                              <h2 className={styles.or}>Or</h2>
-                              <Link className={styles.bttns} to={`/form/${mangaid}`}>Update?</Link>
-                            </div>
-               
-                        
-                        } 
-                    </div>
-                    </div>
-                    
+                    <Link to="/cart">
+                      <button
+                        onClick={() => handleAddToCart(mangaid)}
+                        className={styles.btns}
+                      >
+                        Buy
+                      </button>
+                    </Link>
+                    <button
+                      onClick={() => handleAddToCart(mangaid)}
+                      className={styles.btns}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                  )
+                  }
+                  
+                  {currentUser?.role === "MASTER" ||
+                    (currentUser?.role === "ADMIN" && (
+                      <div className={styles.content}>
+                        <button
+                          className={styles.bttns}
+                          onClick={(id) => {
+                            handleDelete(id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                        <h2 className={styles.or}>Or</h2>
+                        <Link className={styles.bttns} to={`/form/${mangaid}`}>
+                          Update?
+                        </Link>
+                      </div>
+                    ))}
                 </div>
-                </div>
+              </div>
+            </div>
+          </div>
 
-            {/* </div>
+          {/* </div>
           
          <h1 className={styles.recom}>RECOMENDED :</h1>
         <div className={styles.recomend}>
@@ -183,7 +212,7 @@ console.log(numDiscount, "data")
                   );
                 })}
           </div> */}
-        </div> 
+        </div>
         <Footer />
       </div>
     );
