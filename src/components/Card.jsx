@@ -80,7 +80,7 @@ const Card = ({
           {canonicalTitle}
         </h3>
         <div className="absolute left-0 bg-red-600 box-border text-white font-sans	text-xl font-semibold mt-16  px-11 rounded-br-3xl " >  
-        <span>{discount === 0.6 ? "-60%" : null || discount === 0.5 ? "-50%" : null || discount? "OFERT MANGA" : null}</span>
+        <span>{discount === 0.6 ? "-40%" : null || discount === 0.5 ? "-50%" : null || discount? "OFERT MANGA" : null}</span>
       </div>
       <div className="absolute left-0 bottom-36 bg-green-600 box-border text-white font-sans	text-xl font-semibold mt-16  px-11  rounded-lg " >  
         <span>{discount? "SALE: $" : null}{discount ? (price * discount).toFixed(2) : null}</span>
