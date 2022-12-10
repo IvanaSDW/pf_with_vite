@@ -3,7 +3,7 @@ import FilterAside from "../components/FilterAside";
 import Card from "./Card";
 import style from "./assets/Cards/loading.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMangas, loading } from "../Redux/actions";
+import { getAllMangas, loading, getMangasOnSale } from "../Redux/actions";
 import img from "./assets/Cards/yugi.jpg";
 import Pagination from "./Paginated2";
 import NoElement from "./NoElement";
@@ -18,9 +18,11 @@ const CardSection = ({
   const dispatch = useDispatch();
   const mangas = useSelector((state) => state.mangas);
   const isLoading = useSelector((state) => state.isLoading);
+  const promotions = new Map(useSelector((state) => state.mangasOnSale));
   useEffect(() => {
     dispatch(loading());
     dispatch(getAllMangas(currentPage, mangaState));
+    dispatch(getMangasOnSale())
   }, [dispatch, currentPage]);
 
   const [mangasPerPage] = useState(6);
@@ -72,6 +74,8 @@ const CardSection = ({
                         ? e.posterImage
                         : img
                     }
+                    promotion={promotions.has(e.mangaid)}
+                    discount={promotions.get(e.mangaid)}
                     startDate={e.startDate}
                     price={e.price}
                     status={e.status}

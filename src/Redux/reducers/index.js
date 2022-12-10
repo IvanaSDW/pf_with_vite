@@ -25,7 +25,8 @@ import {
   FILTER_MANGA_BY_DATE,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
   GET_USERS,
-  DELETE_PROMO
+  DELETE_PROMO,
+  MANGA_ON_SALE,
 } from "../actions";
 
 const getCartLocalStorage = () => {
@@ -318,6 +319,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         promos: action.payload
       }
+      case MANGA_ON_SALE:
+        return {
+          ...state,
+             mangasOnSale: action.payload,
+        };
 
     default:
       return state;
