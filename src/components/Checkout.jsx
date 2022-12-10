@@ -31,6 +31,7 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
 	const [errorM, setErrorM] = useState('');
 	const [messSuccess, setMessSuccess] = useState('');
 	const [loading, setLoading] = useState(false);
+	const promotions = useSelector((state) => state.mangasOnSale)
 
 	let description = cart.map((e) => e.canonicalTitle).toString();
 

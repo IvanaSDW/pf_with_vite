@@ -25,6 +25,7 @@ import {
   SET_FIREBASE_USER as SET_FIREBASE_USER,
   GET_PROMOS,
   GET_USERS,
+  MANGA_ON_SALE,
   DELETE_PROMO
 } from "../actions";
 
@@ -44,6 +45,7 @@ const initialState = {
   mangasForDetail: [],
   DateListMangas: [],
   mangasDetails: {},
+  mangasOnSale: [],
   categories: [],
   genres: [],
   isLoading: false,
@@ -306,6 +308,12 @@ const rootReducer = (state = initialState, action) => {
         users: action.payload
 
       };
+      case MANGA_ON_SALE:
+        return {
+          ...state,
+             mangasOnSale: action.payload,
+        };
+  
 
     default:
       return state;

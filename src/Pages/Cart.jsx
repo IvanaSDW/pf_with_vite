@@ -13,6 +13,7 @@ import {
   restItemToCart,
   addItemToCart,
   filterMangaByDate,
+  getMangasOnSale,
 } from "../Redux/actions/index.js";
 import swal from "sweetalert";
 import Swal from "sweetalert2";
@@ -24,6 +25,7 @@ export default function Cart() {
   const cart = useSelector((state) => state.cart);
   const dateList = useSelector((state) => state.DateListMangas)
   const [quantity, setCurrent] = useState(window.localStorage.getItem("items"));
+  const promotions = new Map(useSelector((state) => state.mangasOnSale));
   const setLocalStorage = (value) => {
     try {
       setCurrent(value);
@@ -115,8 +117,11 @@ export default function Cart() {
     let totalPrice = 0;
     for (let i = 0; i < cart.length; i++) {
         if (cart[i].price)
-        totalPrice = totalPrice + cart[i]?.quantity * cart[i]?.price;
+        console.log(promotions.get(cart[i].mangaid), "CONSOLE LOG PARA COMPROBAR")
+        totalPrice = (totalPrice + cart[i]?.quantity * (promotions.get(cart[i].mangaid) ? promotions.get(cart[i].mangaid) * cart[i]?.price : cart[i]?.price)); 
+      
     }
+
     
     
     ///// Recomended /////
@@ -131,6 +136,7 @@ export default function Cart() {
         useEffect(() => {
             dispatch(getMangas());
             dispatch(filterMangaByDate());
+            dispatch(getMangasOnSale())
         }, [dispatch]);
     
         const [payment, setPaymet] = useState(false); //para checkout
@@ -184,6 +190,9 @@ export default function Cart() {
                             <h3 className="text-green-400 text-3xl font-arial mt-2">
                             U$D {e.price}
                             </h3>
+                            <h3 className="text-red-00 text-3xl font-arial mt-2 text-red-600">
+                            {promotions.get(e.mangaid) === 0.5 ? "-50%" : null || promotions.get(e.mangaid) === 0.6 ? "-60%" : null || promotions.get(e.mangaid) === 0.7 ? "-70%" : null}
+                            </h3>
                           </div>
                         </div>
                         <div className="flex flex-col ml-4">
@@ -204,7 +213,7 @@ export default function Cart() {
                           className=" mr-3 rounded-md p-2 bg-purple-600 ml-4 w-5/6 text-white "
                           onChange={(e) => setLocalStorage(e.target.value)}
                           value={quantity}
-                        >{(e.price * e.quantity).toFixed(2)}</span></div>
+                        >{(promotions.has(e.mangaid) ? (e.price * e.quantity) * promotions.get(e.mangaid) : e.price * e.quantity).toFixed(2)}</span></div>
                             
                                 <button
                                 onClick={() => handleDelete(e.mangaid)}
