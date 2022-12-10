@@ -27,6 +27,7 @@ export const SUM_TO_CART = 'SUM_TO_CART';
 export const REST_TO_CART = 'REST_TO_CART';
 export const ADD_TO_COUNT = 'ADD_TO_COUNT';
 export const GET_MANGAS_DETAIL = 'GET_MANGAS_DETAIL';
+export const GET_PROMOS = 'GET_PROMOS'
 
 
 export const getMangas = () =>{
@@ -340,3 +341,16 @@ export function updateManga(mangaid, data) {
  }
  
 
+ export const getPromos = () =>{
+  return async function (dispatch) {
+    try {
+        let response = await axios.get("https://backend-production-1a11.up.railway.app/activepromos");
+        return dispatch({
+            type : GET_PROMOS,
+            payload : response.data
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+}

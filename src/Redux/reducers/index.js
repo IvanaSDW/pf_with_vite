@@ -6,6 +6,7 @@ import {
   GET_MANGA_BY_NAME,
   GET_ALL_CATEGORIES,
   GET_ALL_GENRES,
+  GET_PROMOS,
   DELETE_MANGA,
   MANGA_DATE_ASC,
   MANGA_DATE_DESC,
@@ -38,6 +39,7 @@ const setCartLocalStorage = (cart) =>
 
 const initialState = {
   mangas: [],
+  promos: [],
   mangasForDetail: [],
   DateListMangas: [],
   mangasDetails: {},
@@ -280,6 +282,11 @@ const rootReducer = (state = initialState, action) => {
            item.id === action.payload ? action.payload : item
          ),
       };
+      case GET_PROMOS:
+      return{
+        ...state,
+        promos: action.payload
+      }
 
     default:
       return state;
