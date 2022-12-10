@@ -127,7 +127,7 @@ export const FormAdmin = () => {
             itemsValue.stockQty <= 0 ||
             !/^(?:[1-9]\d{0,9}|0)$/.test(itemsValue.stockQty)
           ) {
-            errorsBox.stockQty = "The stock must be a valid number";
+            errorsBox.stockQty = "The stock must be an integer";
           }
 
           if (!itemsValue.startDate) {
@@ -442,7 +442,6 @@ export const FormAdmin = () => {
                 Create new Manga
               </button>
             </Form>
-            {console.log(values.posterImage)}
             <div className="bg-white shadow-2xl rounded-lg pt-10 px-5 mb-10 md:w-1/2 lg:w-2/5 flex flex-col justify-evenly">
               <p class=" text-base font-bold uppercase text-teal-700 mb-2 text-center">
                 Title:
@@ -476,7 +475,7 @@ export const FormAdmin = () => {
                       className=""
                       onClick={() => handlerChangeImage(setFieldValue)}
                     >
-                      2- Rellenar Campo
+                      2- Field completed
                     </button>
                   </span>
                 </form>
