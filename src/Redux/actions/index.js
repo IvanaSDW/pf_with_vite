@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const GET_MANGAS = "GET_MANGAS"
+export const GET_MANGAS = 'GET_MANGAS';
 export const GET_ALL_MANGAS = 'GET_ALL_MANGAS';
 export const GET_DETAILS = 'GET_DETAILS';
 export const DELETE_DETAILS = 'DELETE_DETAILS';
@@ -9,6 +9,8 @@ export const GET_ALL_GENRES = 'GET_ALL_GENRES';
 export const DELETE_MANGA = 'DELETE_MANGA';
 export const LOADING_TYPE = 'LOADING_TYPE';
 export const UPDATE_MANGA = 'UPDATE_MANGA';
+export const GET_USERS = 'GET_USERS';
+export const DELETE_PROMO = 'DELETE_PROMO';
 //ORDER
 export const MANGA_DATE_ASC = 'MANGA_DATE_ASC';
 export const MANGA_DATE_DESC = 'MANGA_DATE_DESC';
@@ -27,37 +29,42 @@ export const SUM_TO_CART = 'SUM_TO_CART';
 export const REST_TO_CART = 'REST_TO_CART';
 export const ADD_TO_COUNT = 'ADD_TO_COUNT';
 export const GET_MANGAS_DETAIL = 'GET_MANGAS_DETAIL';
+export const GET_PROMOS = 'GET_PROMOS';
 ///GET ORDER LIST
-export const GET_ORDER = "GET_ORDER"
+export const GET_ORDER = 'GET_ORDER';
 
-export const getMangas = () =>{
+export const getMangas = () => {
   return async function (dispatch) {
     try {
-        let response = await axios.get("https://backend-production-1a11.up.railway.app/manga");
-        return dispatch({
-            type : GET_MANGAS,
-            payload : response.data
-        })
+      let response = await axios.get(
+        'https://backend-production-1a11.up.railway.app/manga'
+      );
+      return dispatch({
+        type: GET_MANGAS,
+        payload: response.data,
+      });
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
-}
-}
+  };
+};
 
-export const getMangasDetail = () =>{
+export const getMangasDetail = () => {
   return async function (dispatch) {
     try {
-        let response = await axios.get("https://backend-production-1a11.up.railway.app/manga");
-        console.log(response, "RESPONSE DE LA ACTION ")
-        return dispatch({
-            type : GET_MANGAS_DETAIL,
-            payload : response.data
-        })
+      let response = await axios.get(
+        'https://backend-production-1a11.up.railway.app/manga'
+      );
+      console.log(response, 'RESPONSE DE LA ACTION ');
+      return dispatch({
+        type: GET_MANGAS_DETAIL,
+        payload: response.data,
+      });
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
-}
-}
+  };
+};
 
 export const getAllMangas = (pageNum, name) => {
   return async function (dispatch) {
@@ -258,12 +265,12 @@ export const loading = () => {
 };
 
 export const addItemToCart = (item, type) => {
-  console.log(item, "ITEM")
-  console.log(type, "TYPEEEE")
+  console.log(item, 'ITEM');
+  console.log(type, 'TYPEEEE');
   try {
     return {
       type: ADD_TO_CART,
-      payload: {id: item, type: type},
+      payload: { id: item, type: type },
     };
   } catch (err) {
     console.log(err);
@@ -271,15 +278,14 @@ export const addItemToCart = (item, type) => {
 };
 
 export const sumItemToCart = (mangaid) => {
-  try{
-    return{
-      type:SUM_TO_CART,
+  try {
+    return {
+      type: SUM_TO_CART,
       payload: mangaid,
-    }
-  }catch(error){
-    console.log(error)
+    };
+  } catch (error) {
+    console.log(error);
   }
-
 };
 
 export const restItemToCart = (mangaid) => {
@@ -315,7 +321,6 @@ export const DeleteCart = (mangaid) => {
 export const SET_FIREBASE_USER = 'SET_FIREBASE_USER';
 
 export const setFirebaseUser = (firebaseUser) => {
-
   return {
     type: SET_FIREBASE_USER,
     payload: firebaseUser ? firebaseUser : false,
@@ -323,29 +328,97 @@ export const setFirebaseUser = (firebaseUser) => {
 };
 
 export function updateManga(mangaid, data) {
-  console.log(data, "DATSSSSSSSSSSSS")
-   return async function (dispatch) {
-   
-     try {
-       const json = await axios.put(
-         `https://backend-production-1a11.up.railway.app/manga/${mangaid}`, data );
-         console.log(json,"JAMEOSN")
-       return dispatch({
-         type: UPDATE_MANGA,
-         payload: json.data,
-       });
-     } catch (error) {
-       console.log(error);
-     }
-   };
- }
- 
- export function getOrderList(userId) {
+  console.log(data, 'DATSSSSSSSSSSSS');
   return async function (dispatch) {
     try {
-      const  order1 = await axios.get(`https://backend-production-1a11.up.railway.app/order/user/${userId}`);
- 
-      console.log(order1.data, "asdasdasd")
+      const json = await axios.put(
+        `https://backend-production-1a11.up.railway.app/manga/${mangaid}`,
+        data
+      );
+      console.log(json, 'JAMEOSN');
+      return dispatch({
+        type: UPDATE_MANGA,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+//cms/promotions
+export function postPromotion(payload) {
+  return async function (dispatch) {
+    try {
+      const post = await axios.post(
+        'https://backend-production-1a11.up.railway.app/promotion',
+        payload
+      );
+      return post;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const getPromos = () => {
+  return async function (dispatch) {
+    try {
+      //let promos = await axios.get("https://backend-production-1a11.up.railway.app/activepromos");
+      let promos = await axios.get(
+        'https://backend-production-1a11.up.railway.app/activepromos'
+      );
+      return dispatch({
+        type: GET_PROMOS,
+        payload: promos.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deletePromos = (promoid) => {
+  return async function (dispatch) {
+    try {
+      const delet = await axios.delete(
+        `https://backend-production-1a11.up.railway.app/promotion/${promoid}`
+      );
+      alert('Se ha borrado con exito'); //Optimizar esto
+      return dispatch({
+        type: DELETE_PROMO,
+        payload: delet.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getUsers = () => {
+  return async function (dispatch) {
+    try {
+      let users = await axios.get(
+        'https://backend-production-1a11.up.railway.app/user'
+      );
+      return dispatch({
+        type: GET_USERS,
+        payload: users.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export function getOrderList(userId) {
+  return async function (dispatch) {
+    try {
+      const order1 = await axios.get(
+        `https://backend-production-1a11.up.railway.app/order/user/${userId}`
+      );
+
+      console.log(order1.data, 'asdasdasd');
       return dispatch({
         type: GET_ORDER,
         payload: order1.data,
