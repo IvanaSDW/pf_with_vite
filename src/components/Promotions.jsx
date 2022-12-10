@@ -121,14 +121,14 @@ function Promotions() {
                     <div className='' >
 
 
-                        <div className='pl-2 pb-5 pr-3 mt-2  pt-2 rounded-md  duration-300 bg-gray-300'>
+                        <div className='pl-2 pb-5 pr-3 mt-2  pt-2 rounded-md  duration-300 bg-gray-300 text-gray-600'>
                             <h3 className='font-bold text-gray-600'>1.- Name: </h3>
                             <input onChange={(e) => handleChangeName(e)} value={inputs.name} name="name" type="text" required="" />
                         </div >
 
 
 
-                        <div className=' pl-2 pb-3 pr-3 mt-2  pt-2 rounded-md  duration-300 bg-gray-300'>
+                        <div className=' pl-2 pb-3 pr-3 mt-2  pt-2 rounded-md  duration-300 bg-gray-300 text-gray-600'>
                             <h3 className='font-bold text-gray-600'>2.- Category: </h3>
 
                             <div className='flex ' >
@@ -166,26 +166,26 @@ function Promotions() {
                         </div >
 
 
-                        <div className='pl-2 pb-5 pr-3 mt-2  pt-2 rounded-md  duration-300 bg-gray-300'>
+                        <div className='pl-2 pb-5 pr-3 mt-2  pt-2 rounded-md  duration-300 bg-gray-300 text-gray-600'>
                             <h3 className='font-bold text-gray-600'>3.- Description: </h3>
                             <input onChange={(e) => handleChangeDes(e)} value={inputs.description} name="description" type="text" required="" />
                         </div >
 
-                        <div className='pl-2 pb-5 pr-3 mt-2  pt-2 rounded-md inline-block  duration-300 bg-gray-300'>
+                        <div className='pl-2 pb-5 pr-3 mt-2  pt-2 rounded-md inline-block  duration-300 bg-gray-300 text-gray-600' >
                             <h3 className='font-bold text-gray-600'>4.- Discount Rate: </h3>
                             <input onChange={(e) => handleChangeDescuen(e)} value={inputs.discountRate} name="discountRate" step="0.01" type="number" required="" />
                         </div >
 
                         <div></div>
 
-                        <div className='p-5 pl-2 mt-8  pt-2 rounded-md inline-block duration-300 bg-gray-300'>
+                        <div className='p-5 pl-2 mt-8  pt-2 rounded-md inline-block duration-300 bg-gray-300 text-gray-600'>
                             <h3 className='font-bold text-gray-600' >5.- Start Date: </h3>
                             <input onChange={(e) => handleChangeStart(e)} value={inputs.start} name="start" type="date" required="" />
                         </div>
 
                         <div></div>
 
-                        <div className='p-5 pl-2 mt-8  pt-2 rounded-md inline-block duration-300 bg-gray-300'>
+                        <div className='p-5 pl-2 mt-8  pt-2 rounded-md inline-block duration-300 bg-gray-300 text-gray-600'>
                             <h3 className='font-bold text-gray-600' >6.- End Date: </h3>
                             <input onChange={(e) => handleChangeEnd(e)} value={inputs.end} name="end" type="date" required="" />
                         </div>
@@ -219,13 +219,13 @@ function Promotions() {
                         {allPromos.map((e) => {
                             return (
                                 <div className='pl-2 pb-2  mt-2  pt-2 rounded-md  duration-300 bg-gray-300' >
-                                    <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >Name: </h2>  <h2 className='font-sans' >  {e.name} </h2>      </div>
-                                    <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >DiscountRate: </h2>  <h2 className='font-sans'  >  {e.discountRate} </h2></div>
-                                    <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >StartDate: </h2>  <h2 className='font-sans' >  {e.start} </h2> </div>
-                                    <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >EndDate:</h2>  <h2 className='font-sans' >  {e.end} </h2> </div>
+                                    <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >Name: </h2>  <h2 className='font-sans text-gray-600' >  {e.name} </h2>      </div>
+                                    <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >DiscountRate: </h2>  <h2 className='font-sans text-gray-600'  >  {e.discountRate} </h2></div>
+                                    <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >StartDate: </h2>  <h2 className='font-sans text-gray-600' >  {e.start} </h2> </div>
+                                    <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >EndDate:</h2>  <h2 className='font-sans text-gray-600' >  {e.end} </h2> </div>
                                     <div className='flex'> <h2 className='text-gray-600  font-bold pr-2' >Categories:</h2>  {e.categories.map((c) => {
                                         return (
-                                            <div > <h2 className='pl-1 pr-1  mr-2 dark:text-gray-400 italic border-2 border-red-500 rounded-md' > {c.title}  </h2> </div>
+                                            <div > <h2 className='pl-1 pr-1  mr-2 dark:text-gray-400 italic border-2 border-red-500 rounded-md text-gray-600' > {c.title}  </h2> </div>
                                         )
 
                                     })}</div>
