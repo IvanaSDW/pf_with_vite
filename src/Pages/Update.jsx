@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io"
 import { useEffect } from "react";
 import axios from "axios";
+import { uploadFile } from "../domain/userService"; //1
 
 export default function Update(){
   const allGenres = useSelector((state) => state.genres);
@@ -21,6 +22,25 @@ export default function Update(){
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [urlStorage, setUrlStorage] = useState(""); //2
+  const [file, setFile] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await uploadFile(file);
+      setUrlStorage(result);
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handlerChangeImage = (setFieldValue) => {
+    //3
+    setFieldValue("posterImage", urlStorage);
+  };
 
   const handlerResetGenre = (setFieldValue) => {
     setFieldValue("genre", "");
@@ -450,7 +470,6 @@ export default function Update(){
                 Update Manga
               </button>
             </Form>
-            {console.log(values.posterImage)}
             <div className="bg-white shadow-2xl rounded-lg pt-10 px-5 mb-10 md:w-1/2 lg:w-2/5 flex flex-col justify-evenly">
               <p class=" text-base font-bold uppercase text-teal-700 mb-2 text-center">
                 Title:
@@ -458,15 +477,27 @@ export default function Update(){
                   {values.canonicalTitle}
                 </span>
               </p>
-              <img
-                class="rounded-t-lg px-3 py-1"
-                src={
-                  values.posterImage
-                    ? values.posterImage
-                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Ba7Qc7aNAX4MRV2rRKBxwq9155WehCKBYA&usqp=CAU"
-                }
-                alt={values.canonicalTitle}
-              />
+              <div>
+                {/*4 */}
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                  <span className="bg-blue-400 px-1.5 py-0.5 rounded-md text-xl text-black p-2 ml-5 mr-5 hover:text-white ">
+                    <button>1- URL format</button>
+                  </span>
+
+                  <span className="bg-blue-400 text-xl mb-4 hover:text-white  mt-5 cursor-pointer rounded-md ">
+                    <button
+                      className=""
+                      onClick={() => handlerChangeImage(setFieldValue)}
+                    >
+                      2- Field completed
+                    </button>
+                  </span>
+                </form>
+              </div>
               <div class="px-4 py-3 flex flex-col">
                 <p class="text-1xl font-bold text-gray-700 mb-4">
                   Synopsis:
