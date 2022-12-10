@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails, updateManga, deleteManga } from "../Redux/actions";
+import { updateManga} from "../Redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io"
@@ -35,7 +35,6 @@ export default function Update(){
 
   async function getData(){
     const response = await axios.get(`https://backend-production-1a11.up.railway.app/manga/${id}`)
-    console.log(response, "response")
     setDetail(response.data)
     setLoader(false)
   }
@@ -56,7 +55,6 @@ export default function Update(){
       <h1>loading</h1>
     )
   }
-  console.log(detail, "asd")
 
   return (
     <div className=" h-full">
@@ -79,6 +77,7 @@ export default function Update(){
           genre: detail.genres?.map((e) => e.name) ,
           category: detail.categories?.map((e) => e.title) ,
           ageRating: detail.ageRating ,
+          stockQty: detail.stockQty
         }}
         validate={(itemsValue) => {
           let errorsBox = {};
@@ -130,6 +129,15 @@ export default function Update(){
             errorsBox.price = "The price must be a valid number";
           }
 
+          if (!itemsValue.stockQty) {
+            errorsBox.stockQty = "Stock is needed";
+          } else if (
+            itemsValue.stockQty <= 0 ||
+            !/^(?:[1-9]\d{0,9}|0)$/.test(itemsValue.stockQty)
+          ) {
+            errorsBox.stockQty = "The stock must be an integer";
+          }
+
           if (!itemsValue.startDate) {
             errorsBox.startDate = "Start Date is needed";
           } else if (
@@ -171,7 +179,9 @@ export default function Update(){
                 "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
             },
           });
-          navigate("/home");
+          setTimeout(() => {
+            navigate("/home");
+          }, 500);
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
@@ -393,6 +403,27 @@ export default function Update(){
                 )}
               </div>
 
+              <div className="mb-5">
+                <label
+                  htmlFor="stockQty"
+                  className="block  uppercase font-bold mt-2"
+                >
+                  Stock
+                </label>
+                <Field
+                  className="border-2 w-full text-black p-2 mt-2 placeholder-gray-400 rounded-sm"
+                  type="text"
+                  id="stockQty"
+                  name="stockQty"
+                  placeholder="4"
+                />
+                {touched.stockQty && errors.stockQty && (
+                  <div className="block  text-red-500 font-bold mt-1">
+                    {errors.stockQty}
+                  </div>
+                )}
+              </div>
+
               <div>
                 <label
                   htmlFor="synopsis"
@@ -416,7 +447,6 @@ export default function Update(){
               <button
                 className="bg-purple-500 w-full p-3 mt-8 text-white uppercase font-bold hover:bg-purple-700 cursor-pointer transition-colors rounded-xl"
                 type="submit">
-                
                 Update Manga
               </button>
             </Form>
@@ -510,6 +540,12 @@ export default function Update(){
                   Price:
                   <span className="pl-2 dark:text-gray-400 italic">
                     $ {values.price}
+                  </span>
+                </p>
+                <p class="text-1xl font-bold text-gray-700 mb-4">
+                  Stock:
+                  <span className="pl-2 dark:text-gray-400 italic">
+                    {values.stockQty}
                   </span>
                 </p>
               </div>

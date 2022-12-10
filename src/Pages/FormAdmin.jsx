@@ -127,7 +127,7 @@ export const FormAdmin = () => {
             itemsValue.stockQty <= 0 ||
             !/^(?:[1-9]\d{0,9}|0)$/.test(itemsValue.stockQty)
           ) {
-            errorsBox.stockQty = "The stock must be a valid number";
+            errorsBox.stockQty = "The stock must be an integer";
           }
 
           if (!itemsValue.startDate) {

@@ -70,7 +70,7 @@ const About = () => {
           pais="Argentina"
           mail="mailto:silbordon.89@gmail.com"
           carrera="Full Stack developer"
-          linkedin="www.linkedin.com/in/silvina-bordon"
+          linkedin="https://www.linkedin.com/in/silvina-bordon"
           github="https://github.com/Silbordon"
           image="silvi"
         />
