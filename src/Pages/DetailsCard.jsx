@@ -8,6 +8,7 @@ import {
   getMangas,
   addItemToCart,
   getMangasDetail,
+  getMangasOnSale,
 } from '../Redux/actions/index';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -28,6 +29,7 @@ export default function Details() {
   const mangasDetail = useSelector((state) => state.mangasForDetail);
   const cart = useSelector((state) => state.cart);
   const isLoading = useSelector((state) => state.isLoading);
+  const promotions = new Map(useSelector((state) => state.mangasOnSale));
   const navigate = useNavigate();
 
   const currentUser = useCurrentUser();
@@ -36,6 +38,7 @@ export default function Details() {
     dispatch(loading());
     dispatch(getMangasDetail());
     dispatch(getDetails(mangaid));
+    getMangasOnSale();
     return () => {
       dispatch(deleteDetails());
     };
@@ -92,8 +95,10 @@ export default function Details() {
     }
 
   }
-
-
+const id = manga.mangaid
+const discount = promotions.has(id)
+const numDiscount = promotions.get(id)
+console.log(numDiscount, "data")
   if(!isLoading){
     return(
         <div>
@@ -117,7 +122,7 @@ export default function Details() {
                                 <h3 className="flex">Genres: </h3> 
                                 <h5 className="flex justify-start"> {manga.genres?.map((e) => <p className="p-2"> {e.name}</p> )}</h5>
                                 </div>
-                           <div> <h1 className={styles.prieces}>Price: <b>${manga.price}</b></h1></div>
+                           <div> <h1 className={styles.prieces}>Price: <b>${discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b></h1></div>
                              <div className={styles.stars}>
                                 <FaStar/>
                                 <FaStar/>
