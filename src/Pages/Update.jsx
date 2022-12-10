@@ -1,62 +1,82 @@
-import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
-import swal from "sweetalert";
-import { useDispatch, useSelector } from "react-redux";
-import { getDetails, updateManga, deleteManga } from "../Redux/actions";
-import { useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { IoMdArrowRoundBack } from "react-icons/io"
-import { useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+import swal from 'sweetalert';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateManga } from '../Redux/actions';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import axios from 'axios';
+import { uploadFile } from '../domain/userService'; //1
 
-export default function Update(){
+export default function Update() {
   const allGenres = useSelector((state) => state.genres);
   const allCategories = useSelector((state) => state.categories);
-  const {id, mangaid} = useParams()
-  const cardDetail = useSelector((state) => state.mangasDetails) 
+  const { id } = useParams();
   const [genresChoose, setGenresChoose] = useState([]);
   const [categoryChoose, setCategoryChoose] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [detail, setDetail] = useState({})
+  const [detail, setDetail] = useState({});
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [urlStorage, setUrlStorage] = useState(''); //2
+  const [file, setFile] = useState();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await uploadFile(file);
+      setUrlStorage(result);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const saveNewImage = async (file) => {
+    try {
+      const imageUrl = await uploadFile(file);
+      setUrlStorage((prevState) => {
+        return imageUrl;
+      });
+    } catch (e) {
+      console.log('error uploadin image: ', e);
+    }
+  };
+
+  useEffect(() => {
+    console.log('image changed...uploading file..');
+    saveNewImage(file);
+  }, [file]);
+
   const handlerResetGenre = (setFieldValue) => {
-    setFieldValue("genre", "");
+    setFieldValue('genre', '');
     setGenresChoose([]);
   };
 
-
   const handlerResetCategory = (setFieldValue) => {
-    setFieldValue("category", "");
+    setFieldValue('category', '');
     setCategoryChoose([]);
   };
 
-  async function getData(){
-    const response = await axios.get(`https://backend-production-1a11.up.railway.app/manga/${id}`)
-    console.log(response, "response")
-    setDetail(response.data)
-    setLoader(false)
+  async function getData() {
+    const response = await axios.get(
+      `https://backend-production-1a11.up.railway.app/manga/${id}`
+    );
+    setDetail(response.data);
+    setLoader(false);
   }
 
   useEffect(() => {
-    if(id){
-      setLoader(true)
-      getData(id)
+    if (id) {
+      setLoader(true);
+      getData(id);
     }
-    
-    }, [dispatch]) 
+  }, [dispatch]);
 
-
- 
-  
-  if(id && Object.keys(detail).length === 0) {
-    return(
-      <h1>loading</h1>
-    )
+  if (id && Object.keys(detail).length === 0) {
+    return <h1>loading</h1>;
   }
-  console.log(detail, "asd")
 
   return (
     <div className=" h-full">
@@ -64,80 +84,94 @@ export default function Update(){
         New Mangas
       </h2>
       <Link to="/home">
-        <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">  <IoMdArrowRoundBack/></button>
+        <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
+          {' '}
+          <IoMdArrowRoundBack />
+        </button>
       </Link>
       {/* section form */}
       <Formik
         initialValues={{
-          canonicalTitle: detail.canonicalTitle ,
-          subtype: detail.subtype ,
-          status: detail.status ,
-          synopsis: detail.synopsis ,
-          price: detail.price ,
+          canonicalTitle: detail.canonicalTitle,
+          subtype: detail.subtype,
+          status: detail.status,
+          synopsis: detail.synopsis,
+          price: detail.price,
           posterImage: detail.posterImage.small.url,
-          startDate: detail.startDate ,
-          genre: detail.genres?.map((e) => e.name) ,
-          category: detail.categories?.map((e) => e.title) ,
-          ageRating: detail.ageRating ,
+          startDate: detail.startDate,
+          genre: detail.genres?.map((e) => e.name),
+          category: detail.categories?.map((e) => e.title),
+          ageRating: detail.ageRating,
+          stockQty: detail.stockQty,
         }}
         validate={(itemsValue) => {
           let errorsBox = {};
 
           if (!itemsValue.canonicalTitle) {
-            errorsBox.canonicalTitle = "Title is needed";
+            errorsBox.canonicalTitle = 'Title is needed';
           }
 
           if (!itemsValue.subtype) {
-            errorsBox.subtype = "Subtype is needed";
+            errorsBox.subtype = 'Subtype is needed';
           }
 
           if (!itemsValue.ageRating) {
-            errorsBox.ageRating = "Age Rating is needed";
+            errorsBox.ageRating = 'Age Rating is needed';
           }
 
           if (!itemsValue.status) {
-            errorsBox.status = "Status is needed";
+            errorsBox.status = 'Status is needed';
           }
 
           if (!itemsValue.synopsis) {
-            errorsBox.synopsis = "Synopsis is needed";
+            errorsBox.synopsis = 'Synopsis is needed';
           }
 
           if (!itemsValue.genre) {
-            errorsBox.genre = "Genre is needed";
+            errorsBox.genre = 'Genre is needed';
           }
 
           if (!itemsValue.category) {
-            errorsBox.category = "Categories is needed";
+            errorsBox.category = 'Categories is needed';
           }
 
           if (!itemsValue.posterImage) {
-            errorsBox.posterImage = "Image URL is required";
+            errorsBox.posterImage = 'Image URL is required';
           } else if (
             !/^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/.test(
               itemsValue.posterImage
             )
           ) {
-            errorsBox.posterImage = "The URL format is wrong";
+            errorsBox.posterImage = 'The URL format is wrong';
           }
 
           if (!itemsValue.price) {
-            errorsBox.price = "Price is needed";
+            errorsBox.price = 'Price is needed';
           } else if (
             itemsValue.price <= 0 ||
             /^(?:[1-9]\d{0,9}|0)\.\d$/.test(itemsValue.price)
           ) {
-            errorsBox.price = "The price must be a valid number";
+            errorsBox.price = 'The price must be a valid number';
+          }
+
+          if (!itemsValue.stockQty) {
+            errorsBox.stockQty = 'Stock is needed';
+          } else if (
+            itemsValue.stockQty <= 0 ||
+            !/^(?:[1-9]\d{0,9}|0)$/.test(itemsValue.stockQty)
+          ) {
+            errorsBox.stockQty = 'The stock must be an integer';
           }
 
           if (!itemsValue.startDate) {
-            errorsBox.startDate = "Start Date is needed";
+            errorsBox.startDate = 'Start Date is needed';
           } else if (
-            !/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test( 
+            !/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(
               itemsValue.startDate
             )
           ) {
-            errorsBox.startDate = "The date format is wrong, should be: YYYY-MM-DD";
+            errorsBox.startDate =
+              'The date format is wrong, should be: YYYY-MM-DD';
           }
 
           return errorsBox;
@@ -146,32 +180,36 @@ export default function Update(){
           resetForm();
           console.log({
             itemsValue,
-           
           });
           if (itemsValue.genre.length === 0) {
-            alert("genre can not be empty");
+            alert('genre can not be empty');
             return;
           }
           if (itemsValue.category.length === 0) {
-            alert("category can not be empty");
+            alert('category can not be empty');
             return;
           }
           dispatch(
-            updateManga(id,
-                {
+            updateManga(id, {
               ...itemsValue,
-              posterImage: {small: {url: itemsValue.posterImage}},
+              posterImage: {
+                small: {
+                  url: urlStorage ? urlStorage : itemsValue.posterImage,
+                },
+              },
               genre: genresChoose.slice(1),
               categories: categoryChoose.slice(1),
             })
           );
-          swal("Your Manga was edited Successfully", {
+          swal('Your Manga was edited Successfully', {
             button: {
               className:
-                "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+                'bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl',
             },
           });
-          navigate("/home");
+          setTimeout(() => {
+            navigate('/home');
+          }, 500);
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
@@ -276,7 +314,7 @@ export default function Update(){
                   Age Rating
                 </label>
                 <Field
-                  className="border-2 w-full p-2 mt-2 text-black placeholder-gray-400 rounded-sm text-white hover:bg-purple-500 cursos-pointer" 
+                  className="border-2 w-full p-2 mt-2 text-black placeholder-gray-400 rounded-sm text-white hover:bg-purple-500 cursos-pointer"
                   name="ageRating"
                   as="select"
                 >
@@ -393,6 +431,27 @@ export default function Update(){
                 )}
               </div>
 
+              <div className="mb-5">
+                <label
+                  htmlFor="stockQty"
+                  className="block  uppercase font-bold mt-2"
+                >
+                  Stock
+                </label>
+                <Field
+                  className="border-2 w-full text-black p-2 mt-2 placeholder-gray-400 rounded-sm"
+                  type="text"
+                  id="stockQty"
+                  name="stockQty"
+                  placeholder="4"
+                />
+                {touched.stockQty && errors.stockQty && (
+                  <div className="block  text-red-500 font-bold mt-1">
+                    {errors.stockQty}
+                  </div>
+                )}
+              </div>
+
               <div>
                 <label
                   htmlFor="synopsis"
@@ -415,12 +474,11 @@ export default function Update(){
 
               <button
                 className="bg-purple-500 w-full p-3 mt-8 text-white uppercase font-bold hover:bg-purple-700 cursor-pointer transition-colors rounded-xl"
-                type="submit">
-                
+                type="submit"
+              >
                 Update Manga
               </button>
             </Form>
-            {console.log(values.posterImage)}
             <div className="bg-white shadow-2xl rounded-lg pt-10 px-5 mb-10 md:w-1/2 lg:w-2/5 flex flex-col justify-evenly">
               <p class=" text-base font-bold uppercase text-teal-700 mb-2 text-center">
                 Title:
@@ -428,15 +486,20 @@ export default function Update(){
                   {values.canonicalTitle}
                 </span>
               </p>
-              <img
-                class="rounded-t-lg px-3 py-1"
-                src={
-                  values.posterImage
-                    ? values.posterImage
-                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Ba7Qc7aNAX4MRV2rRKBxwq9155WehCKBYA&usqp=CAU"
-                }
-                alt={values.canonicalTitle}
-              />
+              <div>
+                {/*4 */}
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                  <img
+                    class="rounded-t-lg px-3 py-1"
+                    src={urlStorage ? urlStorage : values.posterImage}
+                    alt={values.canonicalTitle}
+                  />
+                </form>
+              </div>
               <div class="px-4 py-3 flex flex-col">
                 <p class="text-1xl font-bold text-gray-700 mb-4">
                   Synopsis:
@@ -512,6 +575,12 @@ export default function Update(){
                     $ {values.price}
                   </span>
                 </p>
+                <p class="text-1xl font-bold text-gray-700 mb-4">
+                  Stock:
+                  <span className="pl-2 dark:text-gray-400 italic">
+                    {values.stockQty}
+                  </span>
+                </p>
               </div>
             </div>
           </div>
@@ -519,4 +588,4 @@ export default function Update(){
       </Formik>
     </div>
   );
-};
+}
