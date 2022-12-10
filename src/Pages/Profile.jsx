@@ -76,10 +76,18 @@ const Profile = () => {
     console.log(order1.data, "     DSDS D    PUTOO")
 }
 
-// const order1 = useSelector((state)=> state.orderList)
+const [view, setView] = useState(false)
+
+// const [res, setRes] = useState()
+
+
+const getOrder =  (id)=>{
+  
+}
 
 useEffect(()=>{
   getOrderList(userId)
+
 },[] )
 
 
@@ -130,7 +138,6 @@ useEffect(()=>{
 
 
 /////////Details order complete***/////
-const [view, setView] = useState(false)
 
 function viewMore(){
   setView(!view)
@@ -296,27 +303,50 @@ function addReview(){
                           return(
                           <>
                           <div className=' flex justify-center m-6 pr-20'>
-                          {e.orderItems.length && e.orderItems.slice(0, 3).map((e)=>{
+                          {
+                          // () => {for(let i; i < e.orderItems.length; i++){
+                          e.orderItems.length && e.orderItems.slice(0, 3).map((e)=>{
                             return(
-                            <div className='flex flex-wrap pr-20 '>
+                              <div>
+                              <div>
+                              {review && e.id &&
+                                <div>
+                                    <div className='flex flex-row w-full p-60 h-full fixed top-0 left-0 bg-black/60'>
+                                    <div className='flex flex-row h-80 w-full bg-white relative justify-center items-center'>
+                                    <button onClick={addReview} className='absolute bg-purple-600 right-60 p-5' >CERRAR REVIEW</button>
+                                      <div>
+                                        <form action="submit">
+                                          <img src={e.mangaPosterImage} className="w-40 " alt="" />
+                                        </form>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>}
+                                </div>
+                              <div className='flex flex-wrap pr-20 '>
                               <img src= {e.mangaPosterImage} alt="" className='w-20 rounded-full'/>      
                                 <div className='flex flex-col ml-4 mt-5'>
                                   <p > Name : {e.mangaTitle}</p>
                                   <p > Quantity : {e.quantity}</p>
                                   <p className='flex ' > Price x unity:   <p className='text-green-600 pl-2'>usd {e.price}</p></p>
                                   </div>
-                            </div>
+                                  <button className='text-purple-400 hover:underline' onClick={addReview}>Add Review</button>
                             
-                            )})} 
+                                </div></div>
+                            )
+                            })
+                            }
+                            
+          
                           <div>
-                          <p>Status: {e.status === "completed" ? <p className='text-green-600'>{e.status}</p> : <p className='text-red-600'>{e.status}</p>}</p>
+                          <p>Status: {e.status === "completed" ? <p className='text-green-600'>{e.status === "rejected" }</p> : <p className='text-red-600'>{e.status}</p>}</p>
                           <p className='flex'>Total Price: </p><p className='text-green-600 '>usd {e.total}</p>
-                          <button className='text-purple-400 hover:underline' onClick={addReview}>Add Review</button>
                             </div>
-                            {e.orderItems.length > 3 && <button className='text-yellow-600 hover:underline  absolute right-10 top-60' onClick={viewMore} >More details...</button>}
-                              {view && e.orderItems.length > 3 &&
+                            {e.orderItems.length > 3 && <button className='text-yellow-600 hover:underline   right-10 top-60' onClick={viewMore} >More details...</button>}
+                              {view && e.orderItems.length   > 3 &&
                                 <div className='flex flex-row w-full p-60 h-full fixed top-0 left-0 bg-black/60'>
-                              {e.orderItems.map((e)=>{
+                              {
+                              e.orderItems.map((e)=>{
                                 return(
                                   <>
                                   <div className='flex flex-row h-80 w-full bg-white relative justify-center items-center'>  
@@ -333,7 +363,8 @@ function addReview(){
 
                                   </>
                                 )
-                              })}
+                              })
+                              }
                               </div>
                               }
                           </div>
@@ -496,15 +527,7 @@ function addReview(){
               </div>
             </div>
           )}</div>
-          {review &&
-          <div>
-              <div className='flex flex-row w-full p-60 h-full fixed top-0 left-0 bg-black/60'>
-              <div className='flex flex-row h-80 w-full bg-white relative justify-center items-center'>
-              <button onClick={addReview} className='absolute bg-purple-600 right-60 p-5' >CERRAR REVIEW</button>
-              AQUI VA EL FORM REVIEW
-              </div>
-              </div>
-          </div>}
+        
         </div>
               </div>
       <div className="mt-80">
