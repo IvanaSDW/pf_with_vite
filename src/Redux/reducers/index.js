@@ -6,6 +6,7 @@ import {
   GET_MANGA_BY_NAME,
   GET_ALL_CATEGORIES,
   GET_ALL_GENRES,
+  GET_PROMOS,
   DELETE_MANGA,
   MANGA_DATE_ASC,
   MANGA_DATE_DESC,
@@ -23,6 +24,8 @@ import {
   GET_MANGAS_DETAIL,
   FILTER_MANGA_BY_DATE,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
+  GET_USERS,
+  DELETE_PROMO
 } from "../actions";
 
 const getCartLocalStorage = () => {
@@ -38,6 +41,7 @@ const setCartLocalStorage = (cart) =>
 
 const initialState = {
   mangas: [],
+  promos: [],
   mangasForDetail: [],
   DateListMangas: [],
   mangasDetails: {},
@@ -48,6 +52,8 @@ const initialState = {
   firebaseUser: false,
   currentPage: 1,
   totalNumberOfPages: 1,
+  promos: [],
+  users: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -55,8 +61,8 @@ const rootReducer = (state = initialState, action) => {
     case GET_MANGAS:
       return {
         ...state,
-        mangas: action.payload,
-      };
+        mangas: action.payload
+      }
     case GET_MANGAS_DETAIL:
       return {
         ...state,
@@ -286,6 +292,32 @@ const rootReducer = (state = initialState, action) => {
           item.id === action.payload ? action.payload : item
         ),
       };
+
+    case GET_PROMOS: //Bring promos
+      return {
+        ...state,
+        promos: action.payload
+
+      };
+
+    case DELETE_PROMO: {  //DELETE PROMO
+      return {
+        ...state,
+        promos: state.promos.filter((p) => p.id !== action.payload)
+      }
+    }
+
+    case GET_USERS: //Bring users
+      return {
+        ...state,
+        users: action.payload
+
+      };
+      case GET_PROMOS:
+      return{
+        ...state,
+        promos: action.payload
+      }
 
     default:
       return state;
