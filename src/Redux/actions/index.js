@@ -9,6 +9,8 @@ export const GET_ALL_GENRES = 'GET_ALL_GENRES';
 export const DELETE_MANGA = 'DELETE_MANGA';
 export const LOADING_TYPE = 'LOADING_TYPE';
 export const UPDATE_MANGA = 'UPDATE_MANGA';
+export const GET_USERS = "GET_USERS";
+export const DELETE_PROMO = "DELETE_PROMO";
 //ORDER
 export const MANGA_DATE_ASC = 'MANGA_DATE_ASC';
 export const MANGA_DATE_DESC = 'MANGA_DATE_DESC';
@@ -341,16 +343,62 @@ export function updateManga(mangaid, data) {
  }
  
 
- export const getPromos = () =>{
+//cms/promotions 
+ export function postPromotion(payload) {
   return async function (dispatch) {
     try {
-        let response = await axios.get("https://backend-production-1a11.up.railway.app/activepromos");
-        return dispatch({
-            type : GET_PROMOS,
-            payload : response.data
-        })
-    } catch (err) {
-        console.log(err);
+      const post = await axios.post("https://backend-production-1a11.up.railway.app/promotion", payload)
+      return post
+    } catch (error) {
+      console.log(error)
     }
+  }
 }
+
+export const getPromos = () => {
+  return async function (dispatch) {
+    try {
+      //let promos = await axios.get("https://backend-production-1a11.up.railway.app/activepromos");
+      let promos = await axios.get("https://backend-production-1a11.up.railway.app/activepromos");
+      return dispatch({
+        type: GET_PROMOS,
+        payload: promos.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
+
+export const deletePromos = (promoid) => {
+  return async function(dispatch){
+    try{
+      const delet = await axios.delete(`https://backend-production-1a11.up.railway.app/promotion/${promoid}`);
+      alert("Se ha borrado con exito") //Optimizar esto
+      return dispatch({
+        type: DELETE_PROMO,
+        payload: delet.data
+      })
+    }catch(error){
+      console.log(error)
+    }
+  }
+}
+
+
+export const getUsers = () => {
+  return async function (dispatch) {
+    try {
+      let users = await axios.get("https://backend-production-1a11.up.railway.app/user")
+      return dispatch({
+        type: GET_USERS,
+        payload: users.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+} 
+
+
