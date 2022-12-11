@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getUsers } from '../Redux/actions';
+import { disableUser } from '../domain/userService';
 
 function Cms() {
     const dispatch = useDispatch()
@@ -29,6 +30,10 @@ function Cms() {
     useEffect(() => {
         dispatch(getUsers())
     }, [])
+
+    const handleDisableUser = (id) => {
+        disableUser(id)
+    }
 
 
     return (
@@ -150,7 +155,9 @@ function Cms() {
 
                                                 <div className='text-gray-600 inline-block flex justify-center mt-2' >
                                                     <div className='p-1  object-contain rounded-full bg-red-400 text-2xl cursor-pointer ' >
-                                                        <FaUserAltSlash/>
+                                                        <button onClick={() => handleDisableUser(u.id)} >
+                                                            <FaUserAltSlash />
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
