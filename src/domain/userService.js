@@ -95,6 +95,28 @@ export const createUserInDB = async (user, authToken, name) => {
   }
 };
 
+
+// Disable User
+export const disableUser = async (iduser) => { 
+  try {
+    firebase
+      .auth()
+      .currentUser.getIdToken()  //Obtengo en token del usuario actual
+      .then((authToken) => {
+        axios.delete(`https://backend-production-1a11.up.railway.app/user/${iduser}`,
+          {headers: {
+              AuthToken: authToken
+          }}
+        )
+          .then((r) => { console.log("Se borro con exito", r) })
+          .catch((e) => { console.log(e) })
+      })
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
 const userExists = async (userId) => {
   console.log('cheking if ' + userId + ' exists');
   const response = await fetch(
@@ -132,7 +154,6 @@ export const fetchUserData = async () => {
   return user;
 };
 
-//img store
 export const storage = getStorage(app);
 
 export async function uploadFile(file) {
@@ -143,6 +164,5 @@ export async function uploadFile(file) {
   const url = await getDownloadURL(storageRef);
   return url;
 }
-//
 
 export default firebase;
