@@ -4,6 +4,8 @@ import 'firebase/compat/auth';
 import { firebaseConfig } from './firebaseConfig';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; //1
 import { v4 } from 'uuid'; //2
+import { SERVER_URL } from './serverConfig';
+
 const app = firebase.initializeApp(firebaseConfig); //3
 
 export const auth = firebase.auth();
@@ -68,12 +70,12 @@ export const createUserInDB = async (user, authToken, name) => {
       console.log('user already exists');
       return;
     }
-    const splittedName = name.split(' ');
+    const splittedName = name ? name.split(' ') : ['First Name', 'Last Name'];
     const firstname = splittedName[0];
     const lastname = splittedName[1];
     axios
       .post(
-        'https://backend-production-1a11.up.railway.app/user',
+        `${SERVER_URL}/user`,
         {
           email: user.email,
           firstname: firstname,
@@ -95,33 +97,34 @@ export const createUserInDB = async (user, authToken, name) => {
   }
 };
 
-
 // Disable User
-export const disableUser = async (iduser) => { 
+export const disableUser = async (iduser) => {
   try {
     firebase
       .auth()
-      .currentUser.getIdToken()  //Obtengo en token del usuario actual
+      .currentUser.getIdToken() //Obtengo en token del usuario actual
       .then((authToken) => {
-        axios.delete(`https://backend-production-1a11.up.railway.app/user/${iduser}`,
-          {headers: {
-              AuthToken: authToken
-          }}
-        )
-          .then((r) => { console.log("Se borro con exito", r) })
-          .catch((e) => { console.log(e) })
-      })
+        axios
+          .delete(`${SERVER_URL}/user/${iduser}`, {
+            headers: {
+              AuthToken: authToken,
+            },
+          })
+          .then((r) => {
+            console.log('Se borro con exito', r);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-}
+};
 
 const userExists = async (userId) => {
-  console.log('cheking if ' + userId + ' exists');
-  const response = await fetch(
-    `https://backend-production-1a11.up.railway.app/user/${userId}`
-  );
+  console.log('checking if ' + userId + ' exists');
+  const response = await fetch(`${SERVER_URL}/user/${userId}`);
   const user = await response.json();
   console.log('userexists responded: ', user.id);
   return user.id === 'undefined';
@@ -131,27 +134,29 @@ export const fetchUserData = async () => {
   const firebaseUser = auth.currentUser;
   if (!firebaseUser) return { 'currentUser: ': 'no user logged in right now' };
   console.log('fetching data for user: ', firebaseUser.uid);
-  const response = await fetch(
-    `https://backend-production-1a11.up.railway.app/user/${firebaseUser.uid}`
-  );
-  const user = await response.json();
-  if (user.id === undefined) {
-    console.log('user not yet created in database, creating now...');
-    auth.currentUser
-      .getIdToken()
-      .then((token) => {
-        try {
-          createUserInDB(firebaseUser, token, firebaseUser.displayName);
-        } catch (error) {
-          console.error(error);
-          alert(error.message);
-        }
-      })
-      .catch((err) => {
-        console.log('error getting auth token');
-      });
+  try {
+    const response = await fetch(`${SERVER_URL}/user/${firebaseUser.uid}`);
+    const user = await response.json();
+    if (user.id === undefined) {
+      console.log('user not yet created in database, creating now...');
+      auth.currentUser
+        .getIdToken()
+        .then((token) => {
+          try {
+            createUserInDB(firebaseUser, token, firebaseUser.displayName);
+          } catch (error) {
+            console.error(error);
+            alert(error.message);
+          }
+        })
+        .catch((err) => {
+          console.log('error getting auth token');
+        });
+    }
+    return user;
+  } catch (error) {
+    console.log('error fetching user data: ', error);
   }
-  return user;
 };
 
 export const storage = getStorage(app);
