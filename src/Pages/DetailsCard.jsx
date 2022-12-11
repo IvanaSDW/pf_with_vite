@@ -28,6 +28,7 @@ export default function Details() {
   const mangasDetail = useSelector((state) => state.mangasForDetail);
   const cart = useSelector((state) => state.cart);
   const isLoading = useSelector((state) => state.isLoading);
+  const promotion = new Map(useSelector((state) => state.mangasOnSale));
   const navigate = useNavigate();
 
   const currentUser = useCurrentUser();
@@ -93,6 +94,10 @@ export default function Details() {
     }
   }
 
+  const id = manga.mangaid;
+  const discount = promotion.has(id);
+  const numDiscount = promotion.get(id);
+
   if (!isLoading) {
     return (
       <div>
@@ -155,7 +160,7 @@ export default function Details() {
                   <div>
                     {" "}
                     <h1 className={styles.prieces}>
-                      Price: <b>${manga.price}</b>
+                      Price: <b>${discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b>
                     </h1>
                   </div>
                   <div className={styles.stars}>
