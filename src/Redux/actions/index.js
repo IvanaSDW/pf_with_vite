@@ -30,6 +30,7 @@ export const REST_TO_CART = 'REST_TO_CART';
 export const ADD_TO_COUNT = 'ADD_TO_COUNT';
 export const GET_MANGAS_DETAIL = 'GET_MANGAS_DETAIL';
 export const GET_PROMOS = 'GET_PROMOS';
+export const MANGA_ON_SALE = 'MANGA_ON_SALE';
 ///GET ORDER LIST
 export const GET_ORDER = 'GET_ORDER';
 
@@ -428,3 +429,19 @@ export function getOrderList(userId) {
     }
   };
 }
+
+export const getMangasOnSale = () => {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(
+        `https://backend-production-1a11.up.railway.app/onsale`
+      );
+      return dispatch({
+        type: MANGA_ON_SALE,
+        payload: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
