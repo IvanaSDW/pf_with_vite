@@ -6,6 +6,7 @@ import {
   GET_MANGA_BY_NAME,
   GET_ALL_CATEGORIES,
   GET_ALL_GENRES,
+  GET_PROMOS,
   DELETE_MANGA,
   MANGA_DATE_ASC,
   MANGA_DATE_DESC,
@@ -24,6 +25,9 @@ import {
   GET_ORDER,
   FILTER_MANGA_BY_DATE,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
+  GET_USERS,
+  DELETE_PROMO,
+  MANGA_ON_SALE,
 } from "../actions";
 
 const getCartLocalStorage = () => {
@@ -39,6 +43,7 @@ const setCartLocalStorage = (cart) =>
 
 const initialState = {
   mangas: [],
+  promos: [],
   mangasForDetail: [],
   DateListMangas: [],
   mangasDetails: {},
@@ -49,21 +54,23 @@ const initialState = {
   cart: getCartLocalStorage(),
   firebaseUser: false,
   currentPage: 1,
-  totalNumberOfPages: 1
+  totalNumberOfPages: 1,
+  promos: [],
+  users: []
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_MANGAS:
-      return{
+      return {
         ...state,
         mangas: action.payload
       }
-     case GET_MANGAS_DETAIL:
-       return{
-         ...state,
-         mangasForDetail: action.payload,
-      }
+    case GET_MANGAS_DETAIL:
+      return {
+        ...state,
+        mangasForDetail: action.payload,
+      };
     case GET_ALL_MANGAS:
       return {
         ...state,
@@ -162,10 +169,10 @@ const rootReducer = (state = initialState, action) => {
         isLoading: false,
       };
 
-      case FILTER_MANGA_BY_DATE:
+    case FILTER_MANGA_BY_DATE:
       return {
         ...state,
-        DateListMangas: action.payload, 
+        DateListMangas: action.payload,
       };
 
     case FILTER_MANGA_BY_GENRE:
@@ -179,9 +186,10 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CART: {
-
-
-      const stateToFilter = action.payload.type === 'card_detail' ? state.mangasForDetail : state.mangas
+      const stateToFilter =
+        action.payload.type === "card_detail"
+          ? state.mangasForDetail
+          : state.mangas;
 
       const newItem = stateToFilter.find(
         (item) => item.mangaid === action.payload.id
@@ -213,11 +221,17 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case SUM_TO_CART: {
-      const ItemInCart = state.cart.find((item)=> item.mangaid === action.payload);
-      return ItemInCart && {
-       ...state,
-       cart: state.cart.map((item)=> ItemInCart&&{...item, quantity: item.quantity + 1} )
-       }
+      const ItemInCart = state.cart.find(
+        (item) => item.mangaid === action.payload
+      );
+      return (
+        ItemInCart && {
+          ...state,
+          cart: state.cart.map(
+            (item) => ItemInCart && { ...item, quantity: item.quantity + 1 }
+          ),
+        }
+      );
 
       // setCartLocalStorage(state.cart);
 
@@ -276,20 +290,50 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case SET_FIREBASE_USER: {
-      console.log(action.payload, "PAYOAASDdddddddDDDDDDDDD")
+      console.log(action.payload, "PAYOAASDdddddddDDDDDDDDD");
       return {
         ...state,
         firebaseUser: action.payload,
       };
     }
     case UPDATE_MANGA:
-    
       return {
         ...state,
-           mangas: state.mangas.map((item) =>
-           item.id === action.payload ? action.payload : item
-         ),
+        mangas: state.mangas.map((item) =>
+          item.id === action.payload ? action.payload : item
+        ),
       };
+
+    case GET_PROMOS: //Bring promos
+      return {
+        ...state,
+        promos: action.payload
+
+      };
+
+    case DELETE_PROMO: {  //DELETE PROMO
+      return {
+        ...state,
+        promos: state.promos.filter((p) => p.id !== action.payload)
+      }
+    }
+
+    case GET_USERS: //Bring users
+      return {
+        ...state,
+        users: action.payload
+
+      };
+      case GET_PROMOS:
+      return{
+        ...state,
+        promos: action.payload
+      }
+      case MANGA_ON_SALE:
+        return {
+          ...state,
+             mangasOnSale: action.payload,
+        };
 
     default:
       return state;
