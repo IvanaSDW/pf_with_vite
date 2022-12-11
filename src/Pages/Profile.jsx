@@ -310,7 +310,7 @@ const Profile = () => {
                   <div className=" h-screen w-full hove:shadow-2 overflow-y-scroll">
                     {myOrders.length &&
                       myOrders.map((e) => {
-                        return <OrderCard order={e} />;
+                        return <OrderCard order={e} key={e.id} />;
                       })}
                   </div>
                 </div>
