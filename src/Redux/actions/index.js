@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SERVER_URL } from '../../domain/serverConfig';
 export const GET_MANGAS = 'GET_MANGAS';
 export const GET_ALL_MANGAS = 'GET_ALL_MANGAS';
 export const GET_DETAILS = 'GET_DETAILS';
@@ -37,9 +38,7 @@ export const GET_ORDER = 'GET_ORDER';
 export const getMangas = () => {
   return async function (dispatch) {
     try {
-      let response = await axios.get(
-        'https://backend-production-1a11.up.railway.app/manga'
-      );
+      let response = await axios.get(`${SERVER_URL}/manga`);
       return dispatch({
         type: GET_MANGAS,
         payload: response.data,
@@ -53,9 +52,7 @@ export const getMangas = () => {
 export const getMangasDetail = () => {
   return async function (dispatch) {
     try {
-      let response = await axios.get(
-        'https://backend-production-1a11.up.railway.app/manga'
-      );
+      let response = await axios.get(`${SERVER_URL}/manga`);
       console.log(response, 'RESPONSE DE LA ACTION ');
       return dispatch({
         type: GET_MANGAS_DETAIL,
@@ -71,7 +68,7 @@ export const getAllMangas = (pageNum, name) => {
   return async function (dispatch) {
     try {
       let response = await axios.get(
-        `https://backend-production-1a11.up.railway.app/paginated/manga?page=${pageNum}&name=${name}`
+        `${SERVER_URL}/paginated/manga?page=${pageNum}&name=${name}`
       );
       return dispatch({
         type: GET_ALL_MANGAS,
@@ -86,10 +83,7 @@ export const getAllMangas = (pageNum, name) => {
 export const postManga = (payload) => {
   return async function () {
     try {
-      let response = await axios.post(
-        'https://backend-production-1a11.up.railway.app/manga',
-        payload
-      );
+      let response = await axios.post(`${SERVER_URL}/manga`, payload);
       return response;
     } catch (error) {}
   };
@@ -103,9 +97,7 @@ export function deleteDetails() {
 
 export function deleteManga(mangaid) {
   return async function (dispatch) {
-    const del = await axios.delete(
-      `https://backend-production-1a11.up.railway.app/manga/${mangaid}`
-    );
+    const del = await axios.delete(`${SERVER_URL}/manga/${mangaid}`);
     return dispatch(
       {
         type: 'DELETE_MANGA',
@@ -119,9 +111,7 @@ export function deleteManga(mangaid) {
 export function getDetails(mangaid) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(
-        `https://backend-production-1a11.up.railway.app/manga/${mangaid}`
-      );
+      var json = await axios.get(`${SERVER_URL}/manga/${mangaid}`);
       return dispatch({
         type: GET_DETAILS,
         payload: json.data,
@@ -135,7 +125,7 @@ export function getDetails(mangaid) {
 export function getMangByName(name, pageNumber) {
   return async function (dispatch) {
     const { data } = await axios.get(
-      `https://backend-production-1a11.up.railway.app/paginated/manga?name=${name}&page=${pageNumber}`
+      `${SERVER_URL}/paginated/manga?name=${name}&page=${pageNumber}`
     );
     return dispatch({
       type: 'GET_MANGA_BY_NAME',
@@ -147,9 +137,7 @@ export function getMangByName(name, pageNumber) {
 export const getAllCategories = () => {
   return async function (dispatch) {
     try {
-      let response = await axios.get(
-        'https://backend-production-1a11.up.railway.app/category'
-      );
+      let response = await axios.get(`${SERVER_URL}/category`);
       return dispatch({
         type: GET_ALL_CATEGORIES,
         payload: response.data,
@@ -163,9 +151,7 @@ export const getAllCategories = () => {
 export const getAllGenres = () => {
   return async function (dispatch) {
     try {
-      let response = await axios.get(
-        'https://backend-production-1a11.up.railway.app/genre'
-      );
+      let response = await axios.get(`${SERVER_URL}/genre`);
       return dispatch({
         type: GET_ALL_GENRES,
         payload: response.data,
@@ -180,7 +166,7 @@ export const getMangaByEmisionDate = (TYPE, pageNumber) => {
   return async function (dispatch) {
     try {
       let response = await axios.get(
-        `https://backend-production-1a11.up.railway.app/paginated/manga?page=${pageNumber}&sort=${TYPE}`
+        `${SERVER_URL}/paginated/manga?page=${pageNumber}&sort=${TYPE}`
       );
       return dispatch({
         type: TYPE === 'dateDesc' ? MANGA_DATE_DESC : MANGA_DATE_ASC,
@@ -196,7 +182,7 @@ export const getMangaByPrice = (TYPE, pageNumber) => {
   return async function (dispatch) {
     try {
       let response = await axios.get(
-        `https://backend-production-1a11.up.railway.app/paginated/manga?page=${pageNumber}&sort=${TYPE}`
+        `${SERVER_URL}/paginated/manga?page=${pageNumber}&sort=${TYPE}`
       );
       return dispatch({
         type: TYPE === 'priceAsc' ? MANGA_PRICE_ASC : MANGA_PRICE_DESC,
@@ -212,7 +198,7 @@ export const filterByCategories = (category, pageNumber) => {
   return async function (dispatch) {
     try {
       let response = await axios.get(
-        `https://backend-production-1a11.up.railway.app/manga/c/${category}?page=${pageNumber}`
+        `${SERVER_URL}/manga/c/${category}?page=${pageNumber}`
       );
       return dispatch({
         type: FILTER_MANGA_BY_CATEGORY,
@@ -228,7 +214,7 @@ export const filterMangaByGenres = (genre, pageNumber) => {
   return async function (dispatch) {
     try {
       let response = await axios.get(
-        `https://backend-production-1a11.up.railway.app/manga/g/${genre}?page=${pageNumber}`
+        `${SERVER_URL}/manga/g/${genre}?page=${pageNumber}`
       );
 
       return dispatch({
@@ -244,9 +230,7 @@ export const filterMangaByGenres = (genre, pageNumber) => {
 export const filterMangaByDate = () => {
   return async function (dispatch) {
     try {
-      let response = await axios.get(
-        `https://backend-production-1a11.up.railway.app/manga?sort=dateDesc`
-      );
+      let response = await axios.get(`${SERVER_URL}/manga?sort=dateDesc`);
 
       return dispatch({
         type: FILTER_MANGA_BY_DATE,
@@ -332,10 +316,7 @@ export function updateManga(mangaid, data) {
   console.log(data, 'DATSSSSSSSSSSSS');
   return async function (dispatch) {
     try {
-      const json = await axios.put(
-        `https://backend-production-1a11.up.railway.app/manga/${mangaid}`,
-        data
-      );
+      const json = await axios.put(`${SERVER_URL}/manga/${mangaid}`, data);
       console.log(json, 'JAMEOSN');
       return dispatch({
         type: UPDATE_MANGA,
@@ -351,10 +332,7 @@ export function updateManga(mangaid, data) {
 export function postPromotion(payload) {
   return async function (dispatch) {
     try {
-      const post = await axios.post(
-        'https://backend-production-1a11.up.railway.app/promotion',
-        payload
-      );
+      const post = await axios.post(`${SERVER_URL}/promotion`, payload);
       return post;
     } catch (error) {
       console.log(error);
@@ -365,10 +343,7 @@ export function postPromotion(payload) {
 export const getPromos = () => {
   return async function (dispatch) {
     try {
-      //let promos = await axios.get("https://backend-production-1a11.up.railway.app/activepromos");
-      let promos = await axios.get(
-        'https://backend-production-1a11.up.railway.app/activepromos'
-      );
+      let promos = await axios.get(`${SERVER_URL}/activepromos`);
       return dispatch({
         type: GET_PROMOS,
         payload: promos.data,
@@ -382,9 +357,7 @@ export const getPromos = () => {
 export const deletePromos = (promoid) => {
   return async function (dispatch) {
     try {
-      const delet = await axios.delete(
-        `https://backend-production-1a11.up.railway.app/promotion/${promoid}`
-      );
+      const delet = await axios.delete(`${SERVER_URL}/promotion/${promoid}`);
       alert('Se ha borrado con exito'); //Optimizar esto
       return dispatch({
         type: DELETE_PROMO,
@@ -399,9 +372,7 @@ export const deletePromos = (promoid) => {
 export const getUsers = () => {
   return async function (dispatch) {
     try {
-      let users = await axios.get(
-        'https://backend-production-1a11.up.railway.app/user'
-      );
+      let users = await axios.get(`${SERVER_URL}/user`);
       return dispatch({
         type: GET_USERS,
         payload: users.data,
@@ -415,9 +386,7 @@ export const getUsers = () => {
 export function getOrderList(userId) {
   return async function (dispatch) {
     try {
-      const order1 = await axios.get(
-        `https://backend-production-1a11.up.railway.app/order/user/${userId}`
-      );
+      const order1 = await axios.get(`${SERVER_URL}/order/user/${userId}`);
 
       console.log(order1.data, 'asdasdasd');
       return dispatch({
@@ -433,9 +402,7 @@ export function getOrderList(userId) {
 export const getMangasOnSale = () => {
   return async function (dispatch) {
     try {
-      let response = await axios.get(
-        `https://backend-production-1a11.up.railway.app/onsale`
-      );
+      let response = await axios.get(`${SERVER_URL}/onsale`);
       return dispatch({
         type: MANGA_ON_SALE,
         payload: response.data,

@@ -12,7 +12,9 @@ import { FiLogOut } from 'react-icons/fi';
 import { AiFillHome, AiFillEdit } from 'react-icons/ai';
 import Footer from '../components/Footer';
 import axios from 'axios';
-import styles from '../components/assets/Profile/profile.module.css'
+import styles from '../components/assets/Profile/profile.module.css';
+import OrderCard from '../components/OrderCard';
+import { SERVER_URL } from '../domain/serverConfig';
 //  import { getOrderList } from '../Redux/actions';
 
 const Profile = () => {
@@ -64,33 +66,26 @@ const Profile = () => {
   const [control, ControlModal] = useState(true);
   const [control2, ControlModal2] = useState(false);
 
-  
   const user = useSelector((state) => state.firebaseUser);
- let userId = user.uid;
-  
-  const [order, setOrder] = useState([])  
+  let userId = user.uid;
 
-  const getOrderList = async (userId) => {
-    const order1 = await axios.get(`https://backend-production-1a11.up.railway.app/order/user/${userId}`);
-    setOrder(order1.data)
-    console.log(order1.data, "     DSDS D    PUTOO")
-}
+  const [myOrders, setMyOrders] = useState([]);
 
-const [view, setView] = useState(false)
+  const getMyOrders = async (userId) => {
+    const orders = await axios.get(`${SERVER_URL}/order/user/${userId}`);
+    setMyOrders(orders.data);
+    console.log('This are my orders: ', orders.data);
+  };
 
-// const [res, setRes] = useState()
+  const [view, setView] = useState(false);
 
+  // const [res, setRes] = useState()
 
-const getOrder =  (id)=>{
-  
-}
+  const getOrder = (id) => {};
 
-useEffect(()=>{
-  getOrderList(userId)
-
-},[] )
-
-
+  useEffect(() => {
+    getMyOrders(userId);
+  }, []);
 
   function controlView() {
     if (control2) {
@@ -135,20 +130,18 @@ useEffect(()=>{
     }
   };
 
+  /////////Details order complete***/////
 
+  function viewMore() {
+    setView(!view);
+  }
 
-/////////Details order complete***/////
+  ////// ADD REVIEW/////////
+  const [review, setReview] = useState(false);
 
-function viewMore(){
-  setView(!view)
-}
-
-////// ADD REVIEW/////////
-const [review, setReview] = useState(false)
-
-function addReview(){
-  setReview(!review)
-}
+  function addReview() {
+    setReview(!review);
+  }
 
   //Personal data form state
 
@@ -185,10 +178,7 @@ function addReview(){
   const onSaveChanges = async () => {
     if (!validateInputs()) return;
     axios
-      .put(
-        `https://backend-production-1a11.up.railway.app/user/${userData.id}`,
-        fieldsState
-      )
+      .put(`${SERVER_URL}/user/${userData.id}`, fieldsState)
       .then((response) => {
         console.log('resp: ', response.data.updatedUser);
         window.alert('Your data were succesfully updated!');
@@ -201,20 +191,29 @@ function addReview(){
   };
 
   const saveAvatarInDb = (avatarUrl) => {
-    axios
-      .put(
-        `https://backend-production-1a11.up.railway.app/user/${userData.id}`,
-        { userAvatar: avatarUrl }
-      )
-      .then((response) => {
-        console.log('Your avatar was succesfully updated!');
-      })
-      .catch((err) => {
-        console.log('err: ', err.response.data);
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((token) => {
+        axios
+          .put(
+            `${SERVER_URL}/user/${userData.id}`,
+            { userAvatar: avatarUrl },
+            {
+              headers: {
+                AuthToken: token,
+              },
+            }
+          )
+          .then((response) => {
+            console.log('Your avatar was succesfully updated! -> ', response);
+          })
+          .catch((err) => {
+            console.log('err: ', err.response.data);
+          });
       });
   };
 
-  
   return (
     <div>
       <div className="">
@@ -231,19 +230,19 @@ function addReview(){
               <div className=" flex ">
                 {fieldsState.userAvatar ? (
                   <img
-                  src={fieldsState.userAvatar}
-                  alt="avatar"
-                  className=" w-40 h-40  rounded-full "
+                    src={fieldsState.userAvatar}
+                    alt="avatar"
+                    className=" w-40 h-40  rounded-full "
                   />
-                  ) : photoUrl ? (
-                    <img
+                ) : photoUrl ? (
+                  <img
                     src={photoUrl}
                     alt="avatar"
                     className=" w-40 h-40 rounded-full "
-                    />
-                    ) : (
-                      <CgProfile />
-                      )}
+                  />
+                ) : (
+                  <CgProfile />
+                )}
               </div>
               <div className=" flex mt-10 flex-col pl-20">
                 <h5 className="pl-5 text-4xl">
@@ -257,14 +256,16 @@ function addReview(){
                   {userData.email}
                   <br />
                 </p>
-            <label htmlFor="file" className={styles.change}>Change a profile photo</label>
-            <input
-              type="file"
-              placeholder='Change photo'
-              className={styles.inputFile}
-              onChange={handleChangeAvatar}
-              id="file"
-            />
+                <label htmlFor="file" className={styles.change}>
+                  Change a profile photo
+                </label>
+                <input
+                  type="file"
+                  placeholder="Change photo"
+                  className={styles.inputFile}
+                  onChange={handleChangeAvatar}
+                  id="file"
+                />
               </div>
             </div>
             <div>
@@ -278,258 +279,201 @@ function addReview(){
           </div>
           <div className="flex justify-evenly h-80 p-20 ">
             <button
-              className="bg-purple-600 hover:bg-white h-10 pb-1  pl-7 pr-7  rounded-md text-white hover:text-purple-600"
+              className={
+                control
+                  ? 'bg-purple-600 hover:bg-white h-10 pb-1  pl-7 pr-7  rounded-md text-white hover:text-purple-600'
+                  : 'bg-purple-300 hover:bg-white h-10 pb-1  pl-7 pr-7  rounded-md text-white hover:text-purple-600'
+              }
               onClick={controlView}
             >
-            My order list
-             
+              My order list
             </button>
             <button
-              className="bg-purple-600 hover:bg-white h-10 pb-1 pl-7 pr-7  rounded-md text-white hover:text-purple-600"
+              className={
+                control2
+                  ? 'bg-purple-600 hover:bg-white h-10 pb-1  pl-7 pr-7  rounded-md text-white hover:text-purple-600'
+                  : 'bg-purple-300 hover:bg-white h-10 pb-1  pl-7 pr-7  rounded-md text-white hover:text-purple-600'
+              }
               onClick={control2View}
             >
-             My Personal data
+              My Personal data
             </button>
           </div>
-          <div className='pb-20'>
-          {control && (
-            <div className="flex justify-center 2xl:mt-60 xl:mt-5 h-60  " value={control}>
-              <div className="border-2 border-purple-600 rounded-md  2xl:w-9/12  absolute self-center ">
-                
-                
-                <div className=" h-screen w-full hove:shadow-2 overflow-y-scroll">
-                      {order.length &&
-                        order.map((e)=>{
-                          return(
-                          <>
-                          <div className=' flex justify-center m-6 pr-20'>
-                          {
-                          // () => {for(let i; i < e.orderItems.length; i++){
-                          e.orderItems.length && e.orderItems.slice(0, 3).map((e)=>{
-                            return(
-                              <div>
-                              <div>
-                              {review && e.id &&
-                                <div>
-                                    <div className='flex flex-row w-full p-60 h-full fixed top-0 left-0 bg-black/60'>
-                                    <div className='flex flex-row h-80 w-full bg-white relative justify-center items-center'>
-                                    <button onClick={addReview} className='absolute bg-purple-600 right-60 p-5' >CERRAR REVIEW</button>
-                                      <div>
-                                        <form action="submit">
-                                          <img src={e.mangaPosterImage} className="w-40 " alt="" />
-                                        </form>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>}
-                                </div>
-                              <div className='flex flex-wrap pr-20 '>
-                              <img src= {e.mangaPosterImage} alt="" className='w-20 rounded-full'/>      
-                                <div className='flex flex-col ml-4 mt-5'>
-                                  <p > Name : {e.mangaTitle}</p>
-                                  <p > Quantity : {e.quantity}</p>
-                                  <p className='flex ' > Price x unity:   <p className='text-green-600 pl-2'>usd {e.price}</p></p>
-                                  </div>
-                                  <button className='text-purple-400 hover:underline' onClick={addReview}>Add Review</button>
-                            
-                                </div></div>
-                            )
-                            })
-                            }
-                            
-          
-                          <div>
-                          <p>Status: {e.status === "completed" ? <p className='text-green-600'>{e.status === "rejected" }</p> : <p className='text-red-600'>{e.status}</p>}</p>
-                          <p className='flex'>Total Price: </p><p className='text-green-600 '>usd {e.total}</p>
-                            </div>
-                            {e.orderItems.length > 3 && <button className='text-yellow-600 hover:underline   right-10 top-60' onClick={viewMore} >More details...</button>}
-                              {view && e.orderItems.length   > 3 &&
-                                <div className='flex flex-row w-full p-60 h-full fixed top-0 left-0 bg-black/60'>
-                              {
-                              e.orderItems.map((e)=>{
-                                return(
-                                  <>
-                                  <div className='flex flex-row h-80 w-full bg-white relative justify-center items-center'>  
-                                  <div className='flex  text-black flex-row'>
-                                    <img src= {e.mangaPosterImage} alt="" className='w-20 rounded-full'/>      
-                                      <div className='flex flex-col ml-4 mt-5'>
-                                        <p > Name : {e.mangaTitle}</p>
-                                        <p > Quantity : {e.quantity}</p>
-                                        <p className='flex ' > Price x unity:   <p className='text-green-600 pl-2'>usd {e.price}</p></p>
-                                        </div>
-                                  </div>
-                                  </div>
-                                  <button onClick={viewMore} className='absolute bg-purple-600 right-60 p-5'>Exit.</button>
-
-                                  </>
-                                )
-                              })
-                              }
-                              </div>
-                              }
-                          </div>
-
-                            <div className='w-full border-2 border-gray-500'></div>
-                          </>)
-                        })  }
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {control2 && (
-            <div className="flex justify-center mt-8 h-60" value={control2}>
-              <div className="border-2 border-purple-600 rounded-md  w-6/12  absolute self-center">
-                <div className="flex flex-col text-purple-500">
-                  <div className="flex text-4xl p-2 2xl:ml-60 xl:ml-10 xl:pl-40">
-                    <h2 className="text-4xl self-center ">Personal Data ....</h2>
-                    {editMode ? (
-                      <p
-                        onClick={() => {
-                          setEditMode(false);
-                          setSomeChanged(false);
-                        }}
-                        className="text-red-300 cursor-pointer hover:text-red-600 italic"
-                      >
-                        cancel
-                      </p>
-                    ) : (
-                      <AiFillEdit
-                        className="cursor-pointer hover:text-red-600"
-                        onClick={() => {
-                          setEditMode(true);
-                        }}
-                      />
-                    )}
+          <div className="pb-20">
+            {control && (
+              <div
+                className="flex justify-center 2xl:mt-60 xl:mt-5 h-60  "
+                value={control}
+              >
+                <div className="border-2 border-purple-600 rounded-md 2xl:w-9/12  absolute self-center ">
+                  <div className=" h-screen w-full hove:shadow-2 overflow-y-scroll">
+                    {myOrders.length &&
+                      myOrders.map((e) => {
+                        return <OrderCard order={e} />;
+                      })}
                   </div>
-                  <form action="" className="flex flex-col 2xl:ml-20 w-full xl:ml-20  m-5">
-                    <div className="flex flex-col  2xl:ml-60 xl:ml-20">
-                      <div className="flex">
-                        <div className="flex flex-col  2xl:mr-12 xl:mr-0">
-                          <label>First Name</label>
-                          <input
-                            disabled={!editMode}
-                            type="text"
-                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
-                            name="firstname"
-                            value={fieldsState.firstname}
-                            onChange={handleFieldChange}
-                          />
-                        </div>
-                        <div className="flex flex-col ">
-                          <label>Last Name</label>
-                          <input
-                            disabled={!editMode}
-                            type="text"
-                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
-                            name="lastname"
-                            value={fieldsState.lastname}
-                            onChange={handleFieldChange}
-                          />
-                        </div>
-                      </div>
-                      <label>E-mail</label>
-                      <input
-                        disabled={!editMode}
-                        type="email"
-                        className="border-2 border-purple-600 2xl:w-7/12 rounded-md p-2 text-gray-800 xl:w-4/6 "
-                        name="email"
-                        value={fieldsState.email}
-                        onChange={handleFieldChange}
-                      />
-                      {fieldErrors.emailError && (
-                        <p className="italic text-red-600 text-sm">
-                          {fieldErrors.emailError}
-                        </p>
-                      )}
-                      <label>Number Phone</label>
-                      <input
-                        disabled={!editMode}
-                        type="text"
-                        className="border-2 border-purple-600 2xl:w-7/12 xl:w-4/6  rounded-md p-2 text-gray-800"
-                        name="phone"
-                        value={fieldsState.phone}
-                        onChange={handleFieldChange}
-                      />
-
-                      <div className="flex">
-                        <div className="flex flex-col 2xl:mr-12 xl:mr-0">
-                          <label>Address</label>
-                          <input
-                            disabled={!editMode}
-                            type="text"
-                            className="border-2 border-purple-600  xl:w-5/6 rounded-md p-2 text-gray-800"
-                            name="addressLine1"
-                            value={fieldsState.addressLine1}
-                            onChange={handleFieldChange}
-                          />
-                        </div>
-                        <div className="flex flex-col 2xl:mr-10 xl:mr-0">
-                          <label>Address2</label>
-                          <input
-                            disabled={!editMode}
-                            type="text"
-                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
-                            name="addressLine2"
-                            value={fieldsState.addressLine2}
-                            onChange={handleFieldChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <div className="flex flex-col 2xl:mr-12 ">
-                          <label> city</label>
-                          <input
-                            disabled={!editMode}
-                            type="text"
-                            className="border-2  xl:w-5/6 xl:mr-0 border-purple-600 rounded-md p-2 text-gray-800"
-                            name="city"
-                            value={fieldsState.city}
-                            onChange={handleFieldChange}
-                          />
-                        </div>
-                        <div className="flex flex-col ">
-                          <label>Postal Code</label>
-                          <input
-                            disabled={!editMode}
-                            type="text"
-                            className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
-                            name="postalCode"
-                            value={fieldsState.postalCode}
-                            onChange={handleFieldChange}
-                          />
-                        </div>
-                      </div>
-                      <label>Country</label>
-                      <input
-                        disabled={!editMode}
-                        type="text"
-                        className="border-2 2xl:w-7/12 border-purple-600 xl:w-4/6 rounded-md p-2 text-gray-800"
-                        name="country"
-                        value={fieldsState.country}
-                        onChange={handleFieldChange}
-                      />
-                      <button
-                        type="button"
-                        disabled={!someChanged}
-                        onClick={onSaveChanges}
-                        className={
-                          !someChanged
-                            ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3 xl:w-4/6 2xl:w-7/12'
-                            : 'bg-purple-600 text-white h-10 rounded-md 4mt-3 xl:4/6 hover:bg-purple-800 2xl:w-7/12'
-                        }
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
                 </div>
               </div>
-            </div>
-          )}</div>
-        
-        </div>
+            )}
+
+            {control2 && (
+              <div className="flex justify-center mt-8 h-60" value={control2}>
+                <div className="border-2 border-purple-600 rounded-md  w-6/12  absolute self-center">
+                  <div className="flex flex-col text-purple-500">
+                    <div className="flex text-4xl p-2 2xl:ml-60 xl:ml-10 xl:pl-40">
+                      <h2 className="text-4xl self-center ">
+                        Personal Data ....
+                      </h2>
+                      {editMode ? (
+                        <p
+                          onClick={() => {
+                            setEditMode(false);
+                            setSomeChanged(false);
+                          }}
+                          className="text-red-300 cursor-pointer hover:text-red-600 italic"
+                        >
+                          cancel
+                        </p>
+                      ) : (
+                        <AiFillEdit
+                          className="cursor-pointer hover:text-red-600"
+                          onClick={() => {
+                            setEditMode(true);
+                          }}
+                        />
+                      )}
+                    </div>
+                    <form
+                      action=""
+                      className="flex flex-col 2xl:ml-20 w-full xl:ml-20  m-5"
+                    >
+                      <div className="flex flex-col  2xl:ml-60 xl:ml-20">
+                        <div className="flex">
+                          <div className="flex flex-col  2xl:mr-12 xl:mr-0">
+                            <label>First Name</label>
+                            <input
+                              disabled={!editMode}
+                              type="text"
+                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                              name="firstname"
+                              value={fieldsState.firstname}
+                              onChange={handleFieldChange}
+                            />
+                          </div>
+                          <div className="flex flex-col ">
+                            <label>Last Name</label>
+                            <input
+                              disabled={!editMode}
+                              type="text"
+                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                              name="lastname"
+                              value={fieldsState.lastname}
+                              onChange={handleFieldChange}
+                            />
+                          </div>
+                        </div>
+                        <label>E-mail</label>
+                        <input
+                          disabled={!editMode}
+                          type="email"
+                          className="border-2 border-purple-600 2xl:w-7/12 rounded-md p-2 text-gray-800 xl:w-4/6 "
+                          name="email"
+                          value={fieldsState.email}
+                          onChange={handleFieldChange}
+                        />
+                        {fieldErrors.emailError && (
+                          <p className="italic text-red-600 text-sm">
+                            {fieldErrors.emailError}
+                          </p>
+                        )}
+                        <label>Number Phone</label>
+                        <input
+                          disabled={!editMode}
+                          type="text"
+                          className="border-2 border-purple-600 2xl:w-7/12 xl:w-4/6  rounded-md p-2 text-gray-800"
+                          name="phone"
+                          value={fieldsState.phone}
+                          onChange={handleFieldChange}
+                        />
+
+                        <div className="flex">
+                          <div className="flex flex-col 2xl:mr-12 xl:mr-0">
+                            <label>Address</label>
+                            <input
+                              disabled={!editMode}
+                              type="text"
+                              className="border-2 border-purple-600  xl:w-5/6 rounded-md p-2 text-gray-800"
+                              name="addressLine1"
+                              value={fieldsState.addressLine1}
+                              onChange={handleFieldChange}
+                            />
+                          </div>
+                          <div className="flex flex-col 2xl:mr-10 xl:mr-0">
+                            <label>Address2</label>
+                            <input
+                              disabled={!editMode}
+                              type="text"
+                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                              name="addressLine2"
+                              value={fieldsState.addressLine2}
+                              onChange={handleFieldChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <div className="flex flex-col 2xl:mr-12 ">
+                            <label> city</label>
+                            <input
+                              disabled={!editMode}
+                              type="text"
+                              className="border-2  xl:w-5/6 xl:mr-0 border-purple-600 rounded-md p-2 text-gray-800"
+                              name="city"
+                              value={fieldsState.city}
+                              onChange={handleFieldChange}
+                            />
+                          </div>
+                          <div className="flex flex-col ">
+                            <label>Postal Code</label>
+                            <input
+                              disabled={!editMode}
+                              type="text"
+                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                              name="postalCode"
+                              value={fieldsState.postalCode}
+                              onChange={handleFieldChange}
+                            />
+                          </div>
+                        </div>
+                        <label>Country</label>
+                        <input
+                          disabled={!editMode}
+                          type="text"
+                          className="border-2 2xl:w-7/12 border-purple-600 xl:w-4/6 rounded-md p-2 text-gray-800"
+                          name="country"
+                          value={fieldsState.country}
+                          onChange={handleFieldChange}
+                        />
+                        <button
+                          type="button"
+                          disabled={!someChanged}
+                          onClick={onSaveChanges}
+                          className={
+                            !someChanged
+                              ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3 xl:w-4/6 2xl:w-7/12'
+                              : 'bg-purple-600 text-white h-10 rounded-md 4mt-3 xl:4/6 hover:bg-purple-800 2xl:w-7/12'
+                          }
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
+            )}
+          </div>
+        </div>
+      </div>
       <div className="mt-80">
         <Footer />
       </div>
