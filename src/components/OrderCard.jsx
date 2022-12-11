@@ -51,12 +51,7 @@ const OrderCard = ({ order }) => {
                           >
                             Cancel
                           </button>
-                          <button
-                            onClick={addReview}
-                            className="absolute bg-purple-600 right-60 p-5"
-                          >
-                            Cancel
-                          </button>
+
                           <div>
                             <form action="submit">
                               <img
@@ -64,6 +59,13 @@ const OrderCard = ({ order }) => {
                                 className="w-40 "
                                 alt=""
                               />
+                              <button
+                                type="button"
+                                onClick={addReview}
+                                className="absolute bg-purple-600 right-60 p-5"
+                              >
+                                Add
+                              </button>
                             </form>
                           </div>
                         </div>
