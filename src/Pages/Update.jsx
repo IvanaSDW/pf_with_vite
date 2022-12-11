@@ -7,6 +7,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import axios from 'axios';
 import { uploadFile } from '../domain/userService'; //1
+import { SERVER_URL } from '../domain/serverConfig';
 
 export default function Update() {
   const allGenres = useSelector((state) => state.genres);
@@ -60,9 +61,7 @@ export default function Update() {
   };
 
   async function getData() {
-    const response = await axios.get(
-      `https://backend-production-1a11.up.railway.app/manga/${id}`
-    );
+    const response = await axios.get(`${SERVER_URL}/manga/${id}`);
     setDetail(response.data);
     setLoader(false);
   }
