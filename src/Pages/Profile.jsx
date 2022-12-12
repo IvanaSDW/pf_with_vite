@@ -346,7 +346,7 @@ const Profile = () => {
                     </div>
                     <form
                       action=""
-                      className="flex flex-col 2xl:ml-20 w-full xl:ml-20  m-5"
+                      className="flex flex-col 2xl:ml-10 w-full xl:ml-20  m-5"
                     >
                       <div className="flex flex-col  2xl:ml-60 xl:ml-20">
                         <div className="flex">
@@ -355,7 +355,7 @@ const Profile = () => {
                             <input
                               disabled={!editMode}
                               type="text"
-                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                              className="border-2 text-purple-600 border-purple-600 xl:w-5/6 rounded-md p-2 "
                               name="firstname"
                               value={fieldsState.firstname}
                               onChange={handleFieldChange}
@@ -366,7 +366,7 @@ const Profile = () => {
                             <input
                               disabled={!editMode}
                               type="text"
-                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 ml-3 text-purple-600"
                               name="lastname"
                               value={fieldsState.lastname}
                               onChange={handleFieldChange}
@@ -377,7 +377,7 @@ const Profile = () => {
                         <input
                           disabled={!editMode}
                           type="email"
-                          className="border-2 border-purple-600 2xl:w-7/12 rounded-md p-2 text-gray-800 xl:w-4/6 "
+                          className="border-2 border-purple-600 2xl:w-8/12 rounded-md p-2 text-purple-600 xl:w-4/6 "
                           name="email"
                           value={fieldsState.email}
                           onChange={handleFieldChange}
@@ -391,7 +391,7 @@ const Profile = () => {
                         <input
                           disabled={!editMode}
                           type="text"
-                          className="border-2 border-purple-600 2xl:w-7/12 xl:w-4/6  rounded-md p-2 text-gray-800"
+                          className="border-2 border-purple-600 2xl:w-8/12 xl:w-4/6  rounded-md p-2 text-purple-600"
                           name="phone"
                           value={fieldsState.phone}
                           onChange={handleFieldChange}
@@ -403,7 +403,7 @@ const Profile = () => {
                             <input
                               disabled={!editMode}
                               type="text"
-                              className="border-2 border-purple-600  xl:w-5/6 rounded-md p-2 text-gray-800"
+                              className="border-2 border-purple-600  xl:w-5/6 rounded-md p-2 text-purple-600"
                               name="addressLine1"
                               value={fieldsState.addressLine1}
                               onChange={handleFieldChange}
@@ -414,7 +414,7 @@ const Profile = () => {
                             <input
                               disabled={!editMode}
                               type="text"
-                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                              className="border-2 border-purple-600 xl:w-5/6 rounded-md ml-3 p-2 text-purple-600"
                               name="addressLine2"
                               value={fieldsState.addressLine2}
                               onChange={handleFieldChange}
@@ -427,7 +427,7 @@ const Profile = () => {
                             <input
                               disabled={!editMode}
                               type="text"
-                              className="border-2  xl:w-5/6 xl:mr-0 border-purple-600 rounded-md p-2 text-gray-800"
+                              className="border-2  xl:w-5/6 xl:mr-0 border-purple-600 rounded-md p-2 text-purple-600"
                               name="city"
                               value={fieldsState.city}
                               onChange={handleFieldChange}
@@ -438,7 +438,7 @@ const Profile = () => {
                             <input
                               disabled={!editMode}
                               type="text"
-                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 text-gray-800"
+                              className="border-2 border-purple-600 xl:w-5/6 rounded-md p-2 ml-3 text-purple-600"
                               name="postalCode"
                               value={fieldsState.postalCode}
                               onChange={handleFieldChange}
@@ -449,7 +449,7 @@ const Profile = () => {
                         <input
                           disabled={!editMode}
                           type="text"
-                          className="border-2 2xl:w-7/12 border-purple-600 xl:w-4/6 rounded-md p-2 text-gray-800"
+                          className="border-2 2xl:w-8/12 border-purple-600 xl:w-4/6 rounded-md p-2 text-purple-600"
                           name="country"
                           value={fieldsState.country}
                           onChange={handleFieldChange}
@@ -460,8 +460,8 @@ const Profile = () => {
                           onClick={onSaveChanges}
                           className={
                             !someChanged
-                              ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3 xl:w-4/6 2xl:w-7/12'
-                              : 'bg-purple-600 text-white h-10 rounded-md 4mt-3 xl:4/6 hover:bg-purple-800 2xl:w-7/12'
+                              ? 'bg-gray-500 text-gray-700 h-10 rounded-md p-2 mt-3 xl:w-4/6 2xl:w-8/12'
+                              : 'bg-purple-600 text-white h-10 rounded-md p-2 mt-3 xl:4/6 hover:bg-purple-800 2xl:w-8/12'
                           }
                         >
                           Save

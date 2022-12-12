@@ -226,7 +226,7 @@ export default function Login() {
                   E-mail
                 </label>
                 <input
-                  className="w-30 p-2 m-2  bg-white text-black relative border-2 rounded-lg border-purple-600 "
+                  className="w-full p-2 m-2  bg-white text-black relative border-2 rounded-lg border-purple-600 "
                   value={fieldInputs.email}
                   onChange={(e) => handleEmailChange(e)}
                   onBlur={() =>
@@ -246,7 +246,7 @@ export default function Login() {
                   Password
                 </label>
                 <input
-                  className="w-30 p-6 m-2 text-black mt-2 bg-white  relative border-2 rounded-lg border-purple-600 h-1"
+                  className=" p-6 m-2 text-black mt-2 w-full bg-white  relative border-2 rounded-lg border-purple-600 h-1"
                   value={fieldInputs.password}
                   onChange={(e) => handlePwdChange(e)}
                   onBlur={() =>
@@ -298,7 +298,7 @@ export default function Login() {
                   Full Name
                 </label>
                 <input
-                  className="w-30 p-4 m-2 text-black mt-1 bg-white  relative border-2 rounded-lg border-purple-600 h-1"
+                  className="w-full p-6 m-2 text-black mt-1 bg-white  relative border-2 rounded-lg border-purple-600 h-1"
                   value={fieldInputs.name}
                   onChange={(e) => handleNameChange(e)}
                   onBlur={() =>
@@ -317,7 +317,7 @@ export default function Login() {
                   E-mail
                 </label>
                 <input
-                  className="w-30 p-4 m-2 text-black mt-1 bg-white  relative border-2 rounded-lg border-purple-600 h-1"
+                  className="w-full p-6 m-2 text-black mt-1 bg-white  relative border-2 rounded-lg border-purple-600 h-1"
                   value={fieldInputs.email}
                   onChange={(e) => handleEmailChange(e)}
                   onBlur={() =>
@@ -337,7 +337,7 @@ export default function Login() {
                   Password
                 </label>
                 <input
-                  className="w-30 p-4 m-2 text-black mt-1 bg-white  relative border-2 rounded-lg border-purple-600 h-1"
+                  className="w-full  p-6 m-2 text-black mt-1 bg-white  relative border-2 rounded-lg border-purple-600 h-1"
                   value={fieldInputs.password}
                   onChange={(e) => handlePwdChange(e)}
                   onBlur={() =>
