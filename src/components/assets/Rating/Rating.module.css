@@ -20,7 +20,7 @@
     top: 0;
     transition: all 0.5s;
 }
-input {
+/* input {
     background: transparent;
     border: solid 2px #a3a3a3;
     color: #fff;
@@ -30,7 +30,7 @@ input {
     text-align: center;
     margin-top: 50px;
     margin-right: 10px;
-}
+} */
 input:focus {
     outline: none;
 }
