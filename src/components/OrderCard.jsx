@@ -94,10 +94,10 @@ const OrderCard = ({ order }) => {
         {order.orderItems.length &&
           order.orderItems.map((item) => {
             return (
-              <div className="my-6">
+              <div className="my-6 ">
                 {showReviewForm && item.id && (
-                  <div className="w-full p-60 h-full fixed top-0 left-0">
-                    <form className="h-80 w-full bg-slate-500 relative p-5 justify-center items-center grid grid-cols-5 grid-rows-4 grid-flow-col gap-4">
+                  <div className="w-full p-60 h-full fixed top-0  left-0">
+                    <form className="h-80 rounded-md w-full bg-slate-500 relative p-5 justify-center items-center grid grid-cols-5 grid-rows-4 grid-flow-col gap-4">
                       <div className="row-span-3 col-span-1">
                         <img
                           src={item.mangaPosterImage}
@@ -117,7 +117,7 @@ const OrderCard = ({ order }) => {
                       </div>
 
                       <div className="col-span-4 row-span-1">
-                        <p>{item.mangaTitle}</p>
+                        <p className="text-6xl">{item.mangaTitle}</p>
                       </div>
 
                       <div className="row-span-2 col-span-4 w-full flex flex-wrap">
@@ -126,7 +126,7 @@ const OrderCard = ({ order }) => {
                         </label>
                         <textarea
                           type="text"
-                          className="bg-black w-full"
+                          className="text-purple-600 p-3 rounded-md w-full"
                           name="review"
                           value={review}
                           onChange={handleReviewChange}
