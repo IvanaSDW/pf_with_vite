@@ -25,3 +25,14 @@ body.dark {
   background-color: #282c34;
   color: aliceblue;
 }
+#root{
+  position: relative;
+  z-index: 99;
+}
+
+#particles-js{
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+}
