@@ -9,6 +9,7 @@ import {
   filterByCategories,
   filterMangaByGenres,
   loading,
+  filterMangasOnSale,
 } from "../Redux/actions";
 import { HiOutlineSortDescending } from "react-icons/hi";
 
@@ -77,6 +78,7 @@ export default function FilterAside({
 
   const allCategories = useSelector((state) => state.categories);
   const allGenres = useSelector((state) => state.genres);
+  const onSale = useSelector((state) => state.mangasOnSale);
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -88,6 +90,12 @@ export default function FilterAside({
     setCurrentPage(1);
     dispatch(loading());
     dispatch(getAllMangas(currentPage, mangaState));
+  };
+
+  const handleGetMangasOnSale = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(filterMangasOnSale());
   };
 
   const HandleFilteredByCategories = (e) => {
@@ -157,6 +165,30 @@ export default function FilterAside({
                 </svg>
                 <span className="ml-3 text-white rounded-lg dark:text-white hover:bg-cyan-500">
                   All Mangas
+                </span>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={(e) => handleGetMangasOnSale(e)}
+                className="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-cyan-500 w-full"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6 text-white"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                  />
+                </svg>
+                <span className="ml-3 text-white rounded-lg dark:text-white hover:bg-cyan-500">
+                  Mangas ONSALE!
                 </span>
               </button>
             </li>

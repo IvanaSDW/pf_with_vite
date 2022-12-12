@@ -30,6 +30,7 @@ import {
   GET_DISABLED_USERS,
   DELETE_PROMO,
   MANGA_ON_SALE,
+  MANGA_FILTER_ON_SALE,  
 } from "../actions";
 
 const getCartLocalStorage = () => {
@@ -60,7 +61,8 @@ const initialState = {
   promos: [],
   users: [],
   usersAvailable: [],
-  disabledUsers: []
+  disabledUsers: [],
+  mangasOnSale: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -350,6 +352,23 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         mangasOnSale: action.payload,
       };
+     case MANGA_FILTER_ON_SALE:
+        const mangasOnSaleFilter = [];
+        
+        action.payload.totalMangas.forEach((e) => {
+          action.payload.onSaleData.forEach((el) => {
+            if( e.mangaid === el[0]) {
+             mangasOnSaleFilter.push(e)
+
+            }
+           })
+           
+        })
+        console.log(mangasOnSaleFilter)
+          return {
+            ...state,
+               mangas: mangasOnSaleFilter,
+          };
 
     default:
       return state;
