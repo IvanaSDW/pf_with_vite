@@ -41,7 +41,7 @@ export default function Update() {
         return imageUrl;
       });
     } catch (e) {
-      console.log('error uploadin image: ', e);
+      console.log('error uploading image: ', e);
     }
   };
 
@@ -79,8 +79,8 @@ export default function Update() {
 
   return (
     <div className=" h-full">
-      <h2 className="font-black text-violet-800 text-3xl text-center pt-10 pb-8">
-        New Mangas
+      <h2 className="font-black text-violet-800 text-3xl text-center pt-10">
+        Update Manga Data
       </h2>
       <Link to="/home">
         <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
@@ -212,8 +212,8 @@ export default function Update() {
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
-          <div className="flex flex-row justify-center h-full mt-36">
-            <Form className=" shadow-4xl rounded-lg py-10 px-5 mb-10 h-full md:w-1/2 lg:w-2/5 mx-5 ">
+          <div className="flex flex-row justify-center h-full mt-12">
+            <Form className=" shadow-4xl rounded-lg px-5 mb-10 h-full md:w-1/2 lg:w-2/5 mx-5 ">
               <div className="mb-5">
                 <label
                   htmlFor="canonicalTitle"

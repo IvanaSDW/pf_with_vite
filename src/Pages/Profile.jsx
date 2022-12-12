@@ -160,16 +160,28 @@ const Profile = () => {
 
   const onSaveChanges = async () => {
     if (!validateInputs()) return;
-    axios
-      .put(`${SERVER_URL}/user/${userData.id}`, fieldsState)
-      .then((response) => {
-        console.log('resp: ', response.data.updatedUser);
-        window.alert('Your data were succesfully updated!');
-        setSomeChanged(false);
-        setEditMode(false);
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((token) => {
+        axios
+          .put(`${SERVER_URL}/user/${userData.id}`, fieldsState, {
+            headers: {
+              AuthToken: token,
+            },
+          })
+          .then((response) => {
+            console.log('resp: ', response.data.updatedUser);
+            window.alert('Your data were succesfully updated!');
+            setSomeChanged(false);
+            setEditMode(false);
+          })
+          .catch((error) => {
+            alert('err: ', error);
+          });
       })
       .catch((err) => {
-        console.log('err: ', err.response.data);
+        console.log('error getting auth token');
       });
   };
 
@@ -446,7 +458,7 @@ const Profile = () => {
                           className={
                             !someChanged
                               ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3 xl:w-4/6 2xl:w-7/12'
-                              : 'bg-purple-600 text-white h-10 rounded-md 4mt-3 xl:4/6 hover:bg-purple-800 2xl:w-7/12'
+                              : 'bg-purple-600 text-white h-10 rounded-md mt-3 xl:w-4/6 hover:bg-purple-800 2xl:w-7/12'
                           }
                         >
                           Save

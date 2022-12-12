@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import swal from 'sweetalert';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,12 +16,13 @@ export const FormAdmin = () => {
   const [categoryChoose, setCategoryChoose] = useState([]);
   const [urlStorage, setUrlStorage] = useState(''); //2
   const [file, setFile] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log('Uploading file to storage...');
       const result = await uploadFile(file);
       setUrlStorage(result);
-      console.log(result);
     } catch (e) {
       console.log(e);
     }
@@ -40,15 +41,26 @@ export const FormAdmin = () => {
     setCategoryChoose([]);
   };
 
-  const handlerChangeImage = (setFieldValue) => {
-    //3
-    setFieldValue('posterImage', urlStorage);
+  useEffect(() => {
+    console.log('image changed...uploading file..');
+    saveNewImage(file);
+  }, [file]);
+
+  const saveNewImage = async (file) => {
+    try {
+      const imageUrl = await uploadFile(file);
+      setUrlStorage((prevState) => {
+        return imageUrl;
+      });
+    } catch (e) {
+      console.log('error uploading image: ', e);
+    }
   };
 
   return (
     <div className=" h-full">
-      <h2 className="font-black text-violet-800 text-3xl text-center pt-10 pb-8">
-        New Mangas
+      <h2 className="font-black text-violet-800 text-3xl text-center pt-10">
+        Create New Manga Item
       </h2>
       <Link to="/home">
         <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
@@ -64,7 +76,6 @@ export const FormAdmin = () => {
           status: '',
           synopsis: '',
           price: '',
-          posterImage: { small: { url: '' } },
           startDate: '',
           genre: '',
           category: '',
@@ -100,16 +111,6 @@ export const FormAdmin = () => {
 
           if (!itemsValue.category) {
             errorsBox.category = 'Categories is needed';
-          }
-
-          if (!itemsValue.posterImage) {
-            errorsBox.posterImage = 'Image URL is required';
-          } else if (
-            !/^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/.test(
-              itemsValue.posterImage
-            )
-          ) {
-            errorsBox.posterImage = 'The URL format is wrong';
           }
 
           if (!itemsValue.price) {
@@ -161,7 +162,7 @@ export const FormAdmin = () => {
           dispatch(
             postManga({
               ...itemsValue,
-              posterImage: { small: { url: itemsValue.posterImage } },
+              posterImage: { small: { url: urlStorage } },
               genre: genresChoose.slice(1),
               category: categoryChoose.slice(1),
             })
@@ -176,8 +177,8 @@ export const FormAdmin = () => {
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
-          <div className="flex flex-row justify-center h-full mt-36">
-            <Form className=" shadow-4xl rounded-lg py-10 px-5 mb-10 h-full md:w-1/2 lg:w-2/5 mx-5 ">
+          <div className="flex flex-row justify-center h-full mt-12">
+            <Form className=" shadow-4xl rounded-lg  px-5 mb-10 h-full md:w-1/2 lg:w-2/5 mx-5 ">
               <div className="mb-5">
                 <label
                   htmlFor="canonicalTitle"
@@ -186,7 +187,7 @@ export const FormAdmin = () => {
                   Title
                 </label>
                 <Field
-                  className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-sm"
+                  className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-sm text-slate-900"
                   type="text"
                   id="canonicalTitle"
                   name="canonicalTitle"
@@ -195,27 +196,6 @@ export const FormAdmin = () => {
                 {touched.canonicalTitle && errors.canonicalTitle && (
                   <div className="block text-red-500 font-bold mt-1">
                     {errors.canonicalTitle}
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="posterImage"
-                  className="block  uppercase font-bold mt-2"
-                >
-                  URL Image
-                </label>
-                <Field
-                  className="border-2 w-full p-2 mt-2 text-black placeholder-gray-400 rounded-sm"
-                  type="text"
-                  id="posterImage"
-                  name="posterImage"
-                  placeholder="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpCW4O6AT0orARolhUqwpgg4auA-MmmB8-LaALvB1zZNszhjGmrPzZ0wSVwznLpk-n8nU&usqp=CAU"
-                />
-                {touched.posterImage && errors.posterImage && (
-                  <div className="block text-red-500 font-bold mt-1">
-                    {errors.posterImage}
                   </div>
                 )}
               </div>
@@ -449,38 +429,23 @@ export const FormAdmin = () => {
                   {values.canonicalTitle}
                 </span>
               </p>
-              <img
-                className="rounded-t-lg px-3 py-1"
-                src={
-                  values.posterImage
-                    ? values.posterImage
-                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Ba7Qc7aNAX4MRV2rRKBxwq9155WehCKBYA&usqp=CAU'
-                }
-                alt={values.canonicalTitle}
-              />
-
               <div>
-                {/*4 */}
                 <form onSubmit={handleSubmit}>
                   <input
                     type="file"
                     onChange={(e) => setFile(e.target.files[0])}
                   />
-                  <span className="bg-blue-400 px-1.5 py-0.5 rounded-md text-xl text-black p-2 ml-5 mr-5 hover:text-white ">
-                    <button>1- URL format</button>
-                  </span>
-
-                  <span className="bg-blue-400 text-xl mb-4 hover:text-white  mt-5 cursor-pointer rounded-md ">
-                    <button
-                      className=""
-                      onClick={() => handlerChangeImage(setFieldValue)}
-                    >
-                      2- Field completed
-                    </button>
-                  </span>
+                  {urlStorage ? (
+                    <img
+                      className="rounded-t-lg px-3 py-1"
+                      src={urlStorage}
+                      alt={values.canonicalTitle}
+                    />
+                  ) : (
+                    <p>Choose a poster image for your manga</p>
+                  )}
                 </form>
               </div>
-
               <div className="px-4 py-3 flex flex-col">
                 <p className="text-1xl font-bold text-gray-700 mb-4">
                   Synopsis:
