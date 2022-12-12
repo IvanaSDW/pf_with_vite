@@ -121,7 +121,7 @@ const OrderCard = ({ order }) => {
                       </div>
 
                       <div className="col-span-4 row-span-1">
-                        <p className="text-6xl">{item.mangaTitle}</p>
+                        <p className="text-3xl">{item.mangaTitle}</p>
                       </div>
 
                       <div className="row-span-2 col-span-4 w-full flex flex-wrap">
