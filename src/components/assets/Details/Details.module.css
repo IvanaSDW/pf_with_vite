@@ -128,13 +128,16 @@ b{
 }
 .bttns{
     margin-left: 3vh;
+    font-weight: bold ;
+
 }
 .or{
     margin-left: 4vh;
 }
 
 .bttns:hover{
-    color: rgb(30, 30, 243);
+    color: rgb(179, 59, 216);
     text-decoration: underline;
     box-shadow: white;
+    font-weight: bold ;
 }

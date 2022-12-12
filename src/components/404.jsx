@@ -3,6 +3,8 @@ import NavBar from './Navbar';
 import styles from './assets/404/NotFound.module.css';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
+
+
 export default function NotFound() {
   const [currentPage, setCurrentPage] = useState(1);
 
