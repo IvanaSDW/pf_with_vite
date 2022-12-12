@@ -15,7 +15,6 @@ import axios from 'axios';
 import styles from '../components/assets/Profile/profile.module.css';
 import OrderCard from '../components/OrderCard';
 import { SERVER_URL } from '../domain/serverConfig';
-//  import { getOrderList } from '../Redux/actions';
 
 const Profile = () => {
   const dispatch = useDispatch();

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SERVER_URL } from '../domain/serverConfig';
 import firebase from '../domain/userService';
+import RatingStar from './RatingStar';
 
 const OrderCard = ({ order }) => {
   ////// ADD REVIEW/////////
@@ -50,10 +51,11 @@ const OrderCard = ({ order }) => {
       });
   };
 
-  const handleRatingChange = (e) => {
-    if (isNaN(e.target.value)) return;
-    if (e.target.value < 1 || e.target.value > 5) return;
-    setRating(e.target.value);
+  const handleRatingChange = (value) => {
+    console.log('Rating changed... value is: ', value);
+    if (isNaN(value)) return;
+    if (value < 1 || value > 5) return;
+    setRating(value);
   };
   const handleReviewChange = (e) => {
     setReview(e.target.value);
@@ -105,14 +107,16 @@ const OrderCard = ({ order }) => {
                           alt=""
                         />
                       </div>
-                      <div className="row-span-1 col-span-1">
-                        <label htmlFor="rating">Your rating </label>
-                        <input
-                          type="number"
-                          className="bg-black w-10"
-                          name="rating"
-                          value={rating}
-                          onChange={handleRatingChange}
+                      <div className="row-span-1 col-span-1 ">
+                        <label
+                          htmlFor="rating"
+                          className="text-sm text-yellow-300"
+                        >
+                          Your rating{' '}
+                        </label>
+                        <RatingStar
+                          rating={rating}
+                          setRating={handleRatingChange}
                         />
                       </div>
 
@@ -122,11 +126,11 @@ const OrderCard = ({ order }) => {
 
                       <div className="row-span-2 col-span-4 w-full flex flex-wrap">
                         <label htmlFor="review" className="w-full">
-                          Your review{' '}
+                          Write your review{' '}
                         </label>
                         <textarea
                           type="text"
-                          className="text-purple-600 p-3 rounded-md w-full"
+                          className="bg-slate-600 w-full text-gray-200 p-2"
                           name="review"
                           value={review}
                           onChange={handleReviewChange}
@@ -135,7 +139,7 @@ const OrderCard = ({ order }) => {
                           ¡ Add at least 10 chars in your review !
                         </p>
                       </div>
-                      <div className="col-span-2 justify-center items-center">
+                      <div className="col-span-2 justify-center items-center ml-9">
                         <button
                           onClick={toggleModalReview}
                           className="bg-purple-600 px-10 py-2 rounded-xl"
