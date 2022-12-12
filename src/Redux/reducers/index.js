@@ -25,9 +25,12 @@ import {
   GET_ORDER,
   FILTER_MANGA_BY_DATE,
   SET_FIREBASE_USER as SET_FIREBASE_USER,
-  GET_USERS,
+  GET_ALL_USERS,
+  GET_AVAILABLE_USERS,
+  GET_DISABLED_USERS,
   DELETE_PROMO,
   MANGA_ON_SALE,
+  MANGA_FILTER_ON_SALE,  
 } from "../actions";
 
 const getCartLocalStorage = () => {
@@ -56,7 +59,10 @@ const initialState = {
   currentPage: 1,
   totalNumberOfPages: 1,
   promos: [],
-  users: []
+  users: [],
+  usersAvailable: [],
+  disabledUsers: [],
+  mangasOnSale: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -92,7 +98,7 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GET_ORDER:
-      return{
+      return {
         ...state,
         orderList: order1.payload,
         isLoading: false,
@@ -318,22 +324,51 @@ const rootReducer = (state = initialState, action) => {
       }
     }
 
-    case GET_USERS: //Bring users
+    case GET_ALL_USERS: //Bring users
       return {
         ...state,
         users: action.payload
 
       };
-      case GET_PROMOS:
-      return{
+
+    case GET_AVAILABLE_USERS:
+      return {
+        ...state,
+        usersAvailable: action.payload
+      }
+
+    case GET_DISABLED_USERS:
+      return {
+        ...state,
+        disabledUsers: action.payload
+      }
+    case GET_PROMOS:
+      return {
         ...state,
         promos: action.payload
       }
-      case MANGA_ON_SALE:
-        return {
-          ...state,
-             mangasOnSale: action.payload,
-        };
+    case MANGA_ON_SALE:
+      return {
+        ...state,
+        mangasOnSale: action.payload,
+      };
+     case MANGA_FILTER_ON_SALE:
+        const mangasOnSaleFilter = [];
+        
+        action.payload.totalMangas.forEach((e) => {
+          action.payload.onSaleData.forEach((el) => {
+            if( e.mangaid === el[0]) {
+             mangasOnSaleFilter.push(e)
+
+            }
+           })
+           
+        })
+        console.log(mangasOnSaleFilter)
+          return {
+            ...state,
+               mangas: mangasOnSaleFilter,
+          };
 
     default:
       return state;

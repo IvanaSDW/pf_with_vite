@@ -14,12 +14,13 @@ import { MdKeyboardBackspace } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getUsers } from '../Redux/actions';
+import { getAvailableUsers, getDisabledUsers } from '../Redux/actions';  //Ncesito el localhost back abierto
 import { disableUser } from '../domain/userService';
 
 function Cms() {
     const dispatch = useDispatch()
-    const allUsers = useSelector((state) => state.users);
+    const availableUsers = useSelector((state) => state.usersAvailable);
+    const disabledUsers = useSelector((state) => state.disabledUsers);
 
     const [downdrop, setDowndrop] = useState(true)
     const handleClickDrop = () => {
@@ -27,13 +28,23 @@ function Cms() {
     }
     let toggleClass = downdrop ? "hidden" : "";
 
-    useEffect(() => {
-        dispatch(getUsers())
-    }, [])
-
     const handleDisableUser = (id) => {
         disableUser(id)
+        dispatch(getAvailableUsers())
+        alert("Se ha deshabilitado el usuario con exito!") //momentaneo
     }
+
+    useEffect(() => {
+        dispatch(getAvailableUsers())
+        dispatch(getDisabledUsers())
+    }, [handleDisableUser])
+
+    useEffect(() => {
+        dispatch(getAvailableUsers())
+        dispatch(getDisabledUsers())
+    }, )
+
+    
 
 
     return (
@@ -134,9 +145,9 @@ function Cms() {
                             <div className='rounded-md p-2 mt-5 lista de activeusers ' >
 
                                 <div  >
-                                    {allUsers.map((u) => {
+                                    {availableUsers.map((u) => {
                                         return (
-                                            <div className='mt-3 mb-3  p-0.5 pt-2 rounded-md  duration-300 cursos-pointer hover:bg-purple-300 pb-3' >
+                                            <div className='mt-3 mb-3  p-0.5 pt-2 rounded-md  duration-300 cursos-pointer bg-gray-200 pb-3' >
                                                 <h1 className='text-gray-600 text-base font-bold pl-2' >
                                                     Name: {u.firstname}
                                                 </h1>
@@ -188,104 +199,42 @@ function Cms() {
                             </div>
 
 
-                            <div className=' rounded-md p-2 mt-5 ' >
+                            <div className=' rounded-md p-2 mt-5 lista de disabled users' >
 
-                                <div className='p-0.5  rounded-md  duration-300 cursos-pointer hover:bg-purple-300 pb-3' >
-                                    <h4 className='text-gray-600 text-base font-bold pl-2' >User 510</h4>
-                                    <div className='flex text-gray-600'>
-                                        <h4 className='text-gray-600 text-base font-bold pl-2 pr-10 mr-20'>id: uuid1231aajasaj11312</h4>
-                                        <div className='p-1 w-[31px] object-contain rounded-full bg-green-300 text-2xl cursor-pointer' >
-                                            <FaUserCheck />
-                                        </div>
-                                    </div>
+                            <div>
+                                    {disabledUsers.map((u) => {
+                                        return (
+                                            <div className='mt-3 mb-3  p-0.5 pt-2 rounded-md  duration-300 cursos-pointer bg-gray-200 pb-3' >
+                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
+                                                    Name: {u.firstname}
+                                                </h1>
+                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
+                                                    Lastname: {u.lastname}
+                                                </h1>
+                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
+                                                    Email: {u.email}
+                                                </h1>
+                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
+                                                    Rol: {u.role}
+                                                </h1>
+                                                <h1 className='text-gray-600 text-base font-bold pl-2 inline-block' >
+                                                    ID: {u.id}
+                                                </h1>
+
+                                                <div className='text-gray-600 inline-block flex justify-center mt-2' >
+                                                    <div className='p-1  object-contain rounded-full bg-green-300 text-2xl cursor-pointer ' >
+                                                        <button onClick={() => handleDisableUser(u.id)} >
+                                                            <FaUserCheck />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+
+                                    })}
                                 </div>
 
-                                <br />
-
-                                <div className='p-0.5  rounded-md  duration-300 cursos-pointer hover:bg-purple-500 pb-3' >
-                                    <h4 className='text-gray-600 text-base font-bold pl-2' >User 510</h4>
-                                    <div className='flex text-gray-600'>
-                                        <h4 className='text-gray-600 text-base font-bold pl-2 pr-10 mr-20'>id: uuid1231aajasaj11312</h4>
-                                        <div className='p-1 w-[31px] object-contain rounded-full bg-green-300 text-2xl cursor-pointer' >
-                                            <FaUserCheck />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div className='p-0.5  rounded-md  duration-300 cursos-pointer hover:bg-purple-500 pb-3' >
-                                    <h4 className='text-gray-600 text-base font-bold pl-2' >User 510</h4>
-                                    <div className='flex text-gray-600'>
-                                        <h4 className='text-gray-600 text-base font-bold pl-2 pr-10 mr-20'>id: uuid1231aajasaj11312</h4>
-                                        <div className='p-1 w-[31px] object-contain rounded-full bg-green-300 text-2xl cursor-pointer' >
-                                            <FaUserCheck />
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <br />
-
-                                <div className='p-0.5  rounded-md  duration-300 cursos-pointer hover:bg-purple-500 pb-3' >
-                                    <h4 className='text-gray-600 text-base font-bold pl-2' >User 510</h4>
-                                    <div className='flex text-gray-600'>
-                                        <h4 className='text-gray-600 text-base font-bold pl-2 pr-10 mr-20'>id: uuid1231aajasaj11312</h4>
-                                        <div className='p-1 w-[31px] object-contain rounded-full bg-green-300 text-2xl cursor-pointer' >
-                                            <FaUserCheck />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div className='p-0.5  rounded-md  duration-300 cursos-pointer hover:bg-purple-500 pb-3' >
-                                    <h4 className='text-gray-600 text-base font-bold pl-2' >User 510</h4>
-                                    <div className='flex text-gray-600'>
-                                        <h4 className='text-gray-600 text-base font-bold pl-2 pr-10 mr-20'>id: uuid1231aajasaj11312</h4>
-                                        <div className='p-1 w-[31px] object-contain rounded-full bg-green-300 text-2xl cursor-pointer' >
-                                            <FaUserCheck />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div className='p-0.5  rounded-md  duration-300 cursos-pointer hover:bg-purple-500 pb-3' >
-                                    <h4 className='text-gray-600 text-base font-bold pl-2' >User 510</h4>
-                                    <div className='flex text-gray-600'>
-                                        <h4 className='text-gray-600 text-base font-bold pl-2 pr-10 mr-20'>id: uuid1231aajasaj11312</h4>
-                                        <div className='p-1 w-[31px] object-contain rounded-full bg-green-300 text-2xl cursor-pointer' >
-                                            <FaUserCheck />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div className='p-0.5  rounded-md  duration-300 cursos-pointer hover:bg-purple-500 pb-3' >
-                                    <h4 className='text-gray-600 text-base font-bold pl-2' >User 510</h4>
-                                    <div className='flex text-gray-600'>
-                                        <h4 className='text-gray-600 text-base font-bold pl-2 pr-10 mr-20'>id: uuid1231aajasaj11312</h4>
-                                        <div className='p-1 w-[31px] object-contain rounded-full bg-green-300 text-2xl cursor-pointer' >
-                                            <FaUserCheck />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div className='p-0.5  rounded-md  duration-300 cursos-pointer hover:bg-purple-500 pb-3' >
-                                    <h4 className='text-gray-600 text-base font-bold pl-2' >User 510</h4>
-                                    <div className='flex text-gray-600'>
-                                        <h4 className='text-gray-600 text-base font-bold pl-2 pr-10 mr-20'>id: uuid1231aajasaj11312</h4>
-                                        <div className='p-1 w-[31px] object-contain rounded-full bg-green-300 text-2xl cursor-pointer' >
-                                            <FaUserCheck />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
+                                
                             </div>
                         </div>
                     </div>

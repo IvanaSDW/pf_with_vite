@@ -1,0 +1,40 @@
+
+.starrating, .backstars, .frontstars {
+    display: flex;
+}
+.starrating {
+    align-items: center;
+    font-size: 1.5em;
+    justify-content: center;
+}
+.backstars {
+    color: #c7c2c2;
+    position: relative;
+    text-shadow: 4px 4px 10px #b9b9b9;
+}
+.frontstars {
+    color: yellow;
+    overflow: hidden;
+    position: absolute;
+    text-shadow: 2px 2px 5px yellow;
+    top: 0;
+    transition: all 0.5s;
+}
+/* input {
+    background: transparent;
+    border: solid 2px #a3a3a3;
+    color: #fff;
+    font-size: 1.5em;
+    height: 50px;
+    width: 60px;
+    text-align: center;
+    margin-top: 50px;
+    margin-right: 10px;
+} */
+input:focus {
+    outline: none;
+}
+.percent {
+    color: #bb5252;
+    font-size: 1.5em;
+}
