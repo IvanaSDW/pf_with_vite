@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
-export default function RatingStar() {
-  const [rating, setRating] = useState(null);
+export default function RatingStar({ rating, setRating }) {
+  //   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
   return (
-    <div>
+    <div className="w-28 flex whitespace-nowrap">
       {[...Array(5)].map((star, i) => {
-        const ratingValue = i;
+        const ratingValue = i + 1;
         return (
-          <label>
+          <label key={i}>
             <input
               type="radio"
               name="rating"
