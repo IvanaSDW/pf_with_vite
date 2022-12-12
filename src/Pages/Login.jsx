@@ -1,6 +1,6 @@
 import '../components/assets/Login/login_signup.css';
 import React, { useState, useEffect } from 'react';
-import { useDispatch/*, useSelector*/ } from 'react-redux';
+import { useDispatch /*, useSelector*/ } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../components/assets/NavBar/ico2.png';
 import { FcGoogle } from 'react-icons/fc';
@@ -59,7 +59,7 @@ export default function Login() {
         navigate('/home');
       }
     });
-  }, );
+  });
 
   useEffect(() => {
     console.log('inputs changed..');
@@ -219,8 +219,8 @@ export default function Login() {
             </h1>
           </div>
 
-          {estadoModal1 && 
-            <div estadoModal1={estadoModal1} setEstadoModal1={setEstadoModal1}>
+          {estadoModal1 && (
+            <div>
               <form className="flex  flex-col" autoComplete="off">
                 <label className="text-2xl font-mono ml-2" htmlFor="email">
                   E-mail
@@ -272,10 +272,13 @@ export default function Login() {
                   Log In
                 </button>
               </form>
-              <button className=" text-2 hover:text-purple-600 hover:underline mt-3" onClick={cambiarEstado2}>
+              <button
+                className=" text-2 hover:text-purple-600 hover:underline mt-3"
+                onClick={cambiarEstado2}
+              >
                 Don't have an account? Register here.
               </button>
-              
+
               {/* <button className=' flex justify-center mt-3 w-full' onClick={signInWithGoogle}>
               <FcGoogle style={{ marginTop: 5 }}/><h4 className=' pl-2 hover:text-purple-400 underline'>Sing in with Google!</h4> */}
 
@@ -289,10 +292,10 @@ export default function Login() {
                 </h4>
               </button>
             </div>
-          }
+          )}
 
-          {estadoModal2 && 
-            <div estadoModal2={estadoModal2} setEstadoModal2={setEstadoModal2}>
+          {estadoModal2 && (
+            <div>
               <form className="register-form">
                 <label className="text-1xl font-arial pl-2" htmlFor="name">
                   Full Name
@@ -378,7 +381,7 @@ export default function Login() {
                 </h4>
               </button>
             </div>
-          }
+          )}
         </div>
       </div>
     </div>

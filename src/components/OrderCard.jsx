@@ -79,14 +79,14 @@ const OrderCard = ({ order }) => {
           </div>
           <div>
             <p className="font-bold">Status:</p>
-            <p>
+            <div>
               {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
               {order.status === 'completed' ? (
                 <p className="text-green-600">{order.status === 'rejected'}</p>
               ) : (
                 <p className="text-red-600">{order.status}</p>
               )}
-            </p>
+            </div>
           </div>
           <div>
             <p className="font-bold">{'Total: '}</p>
@@ -96,7 +96,7 @@ const OrderCard = ({ order }) => {
         {order.orderItems.length &&
           order.orderItems.map((item) => {
             return (
-              <div className="my-6 ">
+              <div className="my-6 " key={item.id}>
                 {showReviewForm && item.id && (
                   <div className="w-full p-60 h-full fixed top-0  left-0">
                     <form className="h-80 rounded-md w-full bg-slate-500 relative p-5 justify-center items-center grid grid-cols-5 grid-rows-4 grid-flow-col gap-4">
@@ -174,11 +174,11 @@ const OrderCard = ({ order }) => {
                   <div className="flex flex-col col-span-3 ">
                     <p> {item.mangaTitle}</p>
                     <p> Qty : {item.quantity}</p>
-                    <p className="flex ">
+                    <div className="flex ">
                       {' '}
                       Price:{' '}
                       <p className="text-green-600 pl-2">${item.price}</p>
-                    </p>
+                    </div>
                   </div>
                   <button
                     className="text-purple-400 hover:underline"

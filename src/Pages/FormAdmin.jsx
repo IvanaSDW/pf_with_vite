@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
-import swal from "sweetalert";
-import { useDispatch, useSelector } from "react-redux";
-import { postManga } from "../Redux/actions";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { uploadFile } from "../domain/userService"; //1
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import swal from 'sweetalert';
+import { useDispatch, useSelector } from 'react-redux';
+import { postManga } from '../Redux/actions';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import { uploadFile } from '../domain/userService'; //1
 
 export const FormAdmin = () => {
   const allGenres = useSelector((state) => state.genres);
@@ -14,7 +14,7 @@ export const FormAdmin = () => {
 
   const [genresChoose, setGenresChoose] = useState([]);
   const [categoryChoose, setCategoryChoose] = useState([]);
-  const [urlStorage, setUrlStorage] = useState(""); //2
+  const [urlStorage, setUrlStorage] = useState(''); //2
   const [file, setFile] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,18 +31,18 @@ export const FormAdmin = () => {
   const navigate = useNavigate();
 
   const handlerResetGenre = (setFieldValue) => {
-    setFieldValue("genre", "");
+    setFieldValue('genre', '');
     setGenresChoose([]);
   };
 
   const handlerResetCategory = (setFieldValue) => {
-    setFieldValue("category", "");
+    setFieldValue('category', '');
     setCategoryChoose([]);
   };
 
   const handlerChangeImage = (setFieldValue) => {
     //3
-    setFieldValue("posterImage", urlStorage);
+    setFieldValue('posterImage', urlStorage);
   };
 
   return (
@@ -52,93 +52,93 @@ export const FormAdmin = () => {
       </h2>
       <Link to="/home">
         <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
-          {" "}
+          {' '}
           <IoMdArrowRoundBack />
         </button>
       </Link>
       {/* section form */}
       <Formik
         initialValues={{
-          canonicalTitle: "",
-          subtype: "",
-          status: "",
-          synopsis: "",
-          price: "",
-          posterImage: { small: { url: "" } },
-          startDate: "",
-          genre: "",
-          category: "",
-          ageRating: "",
-          stockQty: "",
+          canonicalTitle: '',
+          subtype: '',
+          status: '',
+          synopsis: '',
+          price: '',
+          posterImage: { small: { url: '' } },
+          startDate: '',
+          genre: '',
+          category: '',
+          ageRating: '',
+          stockQty: '',
         }}
         validate={(itemsValue) => {
           let errorsBox = {};
 
           if (!itemsValue.canonicalTitle) {
-            errorsBox.canonicalTitle = "Title is needed";
+            errorsBox.canonicalTitle = 'Title is needed';
           }
 
           if (!itemsValue.subtype) {
-            errorsBox.subtype = "Subtype is needed";
+            errorsBox.subtype = 'Subtype is needed';
           }
 
           if (!itemsValue.ageRating) {
-            errorsBox.ageRating = "Age Rating is needed";
+            errorsBox.ageRating = 'Age Rating is needed';
           }
 
           if (!itemsValue.status) {
-            errorsBox.status = "Status is needed";
+            errorsBox.status = 'Status is needed';
           }
 
           if (!itemsValue.synopsis) {
-            errorsBox.synopsis = "Synopsis is needed";
+            errorsBox.synopsis = 'Synopsis is needed';
           }
 
           if (!itemsValue.genre) {
-            errorsBox.genre = "Genre is needed";
+            errorsBox.genre = 'Genre is needed';
           }
 
           if (!itemsValue.category) {
-            errorsBox.category = "Categories is needed";
+            errorsBox.category = 'Categories is needed';
           }
 
           if (!itemsValue.posterImage) {
-            errorsBox.posterImage = "Image URL is required";
+            errorsBox.posterImage = 'Image URL is required';
           } else if (
             !/^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/.test(
               itemsValue.posterImage
             )
           ) {
-            errorsBox.posterImage = "The URL format is wrong";
+            errorsBox.posterImage = 'The URL format is wrong';
           }
 
           if (!itemsValue.price) {
-            errorsBox.price = "Price is needed";
+            errorsBox.price = 'Price is needed';
           } else if (
             itemsValue.price <= 0 ||
             /^(?:[1-9]\d{0,9}|0)\.\d$/.test(itemsValue.price)
           ) {
-            errorsBox.price = "The price must be a valid number";
+            errorsBox.price = 'The price must be a valid number';
           }
 
           if (!itemsValue.stockQty) {
-            errorsBox.stockQty = "Stock is needed";
+            errorsBox.stockQty = 'Stock is needed';
           } else if (
             itemsValue.stockQty <= 0 ||
             !/^(?:[1-9]\d{0,9}|0)$/.test(itemsValue.stockQty)
           ) {
-            errorsBox.stockQty = "The stock must be an integer";
+            errorsBox.stockQty = 'The stock must be an integer';
           }
 
           if (!itemsValue.startDate) {
-            errorsBox.startDate = "Start Date is needed";
+            errorsBox.startDate = 'Start Date is needed';
           } else if (
             !/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(
               itemsValue.startDate
             )
           ) {
             errorsBox.startDate =
-              "The date format is wrong, should be: YYYY-MM-DD";
+              'The date format is wrong, should be: YYYY-MM-DD';
           }
 
           return errorsBox;
@@ -151,11 +151,11 @@ export const FormAdmin = () => {
             category: categoryChoose.slice(1),
           });
           if (itemsValue.genre.length === 0) {
-            alert("genre can not be empty");
+            alert('genre can not be empty');
             return;
           }
           if (itemsValue.category.length === 0) {
-            alert("category can not be empty");
+            alert('category can not be empty');
             return;
           }
           dispatch(
@@ -166,13 +166,13 @@ export const FormAdmin = () => {
               category: categoryChoose.slice(1),
             })
           );
-          swal("Your Manga was create Successfully", {
+          swal('Your Manga was create Successfully', {
             button: {
               className:
-                "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+                'bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl',
             },
           });
-          navigate("/home");
+          navigate('/home');
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
@@ -443,18 +443,18 @@ export const FormAdmin = () => {
               </button>
             </Form>
             <div className="bg-white shadow-2xl rounded-lg pt-10 px-5 mb-10 md:w-1/2 lg:w-2/5 flex flex-col justify-evenly">
-              <p class=" text-base font-bold uppercase text-teal-700 mb-2 text-center">
+              <p className=" text-base font-bold uppercase text-teal-700 mb-2 text-center">
                 Title:
                 <span className="pl-2 dark:text-gray-400 italic">
                   {values.canonicalTitle}
                 </span>
               </p>
               <img
-                class="rounded-t-lg px-3 py-1"
+                className="rounded-t-lg px-3 py-1"
                 src={
                   values.posterImage
                     ? values.posterImage
-                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Ba7Qc7aNAX4MRV2rRKBxwq9155WehCKBYA&usqp=CAU"
+                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Ba7Qc7aNAX4MRV2rRKBxwq9155WehCKBYA&usqp=CAU'
                 }
                 alt={values.canonicalTitle}
               />
@@ -481,39 +481,39 @@ export const FormAdmin = () => {
                 </form>
               </div>
 
-              <div class="px-4 py-3 flex flex-col">
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+              <div className="px-4 py-3 flex flex-col">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Synopsis:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.synopsis}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Status :
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.status}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Subtype:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.subtype}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Age Rating:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.ageRating}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Start Date:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.startDate}
                   </span>
                 </p>
                 <div className="flex flex-col items-start">
-                  <p class="text-1xl font-bold text-gray-700 flex flex-row">
+                  <p className="text-1xl font-bold text-gray-700 flex flex-row">
                     Genres:
                     {console.log(genresChoose)}
                     {!genresChoose.includes(values.genre) &&
@@ -533,7 +533,7 @@ export const FormAdmin = () => {
                   </button>
                 </div>
                 <div className="flex flex-col items-start">
-                  <p class="text-1xl font-bold text-gray-700 flex flex-row">
+                  <p className="text-1xl font-bold text-gray-700 flex flex-row">
                     Categories:
                     {!categoryChoose.includes(values.category) &&
                       setCategoryChoose([...categoryChoose, values.category])}
@@ -550,13 +550,13 @@ export const FormAdmin = () => {
                     Reset
                   </button>
                 </div>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Price:
                   <span className="pl-2 dark:text-gray-400 italic">
                     $ {values.price}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Stock:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.stockQty}

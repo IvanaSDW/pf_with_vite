@@ -78,10 +78,6 @@ const Profile = () => {
 
   const [view, setView] = useState(false);
 
-  // const [res, setRes] = useState()
-
-  const getOrder = (id) => {};
-
   useEffect(() => {
     getMyOrders(userId);
   }, []);
@@ -127,18 +123,8 @@ const Profile = () => {
     }
   };
 
-  /////////Details order complete***/////
-
-  function viewMore() {
-    setView(!view);
-  }
-
   ////// ADD REVIEW/////////
   const [review, setReview] = useState(false);
-
-  function addReview() {
-    setReview(!review);
-  }
 
   //Personal data form state
 
@@ -240,7 +226,7 @@ const Profile = () => {
                 ) : (
                   <CgProfile />
                 )}
-                <div class="absolute inset-0 flex justify-start z-10">
+                <div className="absolute inset-0 flex justify-start z-10">
                   <div>
                     {' '}
                     <label
@@ -317,7 +303,7 @@ const Profile = () => {
             )}
 
             {control2 && (
-              <div className="flex justify-center mt-8 h-60" value={control2}>
+              <div className="flex justify-center mt-1 h-60" value={control2}>
                 <div className="border-2 border-purple-600 rounded-md  w-6/12  absolute self-center">
                   <div className="flex flex-col text-purple-500">
                     <div className="flex text-4xl p-2 2xl:ml-60 xl:ml-10 xl:pl-40">

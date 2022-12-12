@@ -16,8 +16,6 @@ import Update from './Pages/Update';
 import About from './Pages/About';
 import { useCurrentUser } from './domain/useCurrentUserHook';
 
-
-
 import Cms from './Pages/Cms';
 
 function App() {
@@ -26,7 +24,6 @@ function App() {
   console.log('currentUSer: ', currentUser);
 
   const user = useSelector((state) => state.firebaseUser);
-
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -39,16 +36,31 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home />} />
         <Route
-                path="/form" 
-                element={user.email === "admin@mail.com" ? <FormAdmin/> : <Navigate to='/home' />  }/> 
+          path="/form"
+          element={
+            user.email === 'admin@mail.com' ? (
+              <FormAdmin />
+            ) : (
+              <Navigate to="/home" />
+            )
+          }
+        />
         <Route path="/manga/:id" element={<Details />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/form/:id" 
-               element={user.email === "admin@mail.com" ? <Update/> : <Navigate to='/home' /> }/>
+        <Route
+          path="/form/:id"
+          element={
+            user.email === 'admin@mail.com' ? (
+              <Update />
+            ) : (
+              <Navigate to="/home" />
+            )
+          }
+        />
         <Route path="/aboutus" element={<About />} />
         <Route path="/cms" element={<Cms />} />
       </Routes>
@@ -57,4 +69,3 @@ function App() {
 }
 
 export default App;
-
