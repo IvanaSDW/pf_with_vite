@@ -7,11 +7,11 @@ export const useCurrentUser = () => {
     fetchUserData().then((userData) => {
       if (!userData) return;
       setUserData(userData);
+      console.log(
+        '🚀 ~ file: useCurrentUserHook.js:11 ~ fetchUserData ~ userData',
+        userData
+      );
     });
-    console.log(
-      '🚀 ~ file: useCurrentUserHook.js:11 ~ fetchUserData ~ userData',
-      userData
-    );
   }, []);
   return userData;
 };
