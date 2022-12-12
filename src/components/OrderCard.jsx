@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SERVER_URL } from '../domain/serverConfig';
 import firebase from '../domain/userService';
+import RatingStar from './RatingStar';
 
 const OrderCard = ({ order }) => {
   ////// ADD REVIEW/////////
@@ -114,6 +115,7 @@ const OrderCard = ({ order }) => {
                           value={rating}
                           onChange={handleRatingChange}
                         />
+                        <RatingStar />
                       </div>
 
                       <div className="col-span-4 row-span-1">
