@@ -41,7 +41,7 @@ export default function Update() {
         return imageUrl;
       });
     } catch (e) {
-      console.log('error uploadin image: ', e);
+      console.log('error uploading image: ', e);
     }
   };
 
@@ -79,8 +79,8 @@ export default function Update() {
 
   return (
     <div className=" h-full">
-      <h2 className="font-black text-violet-800 text-3xl text-center pt-10 pb-8">
-        New Mangas
+      <h2 className="font-black text-violet-800 text-3xl text-center pt-10">
+        Update Manga Data
       </h2>
       <Link to="/home">
         <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
@@ -212,8 +212,8 @@ export default function Update() {
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
-          <div className="flex flex-row justify-center h-full mt-36">
-            <Form className=" shadow-4xl rounded-lg py-10 px-5 mb-10 h-full md:w-1/2 lg:w-2/5 mx-5 ">
+          <div className="flex flex-row justify-center h-full mt-12">
+            <Form className=" shadow-4xl rounded-lg px-5 mb-10 h-full md:w-1/2 lg:w-2/5 mx-5 ">
               <div className="mb-5">
                 <label
                   htmlFor="canonicalTitle"
@@ -479,7 +479,7 @@ export default function Update() {
               </button>
             </Form>
             <div className="bg-white shadow-2xl rounded-lg pt-10 px-5 mb-10 md:w-1/2 lg:w-2/5 flex flex-col justify-evenly">
-              <p class=" text-base font-bold uppercase text-teal-700 mb-2 text-center">
+              <p className=" text-base font-bold uppercase text-teal-700 mb-2 text-center">
                 Title:
                 <span className="pl-2 dark:text-gray-400 italic">
                   {values.canonicalTitle}
@@ -493,45 +493,45 @@ export default function Update() {
                     onChange={(e) => setFile(e.target.files[0])}
                   />
                   <img
-                    class="rounded-t-lg px-3 py-1"
+                    className="rounded-t-lg px-3 py-1"
                     src={urlStorage ? urlStorage : values.posterImage}
                     alt={values.canonicalTitle}
                   />
                 </form>
               </div>
-              <div class="px-4 py-3 flex flex-col">
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+              <div className="px-4 py-3 flex flex-col">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Synopsis:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.synopsis}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Status :
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.status}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Subtype:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.subtype}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Age Rating:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.ageRating}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Start Date:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.startDate}
                   </span>
                 </p>
                 <div className="flex flex-col items-start">
-                  <p class="text-1xl font-bold text-gray-700 flex flex-row">
+                  <p className="text-1xl font-bold text-gray-700 flex flex-row">
                     Genres:
                     {console.log(genresChoose)}
                     {!genresChoose.includes(values.genre) &&
@@ -551,7 +551,7 @@ export default function Update() {
                   </button>
                 </div>
                 <div className="flex flex-col items-start">
-                  <p class="text-1xl font-bold text-gray-700 flex flex-row">
+                  <p className="text-1xl font-bold text-gray-700 flex flex-row">
                     Categories:
                     {!categoryChoose.includes(values.category) &&
                       setCategoryChoose([...categoryChoose, values.category])}
@@ -568,13 +568,13 @@ export default function Update() {
                     Reset
                   </button>
                 </div>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Price:
                   <span className="pl-2 dark:text-gray-400 italic">
                     $ {values.price}
                   </span>
                 </p>
-                <p class="text-1xl font-bold text-gray-700 mb-4">
+                <p className="text-1xl font-bold text-gray-700 mb-4">
                   Stock:
                   <span className="pl-2 dark:text-gray-400 italic">
                     {values.stockQty}
