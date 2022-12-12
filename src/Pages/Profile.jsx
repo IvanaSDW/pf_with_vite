@@ -92,7 +92,6 @@ const Profile = () => {
       ControlModal2(false);
       ControlModal(!control);
     } else if (control) {
-      alert("You'r already on Favs section");
     }
   }
 
@@ -101,7 +100,6 @@ const Profile = () => {
       ControlModal(false);
       ControlModal2(!control2);
     } else if (control2) {
-      alert("You'r already on Data section");
     }
   }
 
@@ -227,7 +225,7 @@ const Profile = () => {
               </Link>
             </div>
             <div className="flex">
-              <div className=" flex ">
+              <div className=" flex relative z-0">
                 {fieldsState.userAvatar ? (
                   <img
                     src={fieldsState.userAvatar}
@@ -243,29 +241,32 @@ const Profile = () => {
                 ) : (
                   <CgProfile />
                 )}
+                <div class="absolute inset-0 flex justify-start z-10">
+                  <div>
+                    {' '}
+                    <label
+                      htmlFor="file"
+                      className="text-3xl cursor-pointer"
+                    >{`\u270e`}</label>
+                    <input
+                      type="file"
+                      placeholder="Change photo"
+                      className={styles.inputFile}
+                      onChange={handleChangeAvatar}
+                      id="file"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className=" flex mt-10 flex-col pl-20">
-                <h5 className="pl-5 text-4xl">
-                  {userData.firstname?.toUpperCase()}
+              <div className=" flex mt-10 flex-col justify-items-center pl-20">
+                <h5 className="text-4xl">
+                  {userData.firstname?.toUpperCase()}{' '}
                   {userData.lastname?.toUpperCase()}
                 </h5>
-                {/* <h5 className="card-title">
-              {firebaseUser.displayName?.toUpperCase()}
-            </h5> */}
-                <p className="pl-10 mt-4">
+                <p className="mt-3 text-center">
                   {userData.email}
                   <br />
                 </p>
-                <label htmlFor="file" className={styles.change}>
-                  Change a profile photo
-                </label>
-                <input
-                  type="file"
-                  placeholder="Change photo"
-                  className={styles.inputFile}
-                  onChange={handleChangeAvatar}
-                  id="file"
-                />
               </div>
             </div>
             <div>
@@ -309,7 +310,7 @@ const Profile = () => {
                   <div className=" h-screen w-full hove:shadow-2 overflow-y-scroll">
                     {myOrders.length &&
                       myOrders.map((e) => {
-                        return <OrderCard order={e} />;
+                        return <OrderCard order={e} key={e.id} />;
                       })}
                   </div>
                 </div>
