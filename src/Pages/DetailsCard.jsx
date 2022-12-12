@@ -5,27 +5,25 @@ import {
   deleteDetails,
   deleteManga,
   loading,
-  getMangas,
+ 
   addItemToCart,
   getMangasDetail,
 } from "../Redux/actions/index";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import styles from "../components/assets/Details/Details.module.css";
-import Card from "../components/Card";
-import img from "../components/assets/Cards/yugi.jpg";
-import { FaStar } from "react-icons/fa";
+
 import swal from "sweetalert";
 import styleLoading from "../../src/components/assets/Cards/loading.module.css";
 import Footer from "../components/Footer";
 import { useCurrentUser } from "../domain/useCurrentUserHook";
+import RatingRender from '../components/RatingRender';
+
 
 export default function Details() {
   const dispatch = useDispatch();
   let { id: mangaid } = useParams();
   const manga = useSelector((state) => state.mangasDetails);
-  const mangas = useSelector((state) => state.mangas);
-  const mangasDetail = useSelector((state) => state.mangasForDetail);
   const cart = useSelector((state) => state.cart);
   const isLoading = useSelector((state) => state.isLoading);
   const promotion = new Map(useSelector((state) => state.mangasOnSale));
@@ -164,11 +162,8 @@ export default function Details() {
                     </h1>
                   </div>
                   <div className={styles.stars}>
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
+                    
+                      <RatingRender rating={manga.averageRating}/>
                     <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 h-6">
                       {manga.averageRating ? manga.averageRating : 0}
                     </span>

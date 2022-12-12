@@ -6,7 +6,7 @@ import imgSoldOut from "./assets/Cards/soldOut4.png";
 import { addItemToCart } from "../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
-
+import RatingRender from "./RatingRender";
 
 const Card = ({
   mangaid,
@@ -89,46 +89,9 @@ const Card = ({
           <p className="text-white text-xs">Start Date: {startDate}</p>
           <p className="text-white text-xs">Status: {status}</p>
           <div className="flex items-center mt-2">
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
+           
+             <RatingRender rating={averageRating}/>
+
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
               {averageRating ? averageRating : 0}
             </span>
@@ -192,46 +155,9 @@ const Card = ({
           <p className="text-white text-xs">Start Date: {startDate}</p>
           <p className="text-white text-xs">Status: {status}</p>
           <div className="flex items-center mt-2">
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
-            <svg
-              className="w-4 h-4 text-yellow-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <FaStar />
-            </svg>
+          
+             <RatingRender rating={averageRating}/>
+            
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
               {averageRating ? averageRating : 0}
             </span>
