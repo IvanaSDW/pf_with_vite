@@ -23,6 +23,7 @@ export const MANGA_PRICE_DESC = 'MANGA_PRICE_ASC';
 export const FILTER_MANGA_BY_CATEGORY = 'FILTER_MANGA_BY_CATEGORY';
 export const FILTER_MANGA_BY_GENRE = 'FILTER_MANGA_BY_CATEGORY';
 export const FILTER_MANGA_BY_DATE = 'FILTER_MANGA_BY_DATE';
+export const MANGA_FILTER_ON_SALE = 'MANGA_FILTER_ON_SALE';
 // export const FILTER_ANIME_BY_GENRE = "FILTER_ANIME_BY_CATEGORY"
 // CART
 export const ADD_TO_CART = 'ADD_TO_CART';
@@ -442,3 +443,20 @@ export const getMangasOnSale = () => {
     }
   };
 };
+
+export const filterMangasOnSale = () => {
+  return async function (dispatch){
+  try {
+      const response = await axios.get(
+      "https://backend-production-1a11.up.railway.app/onsale" );
+      const responseTotal = await axios.get(
+        "https://backend-production-1a11.up.railway.app/manga" );
+    return dispatch({
+      type: MANGA_FILTER_ON_SALE,
+      payload: {onSaleData: response.data, totalMangas: responseTotal.data}
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+}
