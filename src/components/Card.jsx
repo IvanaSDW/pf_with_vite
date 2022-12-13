@@ -1,12 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
-import img from "./assets/Cards/yugi.jpg";
-import imgSoldOut from "./assets/Cards/soldOut4.png";
-import { addItemToCart } from "../Redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
-import RatingRender from "./RatingRender";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaStar } from 'react-icons/fa';
+import img from './assets/Cards/yugi.jpg';
+import imgSoldOut from './assets/Cards/soldOut4.png';
+import { addItemToCart } from '../Redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import swal from 'sweetalert';
+import RatingRender from './RatingRender';
 
 const Card = ({
   mangaid,
@@ -34,22 +34,22 @@ const Card = ({
           {
             button: {
               className:
-                "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+                'bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl',
             },
           }
         );
       }
 
       if (stockQty === ItemInCart.quantity || stockQty < ItemInCart.quantity) {
-        swal("Oops!! unavailable. Soon we will have more stock.", {
+        swal('Oops!! unavailable. Soon we will have more stock.', {
           button: {
             className:
-              "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+              'bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl',
           },
         });
       }
 
-      if(stockQty > ItemInCart.quantity){
+      if (stockQty > ItemInCart.quantity) {
         dispatch(addItemToCart(mangaid));
       }
     }
@@ -57,7 +57,6 @@ const Card = ({
     if (!ItemInCart && stockQty > 0) {
       dispatch(addItemToCart(mangaid));
     }
-
   }
 
   if (stockQty > 0) {
@@ -79,30 +78,39 @@ const Card = ({
         <h3 className="z-50 duration-1000 transition ease-in-out text-white bg-slate-800 border-none rounded-b-2xl px-3 text-2xl font-bold absolute bottom-1 group-hover:relative group-hover:top-0 group-hover:translate-y-3 shadow-2xl p-1">
           {canonicalTitle}
         </h3>
-        <div className="absolute left-0 bg-red-600 box-border text-white font-sans	text-xl font-semibold mt-16  px-8 rounded-br-3xl " >  
-        <span>{discount ? "-" + (Number(discount) * 100).toString() + "%" + " OFFER MANGA" : null}</span>
-      </div>
-      <div className="absolute left-0 bottom-36 bg-green-600 box-border text-white font-sans	text-xl font-semibold mt-16  px-11  rounded-lg " >  
-        <span>{discount? "SALE: $" : null}{discount ? (price * discount).toFixed(2) : null}</span>
-      </div>
+        <div className="absolute left-0 bg-red-600 box-border text-white font-sans	text-xl font-semibold mt-16  px-8 rounded-br-3xl ">
+          <span>
+            {discount
+              ? '-' +
+                (1 - Number(discount) * 100).toString() +
+                '%' +
+                ' OFFER MANGA'
+              : null}
+          </span>
+        </div>
+        <div className="absolute left-0 bottom-36 bg-green-600 box-border text-white font-sans	text-xl font-semibold mt-16  px-11  rounded-lg ">
+          <span>
+            {discount ? 'SALE: $' : null}
+            {discount ? (price * discount).toFixed(2) : null}
+          </span>
+        </div>
         <div className="invisible group-hover:visible z-50 flex flex-col justify-between bg-black opacity-75 w-full p-4 border-none rounded-b-2xl transition ease-out duration-1000 group-hover:translate-y-2">
           <p className="text-white text-xs">Start Date: {startDate}</p>
           <p className="text-white text-xs">Status: {status}</p>
           <div className="flex items-center mt-2">
-           
-             <RatingRender rating={averageRating}/>
+            <RatingRender rating={averageRating} />
 
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
               {averageRating ? averageRating : 0}
             </span>
           </div>
           <div className="flex items-center justify-between pt-2">
-          <span className="text-2xl font-bold text-red-400 dark:text-white line-through decoration-red-600">
-            {discount? price : null}
-          </span>
-          <span className="text-2xl font-bold text-gray-100 dark:text-white ">
-            {discount? null : price}
-          </span>
+            <span className="text-2xl font-bold text-red-400 dark:text-white line-through decoration-red-600">
+              {discount ? price : null}
+            </span>
+            <span className="text-2xl font-bold text-gray-100 dark:text-white ">
+              {discount ? null : price}
+            </span>
             <button
               onClick={() => handleAddToCart(mangaid)}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -155,9 +163,8 @@ const Card = ({
           <p className="text-white text-xs">Start Date: {startDate}</p>
           <p className="text-white text-xs">Status: {status}</p>
           <div className="flex items-center mt-2">
-          
-             <RatingRender rating={averageRating}/>
-            
+            <RatingRender rating={averageRating} />
+
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
               {averageRating ? averageRating : 0}
             </span>
@@ -176,6 +183,6 @@ const Card = ({
       </div>
     );
   }
-}
+};
 
 export default Card;
