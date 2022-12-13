@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { React, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllGenres,
   getAllCategories,
@@ -10,8 +10,8 @@ import {
   filterMangaByGenres,
   loading,
   filterMangasOnSale,
-} from "../Redux/actions";
-import { HiOutlineSortDescending } from "react-icons/hi";
+} from '../Redux/actions';
+import { HiOutlineSortDescending } from 'react-icons/hi';
 
 export default function FilterAside({
   currentPage,
@@ -19,34 +19,34 @@ export default function FilterAside({
   mangaState,
 }) {
   //logica for styles//
-  const [bgColor, setBgColor] = useState("bg-indigo-900");
-  const [bgColorDos, setBgColorDos] = useState("bg-indigo-900");
-  const [bgColorTres, setBgColorTres] = useState("bg-indigo-900");
-  const [bgColorCuatro, setBgColorCuatro] = useState("bg-indigo-900");
-  const [bgColorCinco, setBgColorCinco] = useState("bg-indigo-900");
+  const [bgColor, setBgColor] = useState('bg-indigo-900');
+  const [bgColorDos, setBgColorDos] = useState('bg-indigo-900');
+  const [bgColorTres, setBgColorTres] = useState('bg-indigo-900');
+  const [bgColorCuatro, setBgColorCuatro] = useState('bg-indigo-900');
+  const [bgColorCinco, setBgColorCinco] = useState('bg-indigo-900');
 
   function handleChangeBg() {
-    setBgColor("bg-cyan-500");
+    setBgColor('bg-cyan-500');
   }
 
   function handleResetBg() {
-    setBgColor("bg-indigo-900");
+    setBgColor('bg-indigo-900');
   }
 
   function handleChangeBgDos() {
-    setBgColorDos("bg-cyan-500");
+    setBgColorDos('bg-cyan-500');
   }
 
   function handleResetBgDos() {
-    setBgColorDos("bg-indigo-900");
+    setBgColorDos('bg-indigo-900');
   }
 
   function handleChangeBgTres() {
-    setBgColorTres("bg-cyan-500");
+    setBgColorTres('bg-cyan-500');
   }
 
   function handleResetBgTres() {
-    setBgColorTres("bg-indigo-900");
+    setBgColorTres('bg-indigo-900');
   }
 
   // function handleChangeBgCuatro() {
@@ -66,11 +66,11 @@ export default function FilterAside({
   // }
 
   function handleChangeBgSeis() {
-    setBgColorCuatro("bg-cyan-500");
+    setBgColorCuatro('bg-cyan-500');
   }
 
   function handleResetBgSeis() {
-    setBgColorCinco("bg-indigo-900");
+    setBgColorCinco('bg-indigo-900');
   }
 
   //logica for filters and sort buttons//
@@ -102,7 +102,7 @@ export default function FilterAside({
     e.preventDefault();
     setCurrentPage(1);
     dispatch(loading());
-    e.target.value === "default"
+    e.target.value === 'default'
       ? dispatch(getAllMangas())
       : dispatch(filterByCategories(e.target.value, currentPage));
   };
@@ -111,7 +111,7 @@ export default function FilterAside({
     e.preventDefault();
     setCurrentPage(1);
     dispatch(loading());
-    e.target.value === "default"
+    e.target.value === 'default'
       ? dispatch(getAllMangas())
       : dispatch(filterMangaByGenres(e.target.value, currentPage));
   };
@@ -122,8 +122,10 @@ export default function FilterAside({
     dispatch(loading());
     const index = e.nativeEvent.target.selectedIndex;
     const target = e.nativeEvent.target[index].text;
-    if (target === "New firts") dispatch(getMangaByEmisionDate("dateDesc", currentPage));
-    if (target === "Clasic firts") dispatch(getMangaByEmisionDate("dateAsc", currentPage));
+    if (target === 'New firts')
+      dispatch(getMangaByEmisionDate('dateDesc', currentPage));
+    if (target === 'Clasic firts')
+      dispatch(getMangaByEmisionDate('dateAsc', currentPage));
   }
 
   function handleSortPrice(e) {
@@ -132,8 +134,10 @@ export default function FilterAside({
     dispatch(loading());
     const index = e.nativeEvent.target.selectedIndex;
     const target = e.nativeEvent.target[index].text;
-    if (target === "Price ASC.") dispatch(getMangaByPrice("priceAsc", currentPage));
-    if (target === "Price DESC.") dispatch(getMangaByPrice("priceDesc", currentPage));
+    if (target === 'Price ASC.')
+      dispatch(getMangaByPrice('priceAsc', currentPage));
+    if (target === 'Price DESC.')
+      dispatch(getMangaByPrice('priceDesc', currentPage));
   }
 
   return (
@@ -274,16 +278,13 @@ export default function FilterAside({
                 </svg>
                 <select
                   className={`flex-1 ml-3 text-left whitespace-nowrap dark:text-white cursor-pointer  hover:bg-cyan-500 bg-transparent ${bgColorDos}`}
-                  style={{ maxWidth: "11.2rem" }}
+                  style={{ maxWidth: '11.2rem' }}
                   name="Categories"
                   onChange={(e) => HandleFilteredByCategories(e)}
                 >
                   <option value="default"> Filter By Categories </option>
                   {allCategories.map((categories) => (
-                    <option
-                      key={categories.id}
-                      value={categories.title.toLowerCase()}
-                    >
+                    <option key={categories.id} value={categories.slug}>
                       {categories.title.toUpperCase()}
                     </option>
                   ))}
@@ -317,7 +318,7 @@ export default function FilterAside({
                 >
                   <option value="default"> Filter By Genres </option>
                   {allGenres.map((genres) => (
-                    <option key={genres.id} value={genres.name.toLowerCase()}>
+                    <option key={genres.id} value={genres.slug}>
                       {genres.name.toUpperCase()}
                     </option>
                   ))}
