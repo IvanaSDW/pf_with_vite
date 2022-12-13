@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
       </div>
       <div className={styles.eas}>
-        <h3>© 2022 Project Final - My Manga</h3>
+        <h3>© 2022 Final Project - My Manga</h3>
       </div>
       <div>
         <h1 className={styles.title}>Contact Us:</h1>
@@ -30,7 +30,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <h2>Grevasio</h2>
+              <h2>Gervasio</h2>
             </a>
             <a
               href="mailto:silbordon.89@gmail.com"
