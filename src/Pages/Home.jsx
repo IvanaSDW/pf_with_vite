@@ -1,9 +1,9 @@
-import React, { Fragment, useState} from "react";
-import CardSection from "../components/CardSection";
-import { Carousel } from "../components/Carousel";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { useCurrentUser } from "../domain/useCurrentUserHook";
+import React, { Fragment, useState } from 'react';
+import CardSection from '../components/CardSection';
+import { Carousel } from '../components/Carousel';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { useCurrentUser } from '../domain/useCurrentUserHook';
 
 export default function Home() {
   const currentUser = useCurrentUser();

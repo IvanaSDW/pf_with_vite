@@ -82,9 +82,9 @@ const Card = ({
           <span>
             {discount
               ? '-' +
-                (1 - Number(discount) * 100).toString() +
+                ((1 - Number(discount)) * 100).toFixed(0).toString() +
                 '%' +
-                ' OFFER MANGA'
+                ' OFFER!!'
               : null}
           </span>
         </div>
@@ -133,7 +133,7 @@ const Card = ({
           <div>
             <img
               src={imgSoldOut}
-              className="absolute top-0 right-0 h-20 opacity-90 z-50 "
+              className="absolute top-0 right-0 h-20 opacity-100 z-50 bg-amber-400 bg-opacity-30 rounded-2xl"
               alt="image sold out"
             />
             <img
