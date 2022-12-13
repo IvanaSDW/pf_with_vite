@@ -172,7 +172,7 @@ export default function FilterAside({
                 </span>
               </button>
             </li>
-            <li>
+            {/* <li>
               <button
                 onClick={(e) => handleGetMangasOnSale(e)}
                 className="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-cyan-500 w-full"
@@ -195,7 +195,7 @@ export default function FilterAside({
                   Mangas ONSALE!
                 </span>
               </button>
-            </li>
+            </li> */}
             {/* <li>
                 <button
                     className="flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-cyan-500  w-full">

@@ -11,7 +11,6 @@ export default function LandingPage() {
         <div className={styles.banerText}>
           <h1 className={styles.title}>
             <b className={styles.colorTitle}>
-              <span className={styles.key}>Animes</span> and{' '}
               <span className={styles.key}>Mangas</span>
             </b>
           </h1>
