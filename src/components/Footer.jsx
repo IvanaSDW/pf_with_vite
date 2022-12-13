@@ -71,7 +71,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <Link exact to="/aboutus">
+        <Link to="/aboutus">
           <h1 className="text-4xl">About Us</h1>
         </Link>
       </div>

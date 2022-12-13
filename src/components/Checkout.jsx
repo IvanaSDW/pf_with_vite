@@ -163,7 +163,7 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
               </button>
               </div> */}
           {children}
-          <section class={styles.tarjeta} id="tarjeta">
+          <section className={styles.tarjeta} id="tarjeta">
             {/* {modal1 && */}
             <div
               className={
