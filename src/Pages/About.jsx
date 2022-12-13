@@ -37,12 +37,10 @@ const About = () => {
 
       <div className="flex justify-center pr-10 pl-10 pt-5">
         <h2 className="text-2xl font-serif">
-          Proyecto realizado en la última etapa del bootcamp de "Soy Henry" con
-          el objetivo de poder seguir adentrándonos en nuevas tecnologías y
-          realizar mejores prácticas, asimismo de terminar de solidificar el
-          conocimiento adquirido en los últimos meses de la cursada, por medio
-          del trabajo en equipo, enfoque, capacidad resolutiva y
-          responsabilidad.
+        This project was realized in the last stage of "Soy Henry" with 
+        the objetive to incorporate new technologies and realize best practices.
+        And finally incorporate the new learning of this last months in the 
+        career through team work, focus resolutive capacity and responsability.
         </h2>
       </div>
 
@@ -116,7 +114,7 @@ const About = () => {
       </div>
 
       <div className="flex justify-center">
-        <h2 className="text-4xl font-bold">Tecnologías Aplicadas</h2>
+        <h2 className="text-4xl font-bold">Applied technologies</h2>
       </div>
 
       <div className="md:mt-0 mt-6 justify-between items-center">
