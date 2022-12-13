@@ -19,7 +19,6 @@ const OrderCard = ({ order }) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
 
   const addReview = async (mangaId) => {
-    console.log('Adding review...');
     firebase
       .auth()
       .currentUser.getIdToken()
