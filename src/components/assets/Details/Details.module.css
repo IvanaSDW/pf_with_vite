@@ -34,8 +34,34 @@
 }
 .prieces{
     font-family: Georgia;
-    font-size: 4vh;   
+    font-size: 4vh; 
+    color:white;  
+    
 }
+
+.prieces1{
+    font-family: Georgia;
+    font-size: 4vh; 
+      
+    
+}
+
+.prieces2{
+    font-family: Georgia;
+    font-size: 4vh;
+    color:green;   
+    
+}
+.prieces3{
+    font-family: Georgia;
+    font-size: 4vh;  
+    text-decoration:line-through;
+    text-decoration-color: black; 
+    color: white;
+    font-size: medium;
+    
+}
+
 b{
     color: yellow;
 }
