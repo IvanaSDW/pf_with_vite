@@ -26,7 +26,7 @@ export const Carousel = () => {
             {promos.map((item, index) => {
                 const { name, description, categories, imageOne, imageTwo } = item
                 return <div key={index} className={activeSlider === index ? 'flex justify-between items-center' : 'hidden'}>
-                    <button className='text-6xl absolute left-0 bg-white rounded-full text-blue-600 hover:bg-blue-600 hover:text-white'
+                    <button className='text-6xl absolute left-14 bg-white rounded-full text-blue-600 hover:bg-blue-600 hover:text-white'
                         onClick={prevSliderHandler}>
                         <FiChevronLeft />
                     </button>
@@ -35,7 +35,7 @@ export const Carousel = () => {
 
                             <img src={imageOne} alt='' className='h-56 align-middle rounded-full grayscale ml-10' />
 
-                            <h5 className='text-center content-center mt-14 text-black'>
+                            <h5 className='text-center content-center mt-4 text-black'>
                                 <b className='text-purple-700'>{name.toUpperCase()}</b> : {description} on our volumes of the categories <b className='text-purple-700'>{categories[0].title.toUpperCase()}</b> 
                             </h5>
 
@@ -44,7 +44,7 @@ export const Carousel = () => {
 
 
                     </div>
-                    <button className='text-6xl absolute right-0 bg-white rounded-full text-blue-600 hover:bg-blue-600 hover:text-white'
+                    <button className='text-6xl absolute right-14 bg-white rounded-full text-blue-600 hover:bg-blue-600 hover:text-white'
                         onClick={nextSliderHandler}>
                         <FiChevronRight />
                     </button>
