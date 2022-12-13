@@ -95,7 +95,7 @@ export default function FilterAside({
   const handleGetMangasOnSale = (e) => {
     e.preventDefault();
     setCurrentPage(1);
-    dispatch(filterMangasOnSale());
+    dispatch(filterMangasOnSale(1));
   };
 
   const HandleFilteredByCategories = (e) => {
