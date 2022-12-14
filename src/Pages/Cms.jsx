@@ -19,8 +19,9 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAvailableUsers, getDisabledUsers } from '../Redux/actions'; //Ncesito el localhost back abierto
-import { disableUser } from '../domain/userService';
+import { disableUser, activeUser } from '../domain/userService';
 import CmsUsers from '../components/CmsUsers';
+import AllOrders from '../components/AllOrders';
 
 function Cms() {
   const dispatch = useDispatch();
@@ -34,12 +35,6 @@ function Cms() {
   let toggleClass = downdrop ? 'hidden' : '';
 
   const [menuItem, setMenuItem] = useState('');
-
-  const handleDisableUser = (id) => {
-    disableUser(id);
-    dispatch(getAvailableUsers());
-    alert('Se ha deshabilitado el usuario con exito!'); //momentaneo
-  };
 
   useEffect(() => {
     dispatch(getAvailableUsers());
@@ -218,6 +213,14 @@ function Cms() {
       <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
         <div className="flex flex-row md:mt-0 mt-6 " />
       </div>
+
+      <AllOrders />  {/*Aca lo dejo Jorge*/}
+
+      <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
+        <div className="flex flex-row md:mt-0 mt-6 " />
+      </div>
+
+
     </div>
   );
 }
