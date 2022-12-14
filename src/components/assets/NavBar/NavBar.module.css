@@ -36,7 +36,8 @@
     padding-left: 2vh;
     cursor: pointer;
     transition: 2s;
-    font-family: Imported;
+    font-weight: bolder;
+    font-family: JAPAN2;
 }
 .Search:hover{
     border: 1px solid #5f30a8 ;

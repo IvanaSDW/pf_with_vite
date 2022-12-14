@@ -191,7 +191,11 @@ console.log(user, "hola")
                   {manga.averageRating ?
                       <RatingRender rating={manga.averageRating }/> :
                       [...Array(5)].map((star, i) => {
-                      <FaStar />
+                        return(
+                      <div className="text-gray-200 flex  overflow-hidden ">
+                        <FaStar size={27} />
+                      </div>
+                      )
                     })
                   }
                     <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 h-6">
@@ -243,11 +247,12 @@ console.log(user, "hola")
 
           </div>
           
-        <div className="flex justify-center  relative w-10/12 mt-10 m-40 flex-col">
+        <div className="flex justify-center  relative w-full mt-10 ml-10 m-40 flex-col">
          <h1 className=" text-6xl m-10 ml-0 h-4/12">Reviews :</h1>
             <div className="w-10/12 border-2 overflow-y-scroll bg-white/75 p-10 h-80  self-center">
-
-                  {reviews.length && reviews.map((e)=>{
+              {reviews.length ? 
+                <div>
+                {reviews.length && reviews.map((e)=>{
                    return(
                       <div className="m-5 " >
                             <div className="border-2 border-gray-200 h-0 w-full  "></div>
@@ -262,15 +267,15 @@ console.log(user, "hola")
                                   <p className="text-black ml-6 text-3xl">{f.firstname }</p>
                                   <p className="text-black ml-6 text-3xl">{f.lastname}</p>
                                </div>
-                              <div className="border-2 w-80 self-center ml-6 h-20">    
-                                  <p className="text-black p-1">{e.review}</p>
-                              </div>
-                              <div className="flex justify-end">
+                              <div className="flex ml-6">
                                 {e.rating && 
                                    <div>
-                                    <RatingRender rating={(e.rating / 5) * 100 }/>
+                                    <RatingRender rating={(e.rating / 5) * 100 } />
                                    </div>
                                   }
+                              </div>
+                              <div className="border-2 m-2 w-80 self-center ml-6 h-20">    
+                                  <p className="text-black p-2">{e.review}</p>
                               </div>
                             </div>
                           </div> 
@@ -280,7 +285,10 @@ console.log(user, "hola")
                     </div>
                     )
                     
-                  })} 
+                  })}
+                  </div>
+                  : <p className="text-purple-800 text-6xl m-20 font-bold ">This Manga hasn't reviews yet </p> 
+                  }
                  
             </div>
           </div>
