@@ -3,10 +3,10 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { firebaseConfig } from './firebaseConfig';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; //1
-import { v4 } from 'uuid'; //2
+import { v4 } from 'uuid';
 import { SERVER_URL } from './serverConfig';
 
-const app = firebase.initializeApp(firebaseConfig); //3
+const app = firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
 
@@ -33,7 +33,7 @@ export const registerWithEmailAndPassword = async (email, password, name) => {
         'A verification email was sent to your address. Please clcik on provided link to confirm your account.'
       );
     });
-    console.log('registered user: ', res.user);
+
     firebase
       .auth()
       .currentUser.getIdToken()
@@ -162,9 +162,8 @@ export const fetchUserData = async () => {
 export const storage = getStorage(app);
 
 export async function uploadFile(file) {
-  console.log('upload file service called ..');
   if (!file) return;
-  const storageRef = ref(storage, v4()); //necesitamos ids unicos, pq se pisan
+  const storageRef = ref(storage, v4());
   await uploadBytes(storageRef, file);
   const url = await getDownloadURL(storageRef);
   return url;

@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DarkMode from './assets/NavBar/darkMode';
 import styles from './assets/NavBar/NavBar.module.css';
 import { Link } from 'react-router-dom';
 import Logo from './assets/NavBar/ico2.png';
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
-import { MdAdminPanelSettings } from "react-icons/md";
+import { MdAdminPanelSettings } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMangByName } from '../Redux/actions';
 import { BiBookAdd } from 'react-icons/bi';
-import { useCurrentUser } from '../domain/useCurrentUserHook';
+
+import firebase, { fetchUserData } from '../domain/userService';
+import { setFirebaseUser } from '../Redux/actions';
 
 export default function Navbar({
   currentPage,
@@ -17,18 +19,29 @@ export default function Navbar({
   setMangasState,
 }) {
   const dispatch = useDispatch();
-  const currentUser = useCurrentUser();
+
+  const [currentUser, setCurrentUser] = useState();
+  const firebaseUser = useSelector((state) => state.firebaseUser);
 
   useEffect(() => {
     setCurrentPage(1);
     dispatch(getMangByName(mangaState, currentPage));
   }, [dispatch, mangaState]);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(async (user) => {
+      dispatch(setFirebaseUser(user));
+      if (user) {
+        const userData = await fetchUserData();
+        setCurrentUser(userData);
+      }
+    });
+  }, [firebaseUser]);
+
   function onHandleinput(e) {
     setMangasState(e.target.value);
   }
   const cart = useSelector((state) => state.cart);
-  const firebaseUser = useSelector((state) => state.firebaseUser);
 
   let count = 0;
   count = cart.length;
@@ -60,8 +73,10 @@ export default function Navbar({
           {currentUser?.role === 'ADMIN' ? (
             <>
               <Link to="/cms">
-                <button className={styles.iconBtn} >
-                  <MdAdminPanelSettings style={{ fontSize: 20, marginTop: 7 }} />
+                <button className={styles.iconBtn}>
+                  <MdAdminPanelSettings
+                    style={{ fontSize: 20, marginTop: 7 }}
+                  />
                 </button>
               </Link>
               <Link to="/form">

@@ -103,7 +103,7 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
           status: 'completed',
         });
         swal(
-          'Your payment was made successfully. During the first 24 hours, the logistics area will be contacted for the delivery of your purchase.',
+          'Your payment was made successfully. Check your email to see confirmation of your order, and delivery status.',
           {
             button: {
               className:
@@ -163,7 +163,7 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
               </button>
               </div> */}
           {children}
-          <section class={styles.tarjeta} id="tarjeta">
+          <section className={styles.tarjeta} id="tarjeta">
             {/* {modal1 && */}
             <div
               className={

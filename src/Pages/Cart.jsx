@@ -188,7 +188,7 @@ export default function Cart() {
                             U$D {e.price}
                             </h3>
                             <h3 className="text-red-00 text-3xl font-arial mt-2 text-red-600">
-                            {"-" + (promotions.get(e.mangaid) * 100).toString() + "%"}
+                            {"-" + ((1 - Number(promotions.get(e.mangaid))) * 100).toFixed(0).toString() + "%"} 
                             </h3>
                           </div>
                         </div>

@@ -174,8 +174,16 @@ console.log(user, "hola")
                   </div>
                   <div>
                     {" "}
-                    <h1 className={styles.prieces}>
-                      Price: <b>${discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b>
+
+                      <h1 className={styles.prieces}>
+                      { discount? <span> Now: 
+                      <b className={styles.prieces2}>${discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b>
+                      <b className={styles.prieces3}>${manga.price}</b>
+                      </span> :
+                      <span className={styles.prieces}>
+                      Price: <b className={styles.prieces1}>$ {discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b>
+                      </span> }
+                  
                     </h1>
                   </div>
                   <div className={styles.stars}>

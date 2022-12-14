@@ -127,12 +127,8 @@ const Profile = () => {
     }
   };
 
-  /////////Details order complete***/////
-
-
   ////// ADD REVIEW/////////
   const [review, setReview] = useState(false);
-
 
   //Personal data form state
 
@@ -168,16 +164,28 @@ const Profile = () => {
 
   const onSaveChanges = async () => {
     if (!validateInputs()) return;
-    axios
-      .put(`${SERVER_URL}/user/${userData.id}`, fieldsState)
-      .then((response) => {
-        console.log('resp: ', response.data.updatedUser);
-        window.alert('Your data were succesfully updated!');
-        setSomeChanged(false);
-        setEditMode(false);
+    firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((token) => {
+        axios
+          .put(`${SERVER_URL}/user/${userData.id}`, fieldsState, {
+            headers: {
+              AuthToken: token,
+            },
+          })
+          .then((response) => {
+            console.log('resp: ', response.data.updatedUser);
+            window.alert('Your data were succesfully updated!');
+            setSomeChanged(false);
+            setEditMode(false);
+          })
+          .catch((error) => {
+            alert('err: ', error);
+          });
       })
       .catch((err) => {
-        console.log('err: ', err.response.data);
+        console.log('error getting auth token');
       });
   };
 
@@ -234,7 +242,7 @@ const Profile = () => {
                 ) : (
                   <CgProfile />
                 )}
-                <div class="absolute inset-0 flex justify-start z-10">
+                <div className="absolute inset-0 flex justify-start z-10">
                   <div>
                     {' '}
                     <label
@@ -311,7 +319,7 @@ const Profile = () => {
             )}
 
             {control2 && (
-              <div className="flex justify-center mt-8 h-60" value={control2}>
+              <div className="flex justify-center mt-1 h-60" value={control2}>
                 <div className="border-2 border-purple-600 rounded-md  w-6/12  absolute self-center">
                   <div className="flex flex-col text-purple-500">
                     <div className="flex text-4xl p-2 2xl:ml-60 xl:ml-10 xl:pl-40">
@@ -454,7 +462,7 @@ const Profile = () => {
                           className={
                             !someChanged
                               ? 'bg-gray-500 text-gray-700 h-10 rounded-md mt-3 xl:w-4/6 2xl:w-7/12'
-                              : 'bg-purple-600 text-white h-10 rounded-md 4mt-3 xl:4/6 hover:bg-purple-800 2xl:w-7/12'
+                              : 'bg-purple-600 text-white h-10 rounded-md mt-3 xl:w-4/6 hover:bg-purple-800 2xl:w-7/12'
                           }
                         >
                           Save
