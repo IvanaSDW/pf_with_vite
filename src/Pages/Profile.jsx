@@ -15,6 +15,7 @@ import axios from 'axios';
 import styles from '../components/assets/Profile/profile.module.css';
 import OrderCard from '../components/OrderCard';
 import { SERVER_URL } from '../domain/serverConfig';
+import swal from 'sweetalert';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -79,8 +80,6 @@ const Profile = () => {
   const [view, setView] = useState(false);
 
   // const [res, setRes] = useState()
-
-  
 
   useEffect(() => {
     getMyOrders(userId);
@@ -176,12 +175,12 @@ const Profile = () => {
           })
           .then((response) => {
             console.log('resp: ', response.data.updatedUser);
-            window.alert('Your data were succesfully updated!');
+            swal('Your data were succesfully updated!');
             setSomeChanged(false);
             setEditMode(false);
           })
           .catch((error) => {
-            alert('err: ', error);
+            swal('err: ', error);
           });
       })
       .catch((err) => {
@@ -309,15 +308,18 @@ const Profile = () => {
               >
                 <div className="border-2 border-purple-600 rounded-md 2xl:w-9/12  absolute self-center ">
                   <div className=" h-screen w-full hove:shadow-2 overflow-y-scroll">
-                   {myOrders.length ?
-                   <div>
-                    {myOrders.length &&
-                      myOrders.map((e) => {
-                        return <OrderCard order={e} key={e.id} />;
-                      })} </div>
-                      :
-                      <p className="text-purple-800 text-6xl m-40 font-bold ">You still don't have purchase orders </p> 
-                      }
+                    {myOrders.length ? (
+                      <div>
+                        {myOrders.length &&
+                          myOrders.map((e) => {
+                            return <OrderCard order={e} key={e.id} />;
+                          })}{' '}
+                      </div>
+                    ) : (
+                      <p className="text-purple-800 text-6xl m-40 font-bold ">
+                        You still don't have purchase orders{' '}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

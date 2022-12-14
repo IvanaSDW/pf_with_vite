@@ -8,11 +8,15 @@ import {
   AiOutlineLogout,
   AiOutlineArrowDown,
   AiOutlineWhatsApp,
+  AiOutlineShoppingCart,
+  AiOutlineDatabase,
 } from 'react-icons/ai';
+
+import { FiUsers } from 'react-icons/fi';
 import { useState } from 'react';
 import DarkMode from '../components/assets/NavBar/darkMode';
 import CmsPromos from '../components/CmsPromos';
-import { MdKeyboardBackspace } from 'react-icons/md';
+import { MdKeyboardBackspace, MdOutlineLocalOffer } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -20,6 +24,7 @@ import { getAvailableUsers, getDisabledUsers } from '../Redux/actions'; //Ncesit
 import CmsUsers from '../components/CmsUsers';
 import CmsOrders from '../components/CmsOrders';
 import { FormAdmin } from './FormAdmin';
+import CmsProducts from '../components/CmsProducts';
 
 function Cms() {
   const dispatch = useDispatch();
@@ -63,7 +68,8 @@ function Cms() {
       }
 
       case 'addproduct': {
-        return <FormAdmin />;
+        return <CmsProducts />;
+        // return <FormAdmin />;
       }
       default: {
         return (
@@ -100,7 +106,7 @@ function Cms() {
               >
                 <span>
                   {' '}
-                  <AiFillAppstore />{' '}
+                  <FiUsers />{' '}
                 </span>
                 <h3 className="font-bold text-gray-200 ml-2">Users</h3>
               </div>
@@ -110,7 +116,7 @@ function Cms() {
               >
                 <span>
                   {' '}
-                  <AiFillFileAdd />{' '}
+                  <AiOutlineShoppingCart />{' '}
                 </span>
                 <h3 className="font-bold text-gray-200 ml-2">Orders</h3>
               </div>
@@ -120,7 +126,7 @@ function Cms() {
               >
                 <span>
                   {' '}
-                  <AiOutlineLogout />{' '}
+                  <MdOutlineLocalOffer />{' '}
                 </span>
                 <h3 className="font-bold text-gray-200 ml-2">Promotions</h3>
               </div>
@@ -130,11 +136,11 @@ function Cms() {
               >
                 <span>
                   {' '}
-                  <AiOutlineBook />{' '}
+                  <AiOutlineDatabase />{' '}
                 </span>
-                <h3 className="font-bold text-gray-200 ml-2">Add new Manga</h3>
+                <h3 className="font-bold text-gray-200 ml-2">Products</h3>
               </div>
-              <div
+              {/* <div
                 className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
                 onClick={() => {
                   handleClickDrop();
@@ -157,7 +163,7 @@ function Cms() {
                     <i className="bi bi-chevron-down"></i>
                   </span>
                 </div>
-              </div>
+              </div> */}
               <div
                 className={`text-left text-sm  w-4/5 mx-auto ${toggleClass}`}
                 id="submenu"

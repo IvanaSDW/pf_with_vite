@@ -59,9 +59,6 @@ export const FormAdmin = () => {
 
   return (
     <div className="h-full w-full">
-      <h2 className="font-black text-violet-800 text-3xl text-center pt-2">
-        Create New Manga Item
-      </h2>
       <Formik
         initialValues={{
           canonicalTitle: '',
@@ -145,11 +142,11 @@ export const FormAdmin = () => {
             category: categoryChoose.slice(1),
           });
           if (itemsValue.genre.length === 0) {
-            alert('genre can not be empty');
+            swal('genre can not be empty');
             return;
           }
           if (itemsValue.category.length === 0) {
-            alert('category can not be empty');
+            swal('category can not be empty');
             return;
           }
           dispatch(

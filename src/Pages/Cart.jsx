@@ -24,6 +24,11 @@ export default function Cart() {
   const [currentPage, setCurrentPage] = useState(1);
   const cart = useSelector((state) => state.cart);
   const dateList = useSelector((state) => state.DateListMangas);
+  const latest10 = dateList
+    .filter((manga) => {
+      return manga.stockQty > 2;
+    })
+    .slice(0, 5);
   const [quantity, setCurrent] = useState(window.localStorage.getItem('items'));
   const promotions = new Map(useSelector((state) => state.mangasOnSale));
   const setLocalStorage = (value) => {
@@ -31,7 +36,7 @@ export default function Cart() {
       setCurrent(value);
       window.localStorage.setItems('items', value);
     } catch (error) {
-      alert(error);
+      swal(error);
     }
   };
 
@@ -289,25 +294,32 @@ export default function Cart() {
         </div>
       </div>
       <div className="mt-10">
-        <h1 className="text-4xl p-7 ">NEW MANGAS :</h1>
+        <h1 className="text-4xl p-7 ">LATEST RELEASES :</h1>
         <div className="flex justify-center">
           <div className="flex overflow-x-scroll  w-8/12">
             {!payment && (
               <div className="flex justify-center ">
                 {dateList.length &&
-                  dateList.slice(0, 5).map((e) => {
+                  latest10.map((e) => {
                     return (
                       <Card
-                        key={e.id}
+                        key={e.mangaid}
                         mangaid={e.mangaid}
                         canonicalTitle={e.canonicalTitle}
                         posterImage={
-                          e.posterImage ? e.posterImage.small.url : img
+                          e.posterImage
+                            ? e.posterImage.small.url
+                            : e.posterImage
+                            ? e.posterImage
+                            : img
                         }
+                        promotion={promotions.has(e.mangaid)}
+                        discount={promotions.get(e.mangaid)}
                         startDate={e.startDate}
                         price={e.price}
                         status={e.status}
                         averageRating={e.averageRating}
+                        stockQty={e.stockQty}
                       />
                     );
                   })}{' '}

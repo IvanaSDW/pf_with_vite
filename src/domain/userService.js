@@ -5,6 +5,7 @@ import { firebaseConfig } from './firebaseConfig';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'; //1
 import { v4 } from 'uuid';
 import { SERVER_URL } from './serverConfig';
+import swal from 'sweetalert';
 
 const app = firebase.initializeApp(firebaseConfig);
 
@@ -20,7 +21,9 @@ export const logInWithEmailAndPassword = async (email, password) => {
     await auth.signInWithEmailAndPassword(email, password);
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    swal(`${err.message}
+    
+    Please kindly write to mymanga.henry@gmail.com to request for your account to be restored.`);
   }
 };
 
@@ -45,17 +48,17 @@ export const registerWithEmailAndPassword = async (email, password, name) => {
       });
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    swal(err.message);
   }
 };
 
 export const sendPasswordReset = async (email) => {
   try {
     await auth.sendPasswordResetEmail(email);
-    alert('Password reset link sent!');
+    swal('Password reset link sent!');
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    swal(err.message);
   }
 };
 
@@ -130,15 +133,15 @@ export const activeUser = async (iduser) => {
       .currentUser.getIdToken() //Obtengo en token del usuario actual
       .then((authToken) => {
         axios
-          .put(`${SERVER_URL}/undelete/user/${iduser}`,
-            {
-
-            },
+          .put(
+            `${SERVER_URL}/undelete/user/${iduser}`,
+            {},
             {
               headers: {
                 AuthToken: authToken,
               },
-            })
+            }
+          )
           .then((r) => {
             console.log('Se reactivo con exito', r);
           })
@@ -175,7 +178,7 @@ export const fetchUserData = async () => {
             createUserInDB(firebaseUser, token, firebaseUser.displayName);
           } catch (error) {
             console.error(error);
-            alert(error.message);
+            swal(error.message);
           }
         })
         .catch((err) => {

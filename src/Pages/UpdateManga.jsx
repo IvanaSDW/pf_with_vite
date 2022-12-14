@@ -61,9 +61,16 @@ export default function Update() {
   };
 
   async function getData() {
-    const response = await axios.get(`${SERVER_URL}/manga/${id}`);
-    setDetail(response.data);
-    setLoader(false);
+    console.log('called');
+    try {
+      const response = await axios.get(`${SERVER_URL}/manga/${id}`);
+      setDetail(response.data);
+      setLoader(false);
+    } catch (error) {
+      swal('Id not found in manga catalog').then((r) => {
+        navigate(-1);
+      });
+    }
   }
 
   useEffect(() => {
@@ -180,11 +187,11 @@ export default function Update() {
             itemsValue,
           });
           if (itemsValue.genre.length === 0) {
-            alert('genre can not be empty');
+            swal('genre can not be empty');
             return;
           }
           if (itemsValue.category.length === 0) {
-            alert('category can not be empty');
+            swal('category can not be empty');
             return;
           }
           dispatch(
@@ -206,8 +213,8 @@ export default function Update() {
             },
           });
           setTimeout(() => {
-            navigate('/home');
-          }, 500);
+            navigate(-1);
+          }, 2000);
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
