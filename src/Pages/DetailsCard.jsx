@@ -116,7 +116,7 @@ console.log(user, "hola")
 
   if (!isLoading) {
     return (
-      <div>
+      <div className="overflow-x-hidden">
         <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
         {isLoading}
         <div className={styles.detailsContain}>
@@ -141,7 +141,7 @@ console.log(user, "hola")
                   <p className="flex">
                     Started date:{" "}
                     {manga.startDate ? (
-                      <h5 className="text-blue-600 pl-2">
+                      <h5 className="text-yellow-400 pl-2">
                         {" "}
                         {manga.startDate}{" "}
                       </h5>
@@ -154,7 +154,7 @@ console.log(user, "hola")
                     {manga.status === "finished" ? (
                       <p className="text-red-600 pl-2">Finished</p>
                     ) : (
-                      <p className="text-green-600">In broadcast</p>
+                      <p className="text-green-600 pl-3">In broadcast</p>
                     )}
                   </p>
                   <div className={styles.filter}>
@@ -177,10 +177,11 @@ console.log(user, "hola")
                     {" "}
 
                       <h1 className={styles.prieces}>
-                      { discount? <span> Now: 
-                      <b className={styles.prieces2}>${discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b>
-                      <b className={styles.prieces3}>${manga.price}</b>
-                      </span> :
+                      { discount?
+                      <span className="flex"> Now: 
+                       <b className={styles.prieces2}>${discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b>
+                      <div className="w-14 h-7 rounded-md bg-red-600 mt-5"><b className={styles.prieces3}>${manga.price}</b></div>
+                      </span>:
                       <span className={styles.prieces}>
                       Price: <b className={styles.prieces1}>$ {discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b>
                       </span> }

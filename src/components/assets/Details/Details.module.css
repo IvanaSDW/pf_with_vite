@@ -36,7 +36,9 @@
     font-family: Georgia;
     font-size: 4vh; 
     color:white;  
-    
+    display: flex;
+    flex-direction: row;
+
 }
 
 .prieces1{
@@ -49,17 +51,17 @@
 .prieces2{
     font-family: Georgia;
     font-size: 4vh;
-    color:green;   
+    color:rgb(228, 231, 54);
+    padding:0 10px 0 10px ;   
     
 }
 .prieces3{
     font-family: Georgia;
-    font-size: 4vh;  
-    text-decoration:line-through;
-    text-decoration-color: black; 
-    color: white;
+    text-decoration-line:  line-through;
+    text-decoration-color: rgb(255, 34, 34); 
+    color: rgb(240, 237, 237);
     font-size: medium;
-    
+    position: absolute;
 }
 
 b{
