@@ -133,7 +133,7 @@ const Card = ({
           <div>
             <img
               src={imgSoldOut}
-              className="absolute top-0 right-0 h-20 opacity-100 z-50 bg-amber-400 bg-opacity-30 rounded-2xl"
+              className="absolute top-0 right-0 h-full w-full z-50 bg-black/60  rounded-2xl"
               alt="image sold out"
             />
             <img

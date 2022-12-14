@@ -94,6 +94,7 @@ export default function Details() {
       dispatch(addItemToCart(mangaid, "card_detail"));
     }
   }
+  console.log(manga, "asdasd")
 
   const id = manga.mangaid;
   const discount = promotion.has(id);
@@ -187,8 +188,12 @@ console.log(user, "hola")
                     </h1>
                   </div>
                   <div className={styles.stars}>
-                    
-                      <RatingRender rating={manga.averageRating}/>
+                  {manga.averageRating ?
+                      <RatingRender rating={manga.averageRating }/> :
+                      [...Array(5)].map((star, i) => {
+                      <FaStar />
+                    })
+                  }
                     <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 h-6">
                       {manga.reviewsCount ? manga.reviewsCount : 0}
                     </span>
