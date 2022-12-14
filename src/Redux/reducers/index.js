@@ -380,7 +380,7 @@ const rootReducer = (state = initialState, action) => {
 
           }
         })
-
+      })
         console.log(mangasOnSaleFilter)
           return {
             ...state,
