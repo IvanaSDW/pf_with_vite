@@ -5,7 +5,7 @@ import { BsFillBarChartFill } from 'react-icons/bs';
 import { postPromotion, getPromos, deletePromos } from '../Redux/actions';
 import { MdDisabledByDefault } from 'react-icons/md';
 
-function CmsPromotions() {
+function CmsPromos() {
   const dispatch = useDispatch();
   const allCategories = useSelector((state) => state.categories);
   const allPromos = useSelector((state) => state.promos);
@@ -445,4 +445,4 @@ function CmsPromotions() {
   );
 }
 
-export default CmsPromotions;
+export default CmsPromos;

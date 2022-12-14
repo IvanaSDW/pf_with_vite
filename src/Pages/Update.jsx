@@ -82,12 +82,11 @@ export default function Update() {
       <h2 className="font-black text-violet-800 text-3xl text-center pt-10">
         Update Manga Data
       </h2>
-      <Link to="/home">
-        <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
-          {' '}
-          <IoMdArrowRoundBack />
-        </button>
-      </Link>
+
+      <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
+        <IoMdArrowRoundBack onClick={() => navigate(-1)} />
+      </button>
+
       {/* section form */}
       <Formik
         initialValues={{

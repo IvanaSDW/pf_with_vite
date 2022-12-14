@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { ImStatsDots } from 'react-icons/im';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUserOrders } from '../Redux/actions';
+import CmsMangaDetail from './CmsMangaDetail';
 import CmsOrderCard from './CmsOrderCard';
-import OrderCard from './OrderCard';
 
 function CmsOrders() {
   const dispatch = useDispatch();
@@ -13,6 +13,7 @@ function CmsOrders() {
   const [renderOrders, setRenderOrders] = useState([allorders]);
 
   const [orderToRender, setOrderToRender] = useState(false);
+  const [mangaToRender, setMangaToRender] = useState(false);
 
   const filterCompleted = () => {
     const orders = allorders.filter((order) => {
@@ -44,10 +45,21 @@ function CmsOrders() {
     );
   };
 
+  const showManga = () => {
+    return (
+      <CmsMangaDetail
+        mangaid={mangaToRender}
+        showMangaDetail={setMangaToRender}
+      />
+    );
+  };
+
   return (
     <div>
       {orderToRender ? (
         showOrder()
+      ) : mangaToRender ? (
+        showManga()
       ) : (
         <div className="bg-white-600 rounded-md p-5 mr-10 w-[1000px] h-[680px]  overflow-auto shadow-2xl border-gray-200 border-2 cursor-move">
           <div className="flex py-4 pl-4 rounded-md  justify-between duration-300 cursor-pointer bg-gradient-to-r from-gray-300 to-white-500 ">
@@ -139,11 +151,21 @@ function CmsOrders() {
                     <span className="text-gray-600 text-base font-bold pl-2">
                       <h2 className="mb-2">Order Items:</h2>
 
-                      <div className="text-gray-600 text-base font-semibold inline-block flex">
+                      <div className="text-gray-600 text-base font-semibold flex w-full flex-shrink-0 scroll-m-0">
                         {o.orderItems?.map((e) => {
                           return (
-                            <div className="pl-1 pr-1  mr-2 dark:text-gray-400 italic border-2 border-red-500 rounded-md text-gray-600">
-                              <h2> Id: {e.id} </h2>
+                            <div className="p-2 mr-2 w-1/3 dark:text-gray-400 italic border-2 border-red-500 rounded-md text-gray-600">
+                              <h2>
+                                Product Id:{' '}
+                                <span
+                                  className="underline cursor-pointer"
+                                  onClick={() =>
+                                    setMangaToRender(e.mangaMangaid)
+                                  }
+                                >
+                                  {e.mangaMangaid}
+                                </span>{' '}
+                              </h2>
                               <h2> Quantity: {e.quantity} </h2>
                               <h2> Title: {e.mangaTitle} </h2>
                             </div>

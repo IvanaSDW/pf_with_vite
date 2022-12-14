@@ -1,8 +1,6 @@
 import React from 'react';
 import logo from '../components/assets/NavBar/ico3.png';
-import fotomuestra from '../components/assets/Dashboard/people01.png';
 import {
-  AiOutlineClose,
   AiFillAppstore,
   AiOutlineBook,
   AiTwotoneAlert,
@@ -13,13 +11,12 @@ import {
 } from 'react-icons/ai';
 import { useState } from 'react';
 import DarkMode from '../components/assets/NavBar/darkMode';
-import CmsPromotions from '../components/CmsPromotions';
+import CmsPromos from '../components/CmsPromos';
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAvailableUsers, getDisabledUsers } from '../Redux/actions'; //Ncesito el localhost back abierto
-import { disableUser, activeUser } from '../domain/userService';
 import CmsUsers from '../components/CmsUsers';
 import CmsOrders from '../components/CmsOrders';
 import { FormAdmin } from './FormAdmin';
@@ -58,7 +55,7 @@ function Cms() {
         );
       }
       case 'promotions': {
-        return <CmsPromotions />;
+        return <CmsPromos />;
       }
 
       case 'orders': {
@@ -105,7 +102,7 @@ function Cms() {
                   {' '}
                   <AiFillAppstore />{' '}
                 </span>
-                <h3 className="font-bold text-gray-200">Users</h3>
+                <h3 className="font-bold text-gray-200 ml-2">Users</h3>
               </div>
               <div
                 onClick={() => setMenuItem('orders')}
@@ -115,7 +112,7 @@ function Cms() {
                   {' '}
                   <AiFillFileAdd />{' '}
                 </span>
-                <h3 className="font-bold text-gray-200">Orders</h3>
+                <h3 className="font-bold text-gray-200 ml-2">Orders</h3>
               </div>
               <div
                 onClick={() => setMenuItem('promotions')}
@@ -125,7 +122,7 @@ function Cms() {
                   {' '}
                   <AiOutlineLogout />{' '}
                 </span>
-                <h3 className="font-bold text-gray-200">Promotions</h3>
+                <h3 className="font-bold text-gray-200 ml-2">Promotions</h3>
               </div>
               <div
                 onClick={() => setMenuItem('addproduct')}
@@ -135,7 +132,7 @@ function Cms() {
                   {' '}
                   <AiOutlineBook />{' '}
                 </span>
-                <h3 className="font-bold text-gray-200">Add new Manga</h3>
+                <h3 className="font-bold text-gray-200 ml-2">Add new Manga</h3>
               </div>
               <div
                 className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
@@ -143,15 +140,17 @@ function Cms() {
                   handleClickDrop();
                 }}
               >
-                <span>
-                  {' '}
-                  <AiTwotoneAlert />{' '}
-                </span>
-                <h3 className="font-bold text-gray-200 mr-20">Reports</h3>
-                <span>
-                  {' '}
-                  <AiOutlineArrowDown />{' '}
-                </span>
+                <div className="flex w-full align-middle">
+                  <span>
+                    <AiTwotoneAlert />
+                  </span>
+                  <h3 className="font-bold text-gray-200 w-32">
+                    Chat with Staff
+                  </h3>
+                  <span>
+                    <AiOutlineArrowDown />
+                  </span>
+                </div>
 
                 <div className="flex justify-between w-full items-center">
                   <span className="text-sm rotate-180">
