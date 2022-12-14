@@ -38,8 +38,10 @@ export const GET_PROMOS = 'GET_PROMOS';
 export const MANGA_ON_SALE = 'MANGA_ON_SALE';
 ///GET ORDER LIST
 export const GET_ORDER = 'GET_ORDER';
+
 export const GET_REVIEW = "GET_REVIEW";
-// export const GET_USER_REVIEW = "GET_USER_REVIEW";
+// export const GET_USER_REVIEW = "GET_USER_REVIEW"
+export const GET_ALL_USER_ORDERS = 'GET_ALL_USER_ORDERS';
 
 export const getMangas = () => {
   return async function (dispatch) {
@@ -491,4 +493,19 @@ export const filterMangasOnSale = () => {
     console.log(err);
   }
 };
+}
+
+//ALL ORDERS
+export const getAllUserOrders = () => {
+  return async function (dispatch){
+    try{
+      const allUserOrders = await axios.get(`${SERVER_URL}/order`)
+      return dispatch({
+        type: GET_ALL_USER_ORDERS,
+        payload: allUserOrders.data
+      })
+    }catch(error){
+      console.log(error)
+    }
+  }
 }
