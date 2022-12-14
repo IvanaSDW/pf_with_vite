@@ -5,19 +5,22 @@ import {
   deleteDetails,
   deleteManga,
   loading,
- 
+  getReview,
+  getAllUsers,
+  // getUserReview,
   addItemToCart,
   getMangasDetail,
 } from "../Redux/actions/index";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import styles from "../components/assets/Details/Details.module.css";
-
+import { FaStar } from 'react-icons/fa';
 import swal from "sweetalert";
 import styleLoading from "../../src/components/assets/Cards/loading.module.css";
 import Footer from "../components/Footer";
 import { useCurrentUser } from "../domain/useCurrentUserHook";
 import RatingRender from '../components/RatingRender';
+import RatingStar from "../components/RatingStar";
 
 
 export default function Details() {
@@ -96,6 +99,20 @@ export default function Details() {
   const discount = promotion.has(id);
   const numDiscount = promotion.get(id);
 
+  const reviews = useSelector((state)=> state.reviews);
+  
+  // const userRev = useSelector((state)=> state.reviews)
+  // const user = userRev.map((e)=> e.userId);
+
+  const user = useSelector((state)=> state.users);
+console.log(user, "hola")
+  // console.log(userRev, "userRev")
+  useEffect(()=>{
+    dispatch(getReview(mangaid))
+    dispatch(getAllUsers())
+    // dispatch(getUserReview(user))
+  }, [])
+
   if (!isLoading) {
     return (
       <div>
@@ -165,7 +182,7 @@ export default function Details() {
                     
                       <RatingRender rating={manga.averageRating}/>
                     <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 h-6">
-                      {manga.averageRating ? manga.averageRating : 0}
+                      {manga.reviewsCount ? manga.reviewsCount : 0}
                     </span>
                   </div>
 
@@ -211,30 +228,49 @@ export default function Details() {
             </div>
           </div>
 
-          {/* </div>
+          </div>
           
-         <h1 className={styles.recom}>RECOMENDED :</h1>
-        <div className={styles.recomend}>
-          <div className={styles.cards}>
-            {mangasDetail.length && mangasDetail.map((e) => {
-                  return (
-                    <div className={styles.card}>
-                      <Card
-                        mangaid={e.mangaid}
-                        canonicalTitle={e.canonicalTitle}
-                        posterImage={
-                          e.posterImage ? e.posterImage.small.url : img
-                        }
-                        startDate={e.startDate}
-                        price={e.price}
-                        status={e.status}
-                        averageRating={e.averageRating}
-                      />
+        <div className="flex justify-center  relative w-10/12 mt-10 m-40 flex-col">
+         <h1 className=" text-6xl m-10 ml-0 h-4/12">Reviews :</h1>
+            <div className="w-10/12 border-2 overflow-y-scroll bg-white/75 p-10 h-80  self-center">
+
+                  {reviews.length && reviews.map((e)=>{
+                   return(
+                      <div className="m-5 " >
+                            <div className="border-2 border-gray-200 h-0 w-full  "></div>
+
+                        {user.map((f)=> f.id === e.userId && 
+                          <div className="flex ml-80 p-2 ">
+                            <div>
+                              <img src={f.userAvatar} className="w-20  rounded-full mt-6" alt=""/>
+                            </div>
+                            <div className="flex flex-col">
+                              <div className="flex ">
+                                  <p className="text-black ml-6 text-3xl">{f.firstname }</p>
+                                  <p className="text-black ml-6 text-3xl">{f.lastname}</p>
+                               </div>
+                              <div className="border-2 w-80 self-center ml-6 h-20">    
+                                  <p className="text-black p-1">{e.review}</p>
+                              </div>
+                              <div className="flex justify-end">
+                                {e.rating && 
+                                   <div>
+                                    <RatingRender rating={(e.rating / 5) * 100 }/>
+                                   </div>
+                                  }
+                              </div>
+                            </div>
+                          </div> 
+                            
+                            ) }  
+                            <div className="border-2 border-gray-200 h-0 w-full  "></div>
                     </div>
-                  );
-                })}
-          </div> */}
-        </div>
+                    )
+                    
+                  })} 
+                 
+            </div>
+          </div>
         <Footer />
       </div>
     );

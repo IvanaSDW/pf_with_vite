@@ -80,7 +80,7 @@ const Profile = () => {
 
   // const [res, setRes] = useState()
 
-  const getOrder = (id) => {};
+  
 
   useEffect(() => {
     getMyOrders(userId);
@@ -129,16 +129,10 @@ const Profile = () => {
 
   /////////Details order complete***/////
 
-  function viewMore() {
-    setView(!view);
-  }
 
   ////// ADD REVIEW/////////
   const [review, setReview] = useState(false);
 
-  function addReview() {
-    setReview(!review);
-  }
 
   //Personal data form state
 
