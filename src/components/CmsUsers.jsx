@@ -5,50 +5,69 @@ import { FaUserAltSlash, FaUserCheck } from 'react-icons/fa';
 const CmsUsers = ({ availableUsers, disabledUsers }) => {
   return (
     <div>
-      <div className="flex">
-        <div className="bg-white-600 rounded-md p-5 mr-10 w-[450px] h-[550px]  overflow-auto shadow-2xl border-gray-200 border-2 cursor-move">
-          <div className="pl-2 pt-2 rounded-md  duration-300 cursor-pointer bg-gradient-to-r from-gray-300 to-white-500">
-            <div className="p-1 w-[31px] object-contain rounded-full bg-green-400 text-2xl ">
-              <BiUserPin className="" />
+      <div className="flex flex-col">
+        <div className="bg-white-600 rounded-md p-5 mr-10 w-full h-[75vh]  overflow-auto shadow-2xl border-gray-200 border-2 cursor-move">
+          <div className="flex align-middle rounded-md  duration-300 cursor-pointer bg-gradient-to-r from-gray-300 to-white-500">
+            <div className="w-6 h-6 rounded-full bg-green-400">
+              <BiUserPin className="self-center" />
             </div>
 
-            <div className="flex text-gray-600">
-              <h1 className="text-gray-600 text-xl font-bold  mb-7">
+            <div className="text-gray-600 my-auto">
+              <h1 className="text-gray-600 text-xl font-bold ml-4">
                 Active Users
               </h1>
             </div>
           </div>
 
-          <div className="rounded-md p-2 mt-5 lista de activeusers ">
+          <div className="rounded-md px-2 mt-1 lista de activeusers ">
             <div>
+              <div className="grid grid-cols-5">
+                <div>Full name</div>
+                <div>Email</div>
+                <div className="w-full flex self-end justify-end mr-4">
+                  <p>Role</p>
+                </div>
+                <div className="ml-4">
+                  <p>Id</p>
+                </div>
+                <div className="text-end">Disable</div>
+              </div>
               {availableUsers.map((u) => {
                 return (
                   <div
                     key={u.id}
-                    className="mt-3 mb-3  p-0.5 pt-2 rounded-md  duration-300 cursos-pointer bg-gray-200 pb-3"
+                    className=" grid grid-cols-5 my-3 p-0.5 rounded-md  duration-300 cursos-pointer bg-gray-200"
                   >
-                    <h1 className="text-gray-600 text-base font-bold pl-2">
-                      Name: {u.firstname}
-                    </h1>
-                    <h1 className="text-gray-600 text-base font-bold pl-2">
-                      Lastname: {u.lastname}
-                    </h1>
-                    <h1 className="text-gray-600 text-base font-bold pl-2">
-                      Email: {u.email}
-                    </h1>
-                    <h1 className="text-gray-600 text-base font-bold pl-2">
-                      Rol: {u.role}
-                    </h1>
+                    <div className="flex">
+                      <h1 className="text-gray-600 text-base font-bold pl-2">
+                        {u.firstname}
+                      </h1>
+                      <h1 className="text-gray-600 text-base font-bold pl-2">
+                        {u.lastname}
+                      </h1>
+                    </div>
+                    <div>
+                      {' '}
+                      <h1 className="text-gray-600 text-base font-bold pl-2">
+                        {u.email}
+                      </h1>
+                    </div>
+                    <div className="w-full flex self-end justify-end">
+                      <h1 className="text-gray-600 text-base font-bold pl-2">
+                        {u.role}
+                      </h1>
+                    </div>
                     <h1 className="text-gray-600 text-base font-bold pl-2 inline-block">
-                      ID: {u.id}
+                      {u.id}
                     </h1>
 
-                    <div className="text-gray-600 inline-block flex justify-center mt-2">
-                      <div className="p-1  object-contain rounded-full bg-red-400 text-2xl cursor-pointer ">
-                        <button onClick={() => handleDisableUser(u.id)}>
-                          <FaUserAltSlash />
-                        </button>
-                      </div>
+                    <div className="w-full flex self-end justify-end">
+                      <button
+                        className="rounded-full bg-red-400 cursor-pointer w-fit justify-end items-end p-1"
+                        onClick={() => handleDisableUser(u.id)}
+                      >
+                        <FaUserAltSlash />
+                      </button>
                     </div>
                   </div>
                 );
@@ -57,7 +76,7 @@ const CmsUsers = ({ availableUsers, disabledUsers }) => {
           </div>
         </div>
 
-        <div className="bg-white-600 rounded-md p-5 mr-10 w-[450px] h-[550px]  overflow-auto shadow-2xl border-gray-200 border-2 cursor-move">
+        <div className="bg-white-600 rounded-md p-5 mr-10 w-full h-[25vh]  overflow-auto shadow-2xl border-gray-200 border-2 cursor-move">
           <div className="pl-2 pt-2 rounded-md  duration-300 cursor-pointer bg-gradient-to-r from-gray-300 to-white-500">
             <div className="p-1 w-[31px] object-contain rounded-full bg-red-500 text-2xl ">
               <BiUserX />
