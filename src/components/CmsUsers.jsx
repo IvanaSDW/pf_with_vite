@@ -1,8 +1,46 @@
 import React from 'react';
 import { BiUserX, BiUserCheck, BiUserPin } from 'react-icons/bi';
 import { FaUserAltSlash, FaUserCheck } from 'react-icons/fa';
+import { disableUser, activeUser } from '../domain/userService';
 
 const CmsUsers = ({ availableUsers, disabledUsers }) => {
+  //sweet alert
+  const confirmation2 = (id) => {
+    //BOTON PARA REACTIVAR
+    swal({
+      title: 'Ey',
+      text: '¿Do you want to reactive this user?',
+      icon: 'warning',
+      buttons: ['No', 'Si'],
+    }).then((r) => {
+      if (r) {
+        activeUser(id);
+        swal({
+          text: 'The user has been reactivated!',
+          icon: 'success',
+        });
+      }
+    });
+  };
+
+  const confirmation1 = (id) => {
+    //BOTON PARA DESACTIVA
+    swal({
+      title: 'Ey',
+      text: '¿Do you want to disable this user?',
+      icon: 'warning',
+      buttons: ['No', 'Si'],
+    }).then((r) => {
+      if (r) {
+        disableUser(id);
+        swal({
+          text: 'The user has been succesfully deactivated!',
+          icon: 'success',
+        });
+      }
+    });
+  };
+
   return (
     <div>
       <div className="flex flex-col">
@@ -64,7 +102,7 @@ const CmsUsers = ({ availableUsers, disabledUsers }) => {
                     <div className="w-full flex self-end justify-end">
                       <button
                         className="rounded-full bg-red-400 cursor-pointer w-fit justify-end items-end p-1"
-                        onClick={() => handleDisableUser(u.id)}
+                        onClick={() => confirmation1(u.id)}
                       >
                         <FaUserAltSlash />
                       </button>
@@ -115,7 +153,7 @@ const CmsUsers = ({ availableUsers, disabledUsers }) => {
 
                     <div className="text-gray-600 inline-block flex justify-center mt-2">
                       <div className="p-1  object-contain rounded-full bg-green-300 text-2xl cursor-pointer ">
-                        <button onClick={() => handleDisableUser(u.id)}>
+                        <button onClick={() => confirmation2(u.id)}>
                           <FaUserCheck />
                         </button>
                       </div>
