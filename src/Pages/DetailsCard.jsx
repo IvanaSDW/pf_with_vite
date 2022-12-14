@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getDetails,
   deleteDetails,
   deleteManga,
   loading,
- 
   addItemToCart,
   getMangasDetail,
-} from "../Redux/actions/index";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import styles from "../components/assets/Details/Details.module.css";
+} from '../Redux/actions/index';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import styles from '../components/assets/Details/Details.module.css';
 
-import swal from "sweetalert";
-import styleLoading from "../../src/components/assets/Cards/loading.module.css";
-import Footer from "../components/Footer";
-import { useCurrentUser } from "../domain/useCurrentUserHook";
+import swal from 'sweetalert';
+import styleLoading from '../../src/components/assets/Cards/loading.module.css';
+import Footer from '../components/Footer';
+import { useCurrentUser } from '../domain/useCurrentUserHook';
 import RatingRender from '../components/RatingRender';
-
 
 export default function Details() {
   const dispatch = useDispatch();
@@ -44,13 +42,13 @@ export default function Details() {
     e.preventDefault();
     dispatch(deleteManga(mangaid));
     dispatch(deleteDetails(mangaid));
-    swal("Your Manga was deleted Successfully", {
+    swal('Your Manga was deleted Successfully', {
       button: {
         className:
-          "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+          'bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl',
       },
     });
-    navigate("/home");
+    navigate('/home');
   }
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -59,13 +57,13 @@ export default function Details() {
 
     if (itemInCart) {
       if (itemInCart.stockQty === itemInCart.quantity + 1) {
-        dispatch(addItemToCart(mangaid, "card_detail"));
+        dispatch(addItemToCart(mangaid, 'card_detail'));
         swal(
           "This is the last unit available. Let's go!! do not waste time :)",
           {
             button: {
               className:
-                "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+                'bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl',
             },
           }
         );
@@ -75,20 +73,20 @@ export default function Details() {
         itemInCart.stockQty === itemInCart.quantity ||
         itemInCart.stockQty < itemInCart.quantity
       ) {
-        swal("Oops!! unavailable. Soon we will have more stock.", {
+        swal('Oops!! unavailable. Soon we will have more stock.', {
           button: {
             className:
-              "bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl",
+              'bg-purple-500 p-3 mt-8 text-white hover:bg-white hover:text-purple-700 uppercase font-bold rounded-xl',
           },
         });
       }
       if (itemInCart.stockQty > itemInCart.quantity) {
-        dispatch(addItemToCart(mangaid, "card_detail"));
+        dispatch(addItemToCart(mangaid, 'card_detail'));
       }
     }
 
     if (!itemInCart && manga.stockQty > 0) {
-      dispatch(addItemToCart(mangaid, "card_detail"));
+      dispatch(addItemToCart(mangaid, 'card_detail'));
     }
   }
 
@@ -121,19 +119,19 @@ export default function Details() {
                 <p className={styles.synopsis}>{manga.synopsis}</p>
                 <div className={styles.rating}>
                   <p className="flex">
-                    Started date:{" "}
+                    Started date:{' '}
                     {manga.startDate ? (
                       <h5 className="text-blue-600 pl-2">
-                        {" "}
-                        {manga.startDate}{" "}
+                        {' '}
+                        {manga.startDate}{' '}
                       </h5>
                     ) : (
-                      ""
+                      ''
                     )}
                   </p>
                   <p className="flex">
-                    State:{" "}
-                    {manga.status === "finished" ? (
+                    State:{' '}
+                    {manga.status === 'finished' ? (
                       <p className="text-red-600 pl-2">Finished</p>
                     ) : (
                       <p className="text-green-600">In broadcast</p>
@@ -142,55 +140,75 @@ export default function Details() {
                   <div className={styles.filter}>
                     <h3 className="flex justify-start">Categories: </h3>
                     <h5 className="flex justify-start">
-                      {" "}
+                      {' '}
                       {manga.categories?.map((e) => (
                         <p className="p-1 ">{e.title}</p>
-                      ))}{" "}
+                      ))}{' '}
                     </h5>
                     <h3 className="flex">Genres: </h3>
                     <h5 className="flex justify-start">
-                      {" "}
+                      {' '}
                       {manga.genres?.map((e) => (
                         <p className="p-2"> {e.name}</p>
                       ))}
                     </h5>
                   </div>
                   <div>
-                    {" "}
+                    {' '}
                     <h1 className={styles.prieces}>
-                      Price: <b>${discount? (manga.price * numDiscount).toFixed(2) : manga.price}</b>
+                      {discount ? (
+                        <span>
+                          {' '}
+                          Now:
+                          <b className={styles.prieces2}>
+                            $
+                            {discount
+                              ? (manga.price * numDiscount).toFixed(2)
+                              : manga.price.toFixed(2)}
+                          </b>
+                          <b className={styles.prieces3}>${manga.price}</b>
+                        </span>
+                      ) : (
+                        <span className={styles.prieces}>
+                          Price:{' '}
+                          <b className={styles.prieces1}>
+                            ${' '}
+                            {discount
+                              ? (manga.price * numDiscount).toFixed(2)
+                              : manga.price}
+                          </b>
+                        </span>
+                      )}
                     </h1>
                   </div>
                   <div className={styles.stars}>
-                    
-                      <RatingRender rating={manga.averageRating}/>
+                    <RatingRender rating={manga.averageRating} />
                     <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 h-6">
                       {manga.averageRating ? manga.averageRating : 0}
                     </span>
                   </div>
 
-                  {manga.stockQty >0 && (
+                  {manga.stockQty > 0 && (
                     <div className={styles.buttons}>
-                    <Link to="/cart">
+                      <Link to="/cart">
+                        <button
+                          onClick={() => handleAddToCart(mangaid)}
+                          className={styles.btns}
+                        >
+                          Buy
+                        </button>
+                      </Link>
                       <button
                         onClick={() => handleAddToCart(mangaid)}
                         className={styles.btns}
                       >
-                        Buy
+                        Add to Cart
                       </button>
-                    </Link>
-                    <button
-                      onClick={() => handleAddToCart(mangaid)}
-                      className={styles.btns}
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                  )
-                  }
-                  
-                  {currentUser?.role === "MASTER" ||
-                    (currentUser?.role === "ADMIN" && (
+                    </div>
+                  )}
+
+                  {currentUser?.role === 'MASTER' ||
+                    (currentUser?.role === 'ADMIN' && (
                       <div className={styles.content}>
                         <button
                           className={styles.bttns}

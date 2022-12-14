@@ -1,12 +1,16 @@
-import React from 'react'
-import logo from "../components/assets/NavBar/ico3.png"
-import fotomuestra from "../components/assets/Dashboard/people01.png"
+import React from 'react';
+import logo from '../components/assets/NavBar/ico3.png';
+import fotomuestra from '../components/assets/Dashboard/people01.png';
 import {
-    AiOutlineClose, AiFillAppstore, AiOutlineBook, AiTwotoneAlert, AiFillFileAdd,
-    AiOutlineLogout, AiOutlineArrowDown, AiOutlineWhatsApp
-} from "react-icons/ai";
-import { BiUserX, BiUserCheck, BiUserPin } from "react-icons/bi";
-import { FaUserAltSlash, FaUserCheck } from "react-icons/fa";
+  AiOutlineClose,
+  AiFillAppstore,
+  AiOutlineBook,
+  AiTwotoneAlert,
+  AiFillFileAdd,
+  AiOutlineLogout,
+  AiOutlineArrowDown,
+  AiOutlineWhatsApp,
+} from 'react-icons/ai';
 import { useState } from 'react';
 import DarkMode from '../components/assets/NavBar/darkMode';
 import Promotions from '../components/Promotions';
@@ -14,270 +18,208 @@ import { MdKeyboardBackspace } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getAvailableUsers, getDisabledUsers } from '../Redux/actions';  //Ncesito el localhost back abierto
+import { getAvailableUsers, getDisabledUsers } from '../Redux/actions'; //Ncesito el localhost back abierto
 import { disableUser } from '../domain/userService';
+import CmsUsers from '../components/CmsUsers';
 
 function Cms() {
-    const dispatch = useDispatch()
-    const availableUsers = useSelector((state) => state.usersAvailable);
-    const disabledUsers = useSelector((state) => state.disabledUsers);
+  const dispatch = useDispatch();
+  const availableUsers = useSelector((state) => state.usersAvailable);
+  const disabledUsers = useSelector((state) => state.disabledUsers);
 
-    const [downdrop, setDowndrop] = useState(true)
-    const handleClickDrop = () => {
-        setDowndrop(downdrop => !downdrop)
+  const [downdrop, setDowndrop] = useState(true);
+  const handleClickDrop = () => {
+    setDowndrop((downdrop) => !downdrop);
+  };
+  let toggleClass = downdrop ? 'hidden' : '';
+
+  const [menuItem, setMenuItem] = useState('');
+
+  const handleDisableUser = (id) => {
+    disableUser(id);
+    dispatch(getAvailableUsers());
+    alert('Se ha deshabilitado el usuario con exito!'); //momentaneo
+  };
+
+  useEffect(() => {
+    dispatch(getAvailableUsers());
+    dispatch(getDisabledUsers());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAvailableUsers());
+    dispatch(getDisabledUsers());
+  }, []);
+
+  const renderSwitch = (activeMenu) => {
+    switch (menuItem) {
+      case 'users': {
+        return (
+          <CmsUsers
+            availableUsers={availableUsers}
+            disabledUsers={disabledUsers}
+          />
+        );
+      }
+      case 'promotions': {
+        return <Promotions />;
+      }
+      default: {
+        return (
+          <CmsUsers
+            availableUsers={availableUsers}
+            disabledUsers={disabledUsers}
+          />
+        );
+      }
     }
-    let toggleClass = downdrop ? "hidden" : "";
+  };
 
-    const handleDisableUser = (id) => {
-        disableUser(id)
-        dispatch(getAvailableUsers())
-        alert("Se ha deshabilitado el usuario con exito!") //momentaneo
-    }
+  return (
+    <div>
+      <div className="flex bg-white-600 h-screen w-screen">
+        <div className="sidebar top-0 bottom-0 lg:left-0 p-2 rounded-br-full text-center bg-gray-900 w-1/6">
+          <Link to="/home">
+            <button className="cursor-pointer text-white text-lg m-2 bg-purple-600 h-9 pointer rounded-full flex justify-center p-2">
+              <MdKeyboardBackspace />
+            </button>
+          </Link>
+          <aside className="text-gray-100 text-l mx-1">
+            <div className="w-fit h-fit">
+              <div className="flex rounded-md duration-300 cursor-pointer bg-gray-700 mt-4 align-middle, items-center w-fit px-4">
+                <img src={logo} alt="prueba" className="w-[40px] h-[41px]" />
+                <h2 className="font-bold text-amber-400 my-auto ml-2">
+                  My Manga
+                </h2>
+              </div>
 
-    useEffect(() => {
-        dispatch(getAvailableUsers())
-        dispatch(getDisabledUsers())
-    }, [handleDisableUser])
+              <div
+                onClick={() => setMenuItem('users')}
+                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
+              >
+                <span>
+                  {' '}
+                  <AiFillAppstore />{' '}
+                </span>
+                <h3 className="font-bold text-gray-200">Users</h3>
+              </div>
+              <div
+                onClick={() => setMenuItem('products')}
+                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
+              >
+                <span>
+                  {' '}
+                  <AiOutlineBook />{' '}
+                </span>
+                <h3 className="font-bold text-gray-200">Products</h3>
+              </div>
 
-    useEffect(() => {
-        dispatch(getAvailableUsers())
-        dispatch(getDisabledUsers())
-    }, )
+              <div
+                onClick={() => setMenuItem('orders')}
+                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
+              >
+                <span>
+                  {' '}
+                  <AiFillFileAdd />{' '}
+                </span>
+                <h3 className="font-bold text-gray-200">Orders</h3>
+              </div>
+              <div
+                onClick={() => setMenuItem('promotions')}
+                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
+              >
+                <span>
+                  {' '}
+                  <AiOutlineLogout />{' '}
+                </span>
+                <h3 className="font-bold text-gray-200">Promotions</h3>
+              </div>
+              <div
+                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
+                onClick={() => {
+                  handleClickDrop();
+                }}
+              >
+                <span>
+                  {' '}
+                  <AiTwotoneAlert />{' '}
+                </span>
+                <h3 className="font-bold text-gray-200 mr-20">Reports</h3>
+                <span>
+                  {' '}
+                  <AiOutlineArrowDown />{' '}
+                </span>
 
-    
-
-
-    return (
-
-        <div>
-            <div className='flex bg-white-600 h-screen' >
-
-                <div className='sidebar top-0 bottom-0 lg:left-0 p-2 w-[250px] h-[750px] rounded-br-full overflow-y-auto text-center bg-gray-900  ' >
-                    <Link to="/home">
-                        <button className="cursor-pointer text-white text-lg m-2 bg-purple-600 h-9 pointer w-9 rounded-full flex justify-center pt-2">
-                            <MdKeyboardBackspace />
-                        </button>
-                    </Link>
-                    <aside className='text-gray-100 text-xl' >
-                        <div className='w-[220px] h-[121px]' >
-                            <div className='p-2.5 flex rounded-md px-4 duration-300 cursor-pointer bg-gray-700 mt-16'>
-                                <div>  <span className='' > <AiOutlineClose />  </span> </div> {/*Futuro responsive */}
-                                <h2 className='font-bold text-gray-200 pt-4 pr-4 ' >My Manga</h2>
-                                <img src={logo} alt="prueba" className='w-[90px] h-[91px]' />
-                            </div>
-
-                            <div className='p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer'>
-                                <span> <AiFillAppstore />  </span>
-                                <h3 className='font-bold text-gray-200' >Home</h3>
-                            </div>
-                            <div href='#product' className='p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer'>
-                                <span> <AiOutlineBook />  </span>
-                                <h3 className='font-bold text-gray-200'>New Discount</h3>
-                            </div>
-
-                            <div className='p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer' >
-                                <span> <AiFillFileAdd />  </span>
-                                <h3 className='font-bold text-gray-200' >Add Productos</h3>
-                            </div>
-
-                            <div className='p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer'
-                                onClick={() => { handleClickDrop() }}
-                            >
-
-                                <span> <AiTwotoneAlert />  </span>
-                                <h3 className='font-bold text-gray-200 mr-20' >Reports</h3>
-                                <span  > <AiOutlineArrowDown />  </span>
-
-                                <div className='flex justify-between w-full items-center' >
-                                    <span className='text-sm rotate-180' >
-                                        <i className='bi bi-chevron-down' ></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className={`text-left text-sm  w-4/5 mx-auto ${toggleClass}`} id='submenu' >
-                                <a className='p-2.5 mt-1 flex items-center rounded-md  duration-300 cursos-pointer text-white hover:bg-gray-700'
-                                    href="https://wa.me/573028405926" target="_blank"  >
-                                    <AiOutlineWhatsApp />
-                                    <h2 className='font-bold cursos-pointer pl-2 pr-4  rounded-md' > Admin1 </h2>
-                                </a>
-
-                                <a className='p-2.5 mt-1 flex items-center rounded-md  duration-300 cursos-pointer text-white hover:bg-gray-700'
-                                    href="https://wa.me/5491141786108" target="_blank"  >
-                                    <AiOutlineWhatsApp />
-                                    <h2 className='font-bold cursos-pointer pl-2 pr-4  rounded-md ' > Admin2 </h2>
-                                </a>
-
-                                <a className='p-2.5 mt-1 flex items-center rounded-md  duration-300 cursos-pointer text-white hover:bg-gray-700 '
-                                    href="https://wa.me/525587304585" target="_blank"  >
-                                    <AiOutlineWhatsApp />
-                                    <h2 className='font-bold cursos-pointer pl-2 pr-4 rounded-md ' > Admin2 </h2>
-                                </a>
-                            </div>
-
-                            <div className='p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer' >
-                                <span> <AiOutlineLogout />  </span>
-                                <h3 className='font-bold text-gray-200' >Log Out</h3>
-                            </div>
-
-                        </div>
-                    </aside>
+                <div className="flex justify-between w-full items-center">
+                  <span className="text-sm rotate-180">
+                    <i className="bi bi-chevron-down"></i>
+                  </span>
                 </div>
+              </div>
+              <div
+                className={`text-left text-sm  w-4/5 mx-auto ${toggleClass}`}
+                id="submenu"
+              >
+                <a
+                  className="p-2.5 mt-1 flex items-center rounded-md  duration-300 cursos-pointer text-white hover:bg-gray-700"
+                  href="https://wa.me/573028405926"
+                  target="_blank"
+                >
+                  <AiOutlineWhatsApp />
+                  <h2 className="font-bold cursos-pointer pl-2 pr-4  rounded-md">
+                    {' '}
+                    Admin1{' '}
+                  </h2>
+                </a>
 
-                <div className='w-[1000px] h-screen mt-0 p-3 ' >
-                    <h1 className='text-black-100 text-xl font-bold pb-4' >DashBoard</h1>
+                <a
+                  className="p-2.5 mt-1 flex items-center rounded-md  duration-300 cursos-pointer text-white hover:bg-gray-700"
+                  href="https://wa.me/5491141786108"
+                  target="_blank"
+                >
+                  <AiOutlineWhatsApp />
+                  <h2 className="font-bold cursos-pointer pl-2 pr-4  rounded-md ">
+                    {' '}
+                    Admin2{' '}
+                  </h2>
+                </a>
 
-                    <div className='flex' >
-
-                        <div className='bg-gray-100 rounded-md p-5 mr-10 w-[450px] h-[680px] overflow-auto '>
-
-                            <div className='pl-2 pt-2 rounded-md  duration-300 cursor-pointer bg-gradient-to-r from-gray-300 to-white-500' >
-                                <div className='p-1 w-[31px] object-contain rounded-full bg-green-400 text-2xl ' >
-                                    <BiUserPin className='' />
-                                </div>
-
-                                <div className='flex text-gray-600' >
-                                    <h1 className='text-gray-600 text-xl font-bold  mb-7' >Active Users</h1>
-                                </div>
-                            </div>
-
-
-                            <div className='rounded-md p-2 mt-5 lista de activeusers ' >
-
-                                <div  >
-                                    {availableUsers.map((u) => {
-                                        return (
-                                            <div className='mt-3 mb-3  p-0.5 pt-2 rounded-md  duration-300 cursos-pointer bg-gray-200 pb-3' >
-                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
-                                                    Name: {u.firstname}
-                                                </h1>
-                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
-                                                    Lastname: {u.lastname}
-                                                </h1>
-                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
-                                                    Email: {u.email}
-                                                </h1>
-                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
-                                                    Rol: {u.role}
-                                                </h1>
-                                                <h1 className='text-gray-600 text-base font-bold pl-2 inline-block' >
-                                                    ID: {u.id}
-                                                </h1>
-
-                                                <div className='text-gray-600 inline-block flex justify-center mt-2' >
-                                                    <div className='p-1  object-contain rounded-full bg-red-400 text-2xl cursor-pointer ' >
-                                                        <button onClick={() => handleDisableUser(u.id)} >
-                                                            <FaUserAltSlash />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        )
-                                    })}
-                                </div>
-
-
-
-                            </div>
-
-
-                        </div>
-
-
-                        <div className='bg-gray-100  rounded-md p-5 pt-2 w-[450px] h-[680px] overflow-auto'  >
-
-                            <div className='pl-2 pt-2 rounded-md  duration-300 cursor-pointer bg-gradient-to-r from-gray-300 to-white-500' >
-                                <div className='p-1 w-[31px] object-contain rounded-full bg-red-500 text-2xl ' >
-                                    <BiUserX />
-                                </div>
-
-                                <div className='flex'>
-                                    <h1 className='text-gray-600 text-xl font-bold  mb-7' >Black List</h1>
-                                </div>
-                            </div>
-
-
-                            <div className=' rounded-md p-2 mt-5 lista de disabled users' >
-
-                            <div>
-                                    {disabledUsers.map((u) => {
-                                        return (
-                                            <div className='mt-3 mb-3  p-0.5 pt-2 rounded-md  duration-300 cursos-pointer bg-gray-200 pb-3' >
-                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
-                                                    Name: {u.firstname}
-                                                </h1>
-                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
-                                                    Lastname: {u.lastname}
-                                                </h1>
-                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
-                                                    Email: {u.email}
-                                                </h1>
-                                                <h1 className='text-gray-600 text-base font-bold pl-2' >
-                                                    Rol: {u.role}
-                                                </h1>
-                                                <h1 className='text-gray-600 text-base font-bold pl-2 inline-block' >
-                                                    ID: {u.id}
-                                                </h1>
-
-                                                <div className='text-gray-600 inline-block flex justify-center mt-2' >
-                                                    <div className='p-1  object-contain rounded-full bg-green-300 text-2xl cursor-pointer ' >
-                                                        <button onClick={() => handleDisableUser(u.id)} >
-                                                            <FaUserCheck />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-
-                                    })}
-                                </div>
-
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div className='w-[200px] h-screen mt-10 text-gray-600' >
-                    <div className='bg-gray-100 rounded-md  pt-2 w-[250px] h-[660px] ' >
-
-                        <div className='ml-5 flex mb-5 ' >
-                            <div className='info' >
-                                <p className='text-xl'>Hello, Elon Musk  </p>
-                                <small className='text-muted' >Rol: </small>
-                                <small className='text-muted' >Master</small>
-                            </div>
-                            <div className='ml-5' >
-                                <img src={fotomuestra} alt="master" className='sm:w-[42px] w-[25px] object-contain rounded-full' />
-                            </div>
-                        </div>
-                        <DarkMode />
-                    </div>
-
-
-                </div>
-
+                <a
+                  className="p-2.5 mt-1 flex items-center rounded-md  duration-300 cursos-pointer text-white hover:bg-gray-700 "
+                  href="https://wa.me/525587304585"
+                  target="_blank"
+                >
+                  <AiOutlineWhatsApp />
+                  <h2 className="font-bold cursos-pointer pl-2 pr-4 rounded-md ">
+                    {' '}
+                    Admin2{' '}
+                  </h2>
+                </a>
+              </div>
             </div>
-
-            <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
-                <div className="flex flex-row md:mt-0 mt-6 " />
-            </div>
-
-            <div className='Aca se podran crear las promociones' >
-                <Promotions />
-            </div>
-
-            <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
-                <div className="flex flex-row md:mt-0 mt-6 " />
-            </div>
-
-
+          </aside>
         </div>
 
-    )
+        <div className="w-5/6 mt-0 p-3 ">
+          <div className="flex justify-between ">
+            <h1 className="text-black-100 text-xl font-bold pb-4">CMS Panel</h1>
+            <div className="w-fit h-fit text-gray-600 mr-8">
+              <DarkMode />
+            </div>
+          </div>
+          {renderSwitch()}
+        </div>
+      </div>
+
+      {/* <div className="Aca se podran crear las promociones">
+        <Promotions />
+      </div> */}
+
+      <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
+        <div className="flex flex-row md:mt-0 mt-6 " />
+      </div>
+    </div>
+  );
 }
 
-export default Cms
+export default Cms;
