@@ -93,7 +93,7 @@ const CardSection = ({
           <div className="w-full flex justify-center">
             <button
               onClick={prevHandler}
-              className="bg-white w-8 h-8 mt-7 rounded-full  flex text-blue-600 text-4xl hover:bg-blue-600 hover:text-white"
+              className="text-white font-bolder text-2xl"
             >
               <FiChevronLeft />
             </button>
@@ -106,7 +106,7 @@ const CardSection = ({
 
             <button
               onClick={nextHandler}
-              className="bg-white w-8 h-8 mt-7  rounded-full  text-blue-600 text-4xl hover:bg-blue-600 hover:text-white"
+              className="text-white font-bolder text-2xl"
             >
               <FiChevronRight />
             </button>

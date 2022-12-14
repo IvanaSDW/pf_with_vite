@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import swal from 'sweetalert';
 import { SERVER_URL } from '../domain/serverConfig';
 import firebase from '../domain/userService';
 import RatingStar from './RatingStar';
@@ -39,7 +40,7 @@ const OrderCard = ({ order }) => {
             }
           )
           .then((response) => {
-            alert('Your review was succesfully saved! -> ', response);
+            swal('Your review was succesfully saved! -> ', response);
             toggleModalReview();
             setRating('');
             setReview('');

@@ -75,13 +75,8 @@ export default function Navbar({
               <Link to="/cms">
                 <button className={styles.iconBtn}>
                   <MdAdminPanelSettings
-                    style={{ fontSize: 20, marginTop: 7 }}
+                    style={{ fontSize: 28, marginTop: 3, marginRight: 4 }}
                   />
-                </button>
-              </Link>
-              <Link to="/form">
-                <button className={styles.iconBtn}>
-                  <BiBookAdd style={{ fontSize: 20, marginTop: 7 }} />
                 </button>
               </Link>
             </>
