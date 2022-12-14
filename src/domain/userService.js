@@ -122,6 +122,35 @@ export const disableUser = async (iduser) => {
   }
 };
 
+//Active user
+export const activeUser = async (iduser) => {
+  try {
+    await firebase
+      .auth()
+      .currentUser.getIdToken() //Obtengo en token del usuario actual
+      .then((authToken) => {
+        axios
+          .put(`${SERVER_URL}/undelete/user/${iduser}`,
+            {
+
+            },
+            {
+              headers: {
+                AuthToken: authToken,
+              },
+            })
+          .then((r) => {
+            console.log('Se reactivo con exito', r);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const userExists = async (userId) => {
   console.log('checking if ' + userId + ' exists');
   const response = await fetch(`${SERVER_URL}/user/${userId}`);

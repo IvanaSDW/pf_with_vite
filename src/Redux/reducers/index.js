@@ -30,7 +30,8 @@ import {
   GET_DISABLED_USERS,
   DELETE_PROMO,
   MANGA_ON_SALE,
-  MANGA_FILTER_ON_SALE,  
+  MANGA_FILTER_ON_SALE,
+  GET_ALL_USER_ORDERS
 } from "../actions";
 
 const getCartLocalStorage = () => {
@@ -63,6 +64,7 @@ const initialState = {
   usersAvailable: [],
   disabledUsers: [],
   mangasOnSale: [],
+  allorders: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -342,6 +344,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         disabledUsers: action.payload
       }
+
+    case GET_ALL_USER_ORDERS:
+      return {
+        ...state,
+        allorders: action.payload
+      }
     case GET_PROMOS:
       return {
         ...state,
@@ -352,23 +360,23 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         mangasOnSale: action.payload,
       };
-     case MANGA_FILTER_ON_SALE:
-        const mangasOnSaleFilter = [];
-        
-        action.payload.totalMangas.forEach((e) => {
-          action.payload.onSaleData.forEach((el) => {
-            if( e.mangaid === el[0]) {
-             mangasOnSaleFilter.push(e)
+    case MANGA_FILTER_ON_SALE:
+      const mangasOnSaleFilter = [];
 
-            }
-           })
-           
+      action.payload.totalMangas.forEach((e) => {
+        action.payload.onSaleData.forEach((el) => {
+          if (e.mangaid === el[0]) {
+            mangasOnSaleFilter.push(e)
+
+          }
         })
-        console.log(mangasOnSaleFilter)
-          return {
-            ...state,
-               mangas: mangasOnSaleFilter,
-          };
+
+      })
+      console.log(mangasOnSaleFilter)
+      return {
+        ...state,
+        mangas: mangasOnSaleFilter,
+      };
 
     default:
       return state;
