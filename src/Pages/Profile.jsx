@@ -74,7 +74,6 @@ const Profile = () => {
   const getMyOrders = async (userId) => {
     const orders = await axios.get(`${SERVER_URL}/order/user/${userId}`);
     setMyOrders(orders.data);
-    console.log('This are my orders: ', orders.data);
   };
 
   const [view, setView] = useState(false);
@@ -102,12 +101,10 @@ const Profile = () => {
   }
 
   const handleChangeAvatar = (e) => {
-    console.log('changing avatar...');
     setAvatarFile(e.target.files[0]);
   };
 
   useEffect(() => {
-    console.log('avatar changed...uploading file..');
     saveAvatar(avatarFile);
   }, [avatarFile]);
 
@@ -146,7 +143,7 @@ const Profile = () => {
 
   const validateInputs = () => {
     let valid = true;
-    console.log('validate inputs called');
+
     const validEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!fieldsState.email.match(validEmail)) {
       valid = false;
@@ -174,7 +171,6 @@ const Profile = () => {
             },
           })
           .then((response) => {
-            console.log('resp: ', response.data.updatedUser);
             swal('Your data were succesfully updated!');
             setSomeChanged(false);
             setEditMode(false);

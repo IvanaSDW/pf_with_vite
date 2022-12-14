@@ -93,7 +93,6 @@ export default function Details() {
       dispatch(addItemToCart(mangaid, 'card_detail'));
     }
   }
-  console.log(manga, 'asdasd');
 
   const id = manga.mangaid;
   const discount = promotion.has(id);
@@ -106,7 +105,7 @@ export default function Details() {
 
   const user = useSelector((state) => state.users);
   console.log(user, 'hola');
-  // console.log(userRev, "userRev")
+
   useEffect(() => {
     dispatch(getReview(mangaid));
     dispatch(getAllUsers());

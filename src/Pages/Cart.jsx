@@ -40,9 +40,6 @@ export default function Cart() {
     }
   };
 
-  console.log('carrito silvi', cart);
-  //// sum - resr product ////
-
   function sumContador(mangaid) {
     const itemCart = cart.find((item) => item.mangaid === mangaid);
     if (itemCart.stockQty === itemCart.quantity + 1) {

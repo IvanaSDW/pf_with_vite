@@ -30,25 +30,22 @@ import {
   GET_DISABLED_USERS,
   DELETE_PROMO,
   MANGA_ON_SALE,
-
-  MANGA_FILTER_ON_SALE, 
-  GET_REVIEW, 
+  MANGA_FILTER_ON_SALE,
+  GET_REVIEW,
   // GET_USER_REVIEW,
-
-  GET_ALL_USER_ORDERS
-
-} from "../actions";
+  GET_ALL_USER_ORDERS,
+} from '../actions';
 
 const getCartLocalStorage = () => {
-  if (localStorage.getItem("cart")) {
-    return JSON.parse(localStorage.getItem("cart"));
+  if (localStorage.getItem('cart')) {
+    return JSON.parse(localStorage.getItem('cart'));
   }
 
   return [];
 };
 
 const setCartLocalStorage = (cart) =>
-  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem('cart', JSON.stringify(cart));
 
 const initialState = {
   mangas: [],
@@ -73,8 +70,7 @@ const initialState = {
   reviews: [],
   // usersReview: []
 
-  allorders: []
-
+  allorders: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -82,8 +78,8 @@ const rootReducer = (state = initialState, action) => {
     case GET_MANGAS:
       return {
         ...state,
-        mangas: action.payload
-      }
+        mangas: action.payload,
+      };
     case GET_MANGAS_DETAIL:
       return {
         ...state,
@@ -114,7 +110,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         orderList: order1.payload,
         isLoading: false,
-      }
+      };
 
     case DELETE_DETAILS:
       return {
@@ -205,7 +201,7 @@ const rootReducer = (state = initialState, action) => {
 
     case ADD_TO_CART: {
       const stateToFilter =
-        action.payload.type === "card_detail"
+        action.payload.type === 'card_detail'
           ? state.mangasForDetail
           : state.mangas;
 
@@ -216,9 +212,6 @@ const rootReducer = (state = initialState, action) => {
       const ItemInCart = state.cart.find(
         (item) => item.mangaid === action.payload.id
       );
-
-      console.log(newItem, "nuevo item");
-      console.log(ItemInCart, "item ya agregado");
 
       if (ItemInCart) {
         state.cart = state.cart.map((item) =>
@@ -308,7 +301,6 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case SET_FIREBASE_USER: {
-      console.log(action.payload, "PAYOAASDdddddddDDDDDDDDD");
       return {
         ...state,
         firebaseUser: action.payload,
@@ -325,46 +317,45 @@ const rootReducer = (state = initialState, action) => {
     case GET_PROMOS: //Bring promos
       return {
         ...state,
-        promos: action.payload
-
+        promos: action.payload,
       };
 
-    case DELETE_PROMO: {  //DELETE PROMO
+    case DELETE_PROMO: {
+      //DELETE PROMO
       return {
         ...state,
-        promos: state.promos.filter((p) => p.id !== action.payload)
-      }
+        promos: state.promos.filter((p) => p.id !== action.payload),
+      };
     }
 
     case GET_ALL_USERS: //Bring users
       return {
         ...state,
-        users: action.payload
-
+        users: action.payload,
       };
 
     case GET_AVAILABLE_USERS:
       return {
         ...state,
-        usersAvailable: action.payload
-      }
+        usersAvailable: action.payload,
+      };
 
     case GET_DISABLED_USERS:
       return {
         ...state,
-        disabledUsers: action.payload
-      }
+        disabledUsers: action.payload,
+      };
 
     case GET_ALL_USER_ORDERS:
       return {
         ...state,
-        allorders: action.payload
-      }
+        allorders: action.payload,
+      };
     case GET_PROMOS:
       return {
         ...state,
-        promos: action.payload
-      }
+        promos: action.payload,
+      };
     case MANGA_ON_SALE:
       return {
         ...state,
@@ -376,27 +367,26 @@ const rootReducer = (state = initialState, action) => {
       action.payload.totalMangas.forEach((e) => {
         action.payload.onSaleData.forEach((el) => {
           if (e.mangaid === el[0]) {
-            mangasOnSaleFilter.push(e)
-
+            mangasOnSaleFilter.push(e);
           }
-        })
-      })
-        console.log(mangasOnSaleFilter)
-          return {
-            ...state,
-               mangas: mangasOnSaleFilter,
-          };
-       case GET_REVIEW: 
-          return{
-            ...state,
-            reviews:action.payload
-          }
+        });
+      });
 
-        // case GET_USER_REVIEW:
-        //   return{
-        //     ...state,
-        //     usersReview: action.payload
-        //   }  
+      return {
+        ...state,
+        mangas: mangasOnSaleFilter,
+      };
+    case GET_REVIEW:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    // case GET_USER_REVIEW:
+    //   return{
+    //     ...state,
+    //     usersReview: action.payload
+    //   }
 
     default:
       return state;

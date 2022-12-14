@@ -52,7 +52,6 @@ const OrderCard = ({ order }) => {
   };
 
   const handleRatingChange = (value) => {
-    console.log('Rating changed... value is: ', value);
     if (isNaN(value)) return;
     if (value < 1 || value > 5) return;
     setRating(value);

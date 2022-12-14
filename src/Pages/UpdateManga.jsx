@@ -75,7 +75,6 @@ export default function Update() {
   };
 
   useEffect(() => {
-    console.log('image changed...uploading file..');
     saveNewImage(file);
   }, [file]);
 
@@ -90,7 +89,6 @@ export default function Update() {
   };
 
   async function getData() {
-    console.log('called');
     try {
       const response = await axios.get(`${SERVER_URL}/manga/${id}`);
       setDetail(response.data);
@@ -568,10 +566,8 @@ export default function Update() {
                 <div className="flex flex-col items-start">
                   <p className="text-1xl font-bold text-gray-700 flex flex-row">
                     Genres:
-                    {console.log(genresChoose)}
                     {!genresChoose.includes(values.genre) &&
                       setGenresChoose([...genresChoose, values.genre])}
-                    {console.log(genresChoose)}
                     {genresChoose?.slice(1).map((el) => (
                       <div className="flex flex-col">
                         <p className="pl-2 dark:text-gray-400 italic">{el}</p>
