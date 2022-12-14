@@ -13,7 +13,7 @@ import {
 } from 'react-icons/ai';
 import { useState } from 'react';
 import DarkMode from '../components/assets/NavBar/darkMode';
-import Promotions from '../components/Promotions';
+import CmsPromotions from '../components/CmsPromotions';
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +22,7 @@ import { getAvailableUsers, getDisabledUsers } from '../Redux/actions'; //Ncesit
 import { disableUser, activeUser } from '../domain/userService';
 import CmsUsers from '../components/CmsUsers';
 import AllOrders from '../components/AllOrders';
+import { FormAdmin } from './FormAdmin';
 
 function Cms() {
   const dispatch = useDispatch();
@@ -57,8 +58,16 @@ function Cms() {
         );
       }
       case 'promotions': {
-        return <Promotions />;
+        return <CmsPromotions />;
       }
+
+      case 'orders': {
+        return <AllOrders />;
+      }
+
+      //   case 'products': {
+      //     return <FormAdmin />;
+      //   }
       default: {
         return (
           <CmsUsers
@@ -205,22 +214,6 @@ function Cms() {
           {renderSwitch()}
         </div>
       </div>
-
-      {/* <div className="Aca se podran crear las promociones">
-        <Promotions />
-      </div> */}
-
-      <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
-        <div className="flex flex-row md:mt-0 mt-6 " />
-      </div>
-
-      <AllOrders />  {/*Aca lo dejo Jorge*/}
-
-      <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
-        <div className="flex flex-row md:mt-0 mt-6 " />
-      </div>
-
-
     </div>
   );
 }
