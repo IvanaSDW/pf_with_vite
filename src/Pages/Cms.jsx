@@ -21,7 +21,7 @@ import { useEffect } from 'react';
 import { getAvailableUsers, getDisabledUsers } from '../Redux/actions'; //Ncesito el localhost back abierto
 import { disableUser, activeUser } from '../domain/userService';
 import CmsUsers from '../components/CmsUsers';
-import AllOrders from '../components/AllOrders';
+import CmsOrders from '../components/CmsOrders';
 import { FormAdmin } from './FormAdmin';
 
 function Cms() {
@@ -62,12 +62,12 @@ function Cms() {
       }
 
       case 'orders': {
-        return <AllOrders />;
+        return <CmsOrders />;
       }
 
-      //   case 'products': {
-      //     return <FormAdmin />;
-      //   }
+      case 'addproduct': {
+        return <FormAdmin />;
+      }
       default: {
         return (
           <CmsUsers
@@ -108,17 +108,6 @@ function Cms() {
                 <h3 className="font-bold text-gray-200">Users</h3>
               </div>
               <div
-                onClick={() => setMenuItem('products')}
-                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
-              >
-                <span>
-                  {' '}
-                  <AiOutlineBook />{' '}
-                </span>
-                <h3 className="font-bold text-gray-200">Products</h3>
-              </div>
-
-              <div
                 onClick={() => setMenuItem('orders')}
                 className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
               >
@@ -137,6 +126,16 @@ function Cms() {
                   <AiOutlineLogout />{' '}
                 </span>
                 <h3 className="font-bold text-gray-200">Promotions</h3>
+              </div>
+              <div
+                onClick={() => setMenuItem('addproduct')}
+                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
+              >
+                <span>
+                  {' '}
+                  <AiOutlineBook />{' '}
+                </span>
+                <h3 className="font-bold text-gray-200">Add new Manga</h3>
               </div>
               <div
                 className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
