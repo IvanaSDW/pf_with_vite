@@ -50,7 +50,6 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
     });
 
     if (!error) {
-      //   console.log(paymentMethod.card.brand); //que tarjeta es
       const { id } = paymentMethod;
       const { data } = await axios.post(`${SERVER_URL}/checkout`, {
         id,
@@ -59,9 +58,6 @@ const CheckoutForm = ({ payment, setPaymet, children, totalPrice }) => {
         cart: cart,
       });
 
-      console.log(totalPrice);
-      console.log(totalPrice * 100);
-      console.log((totalPrice * 100).toFixed(2));
       let userId = userFirebase.uid;
 
       if (data.error) {

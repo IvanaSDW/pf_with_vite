@@ -34,7 +34,7 @@ const Profile = () => {
         setUserData(userData);
       } else {
         dispatch(resetCart());
-        navigate('/home');
+        navigate('/login');
       }
     });
   }, [firebaseUser]);

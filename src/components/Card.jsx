@@ -17,6 +17,7 @@ const Card = ({
   price,
   averageRating,
   stockQty,
+  reviewsCount,
   promotion,
   discount,
 }) => {
@@ -98,18 +99,19 @@ const Card = ({
           <p className="text-white text-xs">Start Date: {startDate}</p>
           <p className="text-white text-xs">Status: {status}</p>
           <div className="flex items-center mt-2">
-          {averageRating ?
-                      <RatingRender rating={averageRating }/> :
-                      [...Array(5)].map((star, i) => {
-                        return(
-                      <div className="text-gray-200 flex  overflow-hidden ">
-                        <FaStar size={27} />
-                      </div>
-                      )
-                    })
-                  }
+            {reviewsCount ? (
+              <RatingRender rating={averageRating} />
+            ) : (
+              [...Array(5)].map((star, i) => {
+                return (
+                  <div className="text-gray-200 flex  overflow-hidden ">
+                    <FaStar size={27} />
+                  </div>
+                );
+              })
+            )}
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
-              {averageRating ? averageRating : 0}
+              {reviewsCount ? reviewsCount : 0}
             </span>
           </div>
           <div className="flex items-center justify-between pt-2">
