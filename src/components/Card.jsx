@@ -98,8 +98,16 @@ const Card = ({
           <p className="text-white text-xs">Start Date: {startDate}</p>
           <p className="text-white text-xs">Status: {status}</p>
           <div className="flex items-center mt-2">
-            <RatingRender rating={averageRating} />
-
+          {averageRating ?
+                      <RatingRender rating={averageRating }/> :
+                      [...Array(5)].map((star, i) => {
+                        return(
+                      <div className="text-gray-200 flex  overflow-hidden ">
+                        <FaStar size={27} />
+                      </div>
+                      )
+                    })
+                  }
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
               {averageRating ? averageRating : 0}
             </span>
@@ -133,7 +141,7 @@ const Card = ({
           <div>
             <img
               src={imgSoldOut}
-              className="absolute top-0 right-0 h-20 opacity-100 z-50 bg-amber-400 bg-opacity-30 rounded-2xl"
+              className="absolute top-0 right-0 h-full w-full z-50 bg-black/60  rounded-2xl"
               alt="image sold out"
             />
             <img

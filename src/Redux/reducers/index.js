@@ -30,8 +30,13 @@ import {
   GET_DISABLED_USERS,
   DELETE_PROMO,
   MANGA_ON_SALE,
-  MANGA_FILTER_ON_SALE,
+
+  MANGA_FILTER_ON_SALE, 
+  GET_REVIEW, 
+  // GET_USER_REVIEW,
+
   GET_ALL_USER_ORDERS
+
 } from "../actions";
 
 const getCartLocalStorage = () => {
@@ -64,7 +69,12 @@ const initialState = {
   usersAvailable: [],
   disabledUsers: [],
   mangasOnSale: [],
+
+  reviews: [],
+  // usersReview: []
+
   allorders: []
+
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -370,13 +380,23 @@ const rootReducer = (state = initialState, action) => {
 
           }
         })
-
       })
-      console.log(mangasOnSaleFilter)
-      return {
-        ...state,
-        mangas: mangasOnSaleFilter,
-      };
+        console.log(mangasOnSaleFilter)
+          return {
+            ...state,
+               mangas: mangasOnSaleFilter,
+          };
+       case GET_REVIEW: 
+          return{
+            ...state,
+            reviews:action.payload
+          }
+
+        // case GET_USER_REVIEW:
+        //   return{
+        //     ...state,
+        //     usersReview: action.payload
+        //   }  
 
     default:
       return state;
