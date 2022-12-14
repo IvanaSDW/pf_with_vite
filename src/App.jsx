@@ -12,7 +12,7 @@ import Login from './Pages/Login';
 import Cart from './Pages/Cart';
 import Profile from './Pages/Profile';
 import AboutUs from './components/Aboutus';
-import Update from './Pages/Update';
+import Update from './Pages/UpdateManga';
 import About from './Pages/About';
 
 import Cms from './Pages/Cms';

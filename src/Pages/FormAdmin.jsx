@@ -58,17 +58,7 @@ export const FormAdmin = () => {
   };
 
   return (
-    <div className=" h-full">
-      <h2 className="font-black text-violet-800 text-3xl text-center pt-10">
-        Create New Manga Item
-      </h2>
-      <Link to="/home">
-        <button className="bg-violet-800 w-20 h-20 rounded-full text-6xl pl-2 ml-4 absolute top-2 hover:bg-violet-600 hover:text-blue-500">
-          {' '}
-          <IoMdArrowRoundBack />
-        </button>
-      </Link>
-      {/* section form */}
+    <div className="h-full w-full">
       <Formik
         initialValues={{
           canonicalTitle: '',
@@ -152,11 +142,11 @@ export const FormAdmin = () => {
             category: categoryChoose.slice(1),
           });
           if (itemsValue.genre.length === 0) {
-            alert('genre can not be empty');
+            swal('genre can not be empty');
             return;
           }
           if (itemsValue.category.length === 0) {
-            alert('category can not be empty');
+            swal('category can not be empty');
             return;
           }
           dispatch(
@@ -177,8 +167,8 @@ export const FormAdmin = () => {
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
-          <div className="flex flex-row justify-center h-full mt-12">
-            <Form className=" shadow-4xl rounded-lg  px-5 mb-10 h-full md:w-1/2 lg:w-2/5 mx-5 ">
+          <div className="grid  grid-cols-2 justify-center h-full w-full mt-6 p-4">
+            <Form className=" shadow-4xl rounded-lg  px-5 mb-10 h-full">
               <div className="mb-5">
                 <label
                   htmlFor="canonicalTitle"
@@ -422,7 +412,7 @@ export const FormAdmin = () => {
                 Create new Manga
               </button>
             </Form>
-            <div className="bg-white shadow-2xl rounded-lg pt-10 px-5 mb-10 md:w-1/2 lg:w-2/5 flex flex-col justify-evenly">
+            <div className="bg-white shadow-2xl rounded-lg pt-10 px-5 mb-10 w-full flex flex-col justify-evenly">
               <p className=" text-base font-bold uppercase text-teal-700 mb-2 text-center">
                 Title:
                 <span className="pl-2 dark:text-gray-400 italic">

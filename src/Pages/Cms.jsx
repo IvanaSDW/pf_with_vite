@@ -1,8 +1,6 @@
 import React from 'react';
 import logo from '../components/assets/NavBar/ico3.png';
-import fotomuestra from '../components/assets/Dashboard/people01.png';
 import {
-  AiOutlineClose,
   AiFillAppstore,
   AiOutlineBook,
   AiTwotoneAlert,
@@ -10,18 +8,23 @@ import {
   AiOutlineLogout,
   AiOutlineArrowDown,
   AiOutlineWhatsApp,
+  AiOutlineShoppingCart,
+  AiOutlineDatabase,
 } from 'react-icons/ai';
+
+import { FiUsers } from 'react-icons/fi';
 import { useState } from 'react';
 import DarkMode from '../components/assets/NavBar/darkMode';
-import Promotions from '../components/Promotions';
-import { MdKeyboardBackspace } from 'react-icons/md';
+import CmsPromos from '../components/CmsPromos';
+import { MdKeyboardBackspace, MdOutlineLocalOffer } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAvailableUsers, getDisabledUsers } from '../Redux/actions'; //Ncesito el localhost back abierto
-import { disableUser, activeUser } from '../domain/userService';
 import CmsUsers from '../components/CmsUsers';
-import AllOrders from '../components/AllOrders';
+import CmsOrders from '../components/CmsOrders';
+import { FormAdmin } from './FormAdmin';
+import CmsProducts from '../components/CmsProducts';
 
 function Cms() {
   const dispatch = useDispatch();
@@ -57,7 +60,16 @@ function Cms() {
         );
       }
       case 'promotions': {
-        return <Promotions />;
+        return <CmsPromos />;
+      }
+
+      case 'orders': {
+        return <CmsOrders />;
+      }
+
+      case 'addproduct': {
+        return <CmsProducts />;
+        // return <FormAdmin />;
       }
       default: {
         return (
@@ -94,30 +106,19 @@ function Cms() {
               >
                 <span>
                   {' '}
-                  <AiFillAppstore />{' '}
+                  <FiUsers />{' '}
                 </span>
-                <h3 className="font-bold text-gray-200">Users</h3>
+                <h3 className="font-bold text-gray-200 ml-2">Users</h3>
               </div>
-              <div
-                onClick={() => setMenuItem('products')}
-                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
-              >
-                <span>
-                  {' '}
-                  <AiOutlineBook />{' '}
-                </span>
-                <h3 className="font-bold text-gray-200">Products</h3>
-              </div>
-
               <div
                 onClick={() => setMenuItem('orders')}
                 className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
               >
                 <span>
                   {' '}
-                  <AiFillFileAdd />{' '}
+                  <AiOutlineShoppingCart />{' '}
                 </span>
-                <h3 className="font-bold text-gray-200">Orders</h3>
+                <h3 className="font-bold text-gray-200 ml-2">Orders</h3>
               </div>
               <div
                 onClick={() => setMenuItem('promotions')}
@@ -125,32 +126,44 @@ function Cms() {
               >
                 <span>
                   {' '}
-                  <AiOutlineLogout />{' '}
+                  <MdOutlineLocalOffer />{' '}
                 </span>
-                <h3 className="font-bold text-gray-200">Promotions</h3>
+                <h3 className="font-bold text-gray-200 ml-2">Promotions</h3>
               </div>
               <div
+                onClick={() => setMenuItem('addproduct')}
+                className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
+              >
+                <span>
+                  {' '}
+                  <AiOutlineDatabase />{' '}
+                </span>
+                <h3 className="font-bold text-gray-200 ml-2">Products</h3>
+              </div>
+              {/* <div
                 className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer hover:bg-purple-600 text-white cursor-pointer"
                 onClick={() => {
                   handleClickDrop();
                 }}
               >
-                <span>
-                  {' '}
-                  <AiTwotoneAlert />{' '}
-                </span>
-                <h3 className="font-bold text-gray-200 mr-20">Reports</h3>
-                <span>
-                  {' '}
-                  <AiOutlineArrowDown />{' '}
-                </span>
+                <div className="flex w-full align-middle">
+                  <span>
+                    <AiTwotoneAlert />
+                  </span>
+                  <h3 className="font-bold text-gray-200 w-32">
+                    Chat with Staff
+                  </h3>
+                  <span>
+                    <AiOutlineArrowDown />
+                  </span>
+                </div>
 
                 <div className="flex justify-between w-full items-center">
                   <span className="text-sm rotate-180">
                     <i className="bi bi-chevron-down"></i>
                   </span>
                 </div>
-              </div>
+              </div> */}
               <div
                 className={`text-left text-sm  w-4/5 mx-auto ${toggleClass}`}
                 id="submenu"
@@ -205,22 +218,6 @@ function Cms() {
           {renderSwitch()}
         </div>
       </div>
-
-      {/* <div className="Aca se podran crear las promociones">
-        <Promotions />
-      </div> */}
-
-      <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
-        <div className="flex flex-row md:mt-0 mt-6 " />
-      </div>
-
-      <AllOrders />  {/*Aca lo dejo Jorge*/}
-
-      <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 mt-6 mb-5 border-t-[1px] border-t-[#3F3E45] ">
-        <div className="flex flex-row md:mt-0 mt-6 " />
-      </div>
-
-
     </div>
   );
 }
