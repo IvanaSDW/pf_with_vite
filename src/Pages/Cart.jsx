@@ -257,7 +257,7 @@ export default function Cart() {
                     );
                   })
                 ) : (
-                  <h1 className="text-5xl m-5 text-purple-600 font-mono">
+                  <h1 className="text-3xl m-5 text-purple-600 font-mono">
                     You haven't added mangas to your cart yet
                   </h1>
                 )}

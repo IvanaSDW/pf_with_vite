@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BsFillBarChartFill } from 'react-icons/bs';
 import { postPromotion, getPromos, deletePromos } from '../Redux/actions';
 import { MdDisabledByDefault } from 'react-icons/md';
+import swal from 'sweetalert';
 
 function CmsPromos() {
   const dispatch = useDispatch();
@@ -114,7 +115,7 @@ function CmsPromos() {
       setErrorStart('Date before today');
     } else if (year > currentYear) {
       setErrorStart(false);
-    } else if (month < currentMonth || day < currentDay) {
+    } else if (month < currentMonth) {
       setErrorStart('Date before today');
     } else {
       setErrorStart(false);
@@ -172,7 +173,7 @@ function CmsPromos() {
     } else {
       setErrorSubmit(false);
       dispatch(postPromotion(inputs));
-      alert('Se creo de manera correcta!');
+      swal('Se creo de manera correcta!');
       dispatch(getPromos());
     }
   };
@@ -198,6 +199,24 @@ function CmsPromos() {
   useEffect(() => {
     dispatch(getPromos());
   }, []);
+
+  const confirmDeletePromo = (e) => {
+    //BOTON PARA DESACTIVA
+    swal({
+      title: 'Delete promotion!',
+      text: '¿Do you want to delete this promotion?',
+      icon: 'warning',
+      buttons: ['No', 'Si'],
+    }).then((r) => {
+      if (r) {
+        deletePromo(e);
+        swal({
+          text: 'The promotion has been succesfully deleted!',
+          icon: 'success',
+        });
+      }
+    });
+  };
 
   return (
     <div className="w-full">
@@ -428,7 +447,7 @@ function CmsPromos() {
 
                   <div className="text-gray-600 inline-block flex  justify-center mt-2">
                     <button
-                      onClick={() => deletePromo(e.id)}
+                      onClick={() => confirmDeletePromo(e.id)}
                       className="p-1   object-contain rounded-full bg-red-400  cursor-pointer flex"
                     >
                       <MdDisabledByDefault className="mt-1" />

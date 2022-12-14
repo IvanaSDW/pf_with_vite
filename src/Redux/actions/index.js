@@ -10,9 +10,9 @@ export const GET_ALL_GENRES = 'GET_ALL_GENRES';
 export const DELETE_MANGA = 'DELETE_MANGA';
 export const LOADING_TYPE = 'LOADING_TYPE';
 export const UPDATE_MANGA = 'UPDATE_MANGA';
-export const GET_ALL_USERS = "GET_ALL_USERS";
-export const GET_AVAILABLE_USERS = "GET_AVAILABLE_USERS";
-export const GET_DISABLED_USERS = "GET_DISABLED_USERS";
+export const GET_ALL_USERS = 'GET_ALL_USERS';
+export const GET_AVAILABLE_USERS = 'GET_AVAILABLE_USERS';
+export const GET_DISABLED_USERS = 'GET_DISABLED_USERS';
 export const DELETE_PROMO = 'DELETE_PROMO';
 //ORDER
 export const MANGA_DATE_ASC = 'MANGA_DATE_ASC';
@@ -89,7 +89,7 @@ export const postManga = (payload) => {
     try {
       let response = await axios.post(`${SERVER_URL}/manga`, payload);
       return response;
-    } catch (error) { }
+    } catch (error) {}
   };
 };
 
@@ -337,6 +337,7 @@ export function postPromotion(payload) {
   return async function (dispatch) {
     try {
       const post = await axios.post(`${SERVER_URL}/promotion`, payload);
+      console.log('🚀 ~ file: index.js:341 ~ post', post);
       return post;
     } catch (error) {
       console.log(error);
@@ -390,30 +391,30 @@ export const getAllUsers = () => {
 export const getAvailableUsers = () => {
   return async function (dispatch) {
     try {
-      const available = await axios.get(`${SERVER_URL}/user/available`)
+      const available = await axios.get(`${SERVER_URL}/user/available`);
       return dispatch({
         type: GET_AVAILABLE_USERS,
-        payload: available.data
-      })
+        payload: available.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};
 
 export const getDisabledUsers = () => {
   return async function (dispatch) {
     try {
-      const disabled = await axios.get(`${SERVER_URL}/user/disabled`)
+      const disabled = await axios.get(`${SERVER_URL}/user/disabled`);
       return dispatch({
         type: GET_DISABLED_USERS,
-        payload: disabled.data
-      })
+        payload: disabled.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};
 
 export function getOrderList(userId) {
   return async function (dispatch) {
@@ -446,33 +447,35 @@ export const getMangasOnSale = () => {
 };
 
 export const filterMangasOnSale = () => {
-  return async function (dispatch){
-  try {
+  return async function (dispatch) {
+    try {
       const response = await axios.get(
-      "https://backend-production-1a11.up.railway.app/onsale" );
+        'https://backend-production-1a11.up.railway.app/onsale'
+      );
       const responseTotal = await axios.get(
-        "https://backend-production-1a11.up.railway.app/manga" );
-    return dispatch({
-      type: MANGA_FILTER_ON_SALE,
-      payload: {onSaleData: response.data, totalMangas: responseTotal.data}
-    });
-  } catch (err) {
-    console.log(err);
-  }
+        'https://backend-production-1a11.up.railway.app/manga'
+      );
+      return dispatch({
+        type: MANGA_FILTER_ON_SALE,
+        payload: { onSaleData: response.data, totalMangas: responseTotal.data },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 };
-}
 
 //ALL ORDERS
 export const getAllUserOrders = () => {
-  return async function (dispatch){
-    try{
-      const allUserOrders = await axios.get(`${SERVER_URL}/order`)
+  return async function (dispatch) {
+    try {
+      const allUserOrders = await axios.get(`${SERVER_URL}/order`);
       return dispatch({
         type: GET_ALL_USER_ORDERS,
-        payload: allUserOrders.data
-      })
-    }catch(error){
-      console.log(error)
+        payload: allUserOrders.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
-}
+  };
+};

@@ -8,15 +8,15 @@ const CmsUsers = ({ availableUsers, disabledUsers }) => {
   const confirmation2 = (id) => {
     //BOTON PARA REACTIVAR
     swal({
-      title: 'Ey',
-      text: '¿Do you want to reactive this user?',
+      title: 'Restore user account!',
+      text: '¿Do you want to re-enable this user account?',
       icon: 'warning',
       buttons: ['No', 'Si'],
     }).then((r) => {
       if (r) {
         activeUser(id);
         swal({
-          text: 'The user has been reactivated!',
+          text: 'The user account has been restored!',
           icon: 'success',
         });
       }
@@ -26,15 +26,15 @@ const CmsUsers = ({ availableUsers, disabledUsers }) => {
   const confirmation1 = (id) => {
     //BOTON PARA DESACTIVA
     swal({
-      title: 'Ey',
-      text: '¿Do you want to disable this user?',
+      title: 'Disable user account!',
+      text: '¿Do you want to disable this user account?',
       icon: 'warning',
       buttons: ['No', 'Si'],
     }).then((r) => {
       if (r) {
         disableUser(id);
         swal({
-          text: 'The user has been succesfully deactivated!',
+          text: 'The user account has been succesfully disabled!',
           icon: 'success',
         });
       }
