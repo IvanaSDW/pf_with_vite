@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { MdReviews } from 'react-icons/md';
 import { SERVER_URL } from '../../domain/serverConfig';
 export const GET_MANGAS = 'GET_MANGAS';
 export const GET_ALL_MANGAS = 'GET_ALL_MANGAS';
@@ -37,6 +38,9 @@ export const GET_PROMOS = 'GET_PROMOS';
 export const MANGA_ON_SALE = 'MANGA_ON_SALE';
 ///GET ORDER LIST
 export const GET_ORDER = 'GET_ORDER';
+
+export const GET_REVIEW = "GET_REVIEW";
+// export const GET_USER_REVIEW = "GET_USER_REVIEW"
 export const GET_ALL_USER_ORDERS = 'GET_ALL_USER_ORDERS';
 
 export const getMangas = () => {
@@ -430,6 +434,35 @@ export function getOrderList(userId) {
     }
   };
 }
+
+export function getReview(mangaid){
+  return async function (dispatch){
+    try{
+      const review = await axios.get(`https://backend-production-1a11.up.railway.app/review/manga/${mangaid}`);
+      return dispatch({
+        type: GET_REVIEW,
+        payload: review.data
+      });
+     } catch(error){
+        alert(error)
+      }
+    
+  }
+}
+
+// export function getUserReview(userId){
+//   return async function(dispatch){
+//     try{
+//       const user = await axios.get(`https://backend-production-1a11.up.railway.app/review/user/`);
+//       return dispatch({
+//         type: GET_USER_REVIEW,
+//         payload: user.data
+//       });
+//     } catch(error){
+//       alert(error)
+//     }
+//   }
+// }
 
 export const getMangasOnSale = () => {
   return async function (dispatch) {
