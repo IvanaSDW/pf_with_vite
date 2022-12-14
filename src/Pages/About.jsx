@@ -37,10 +37,11 @@ const About = () => {
 
       <div className="flex justify-center pr-10 pl-10 pt-5">
         <h2 className="text-2xl font-serif">
-        This project was realized in the last stage of "Soy Henry" with 
-        the objetive to incorporate new technologies and realize best practices.
-        And finally incorporate the new learning of this last months in the 
-        career through team work, focus resolutive capacity and responsability.
+          This project was realized in the last stage of "Soy Henry" with the
+          objetive to incorporate new technologies and realize best practices.
+          And finally incorporate the new learning of this last months in the
+          career through team work, focus resolutive capacity and
+          responsability.
         </h2>
       </div>
 
@@ -48,7 +49,7 @@ const About = () => {
         <EachOne
           nombre="Jorge Castañeda"
           pais="Colombia"
-          mail='"mailto:castanedajorge.correo@gmail.com'
+          mail="mailto:castanedajorge.correo@gmail.com"
           carrera="Full Stack developer"
           linkedin="https://www.linkedin.com/in/jorgeenriquecastaneda/"
           github="https://github.com/IvanaSDW"

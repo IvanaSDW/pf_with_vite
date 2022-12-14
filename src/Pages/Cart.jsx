@@ -143,7 +143,7 @@ export default function Cart() {
     <div>
       <NavBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <div className="flex flex-col  font-serif">
-        <div className="w-3/6 h-80 overflow-y-scroll rounded-md  self-center  mt-8 flex  justify-center ">
+        <div className="w-3/6 h-80 overflow-y-auto rounded-md  self-center  mt-8 flex  justify-center ">
           <Checkout
             payment={payment}
             setPaymet={setPaymet}
