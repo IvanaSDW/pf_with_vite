@@ -122,9 +122,9 @@ export default function FilterAside({
     dispatch(loading());
     const index = e.nativeEvent.target.selectedIndex;
     const target = e.nativeEvent.target[index].text;
-    if (target === 'New firts')
+    if (target === 'Newest first')
       dispatch(getMangaByEmisionDate('dateDesc', currentPage));
-    if (target === 'Clasic firts')
+    if (target === 'Classics first')
       dispatch(getMangaByEmisionDate('dateAsc', currentPage));
   }
 
@@ -134,9 +134,9 @@ export default function FilterAside({
     dispatch(loading());
     const index = e.nativeEvent.target.selectedIndex;
     const target = e.nativeEvent.target[index].text;
-    if (target === 'Price ASC.')
+    if (target === 'Lower price')
       dispatch(getMangaByPrice('priceAsc', currentPage));
-    if (target === 'Price DESC.')
+    if (target === 'Higher price')
       dispatch(getMangaByPrice('priceDesc', currentPage));
   }
 
