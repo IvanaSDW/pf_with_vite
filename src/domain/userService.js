@@ -28,14 +28,9 @@ export const logInWithEmailAndPassword = async (email, password) => {
 };
 
 export const registerWithEmailAndPassword = async (email, password, name) => {
-  console.log('email: ', email, ' pwd: ', password);
   try {
     const res = await auth.createUserWithEmailAndPassword(email, password);
-    res.user.sendEmailVerification().then(() => {
-      console.log(
-        'A verification email was sent to your address. Please clcik on provided link to confirm your account.'
-      );
-    });
+    res.user.sendEmailVerification().then(() => {});
 
     firebase
       .auth()
@@ -67,7 +62,6 @@ export const logout = () => {
 };
 
 export const createUserInDB = async (user, authToken, name) => {
-  console.log('posting request to create user: ', user.email);
   if (user) {
     if (await userExists(user.uid)) {
       console.log('user already exists');
@@ -113,9 +107,7 @@ export const disableUser = async (iduser) => {
               AuthToken: authToken,
             },
           })
-          .then((r) => {
-            console.log('Se borro con exito', r);
-          })
+          .then((r) => {})
           .catch((e) => {
             console.log(e);
           });
@@ -155,10 +147,9 @@ export const activeUser = async (iduser) => {
 };
 
 const userExists = async (userId) => {
-  console.log('checking if ' + userId + ' exists');
   const response = await fetch(`${SERVER_URL}/user/${userId}`);
   const user = await response.json();
-  console.log('userexists responded: ', user.id);
+
   return user.id === 'undefined';
 };
 
@@ -170,7 +161,6 @@ export const fetchUserData = async () => {
     const response = await fetch(`${SERVER_URL}/user/${firebaseUser.uid}`);
     const user = await response.json();
     if (user.id === undefined) {
-      console.log('user not yet created in database, creating now...');
       auth.currentUser
         .getIdToken()
         .then((token) => {

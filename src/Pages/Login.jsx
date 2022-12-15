@@ -51,9 +51,6 @@ export default function Login() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      user
-        ? console.log('user is now: ', user.uid)
-        : console.log('no user logged');
       dispatch(setFirebaseUser(user));
       if (user) {
         navigate('/home');
@@ -116,7 +113,6 @@ export default function Login() {
   };
 
   const validateInputs = () => {
-    console.log('validate inputs called');
     const validEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!fieldInputs.email.match(validEmail)) {
       if (fieldsTouched.emailTouched) {

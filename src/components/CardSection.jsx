@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import FilterAside from "../components/FilterAside";
-import Card from "./Card";
-import style from "./assets/Cards/loading.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllMangas, loading, getMangasOnSale } from "../Redux/actions";
-import img from "./assets/Cards/yugi.jpg";
-import Pagination from "./Paginated2";
-import NoElement from "./NoElement";
-import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
+import React, { useState, useEffect } from 'react';
+import FilterAside from '../components/FilterAside';
+import Card from './Card';
+import style from './assets/Cards/loading.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllMangas, loading, getMangasOnSale } from '../Redux/actions';
+import img from './assets/Cards/yugi.jpg';
+import Pagination from './Paginated2';
+import NoElement from './NoElement';
+import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 
 const CardSection = ({
   currentPage,
@@ -22,7 +22,7 @@ const CardSection = ({
   useEffect(() => {
     dispatch(loading());
     dispatch(getAllMangas(currentPage, mangaState));
-    dispatch(getMangasOnSale())
+    dispatch(getMangasOnSale());
   }, [dispatch, currentPage]);
 
   const [mangasPerPage] = useState(6);
@@ -81,6 +81,7 @@ const CardSection = ({
                     status={e.status}
                     averageRating={e.averageRating}
                     stockQty={e.stockQty}
+                    reviewsCount={e.reviewsCount}
                   />
                 );
               })

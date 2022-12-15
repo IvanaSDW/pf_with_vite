@@ -14,11 +14,15 @@ import Profile from './Pages/Profile';
 import AboutUs from './components/Aboutus';
 import Update from './Pages/UpdateManga';
 import About from './Pages/About';
-
 import Cms from './Pages/Cms';
+import { useCurrentUser } from './domain/useCurrentUserHook';
+import firebase from './domain/userService';
 
 function App() {
   const dispatch = useDispatch();
+  const loggedUser = firebase.auth().currentUser;
+  const user = useCurrentUser();
+  const userRole = user.role;
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -30,7 +34,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/form" element={<FormAdmin />} />
+        {/* <Route path="/form" element={<FormAdmin />} /> */}
         <Route path="/manga/:id" element={<Details />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />

@@ -40,9 +40,6 @@ export default function Cart() {
     }
   };
 
-  console.log('carrito silvi', cart);
-  //// sum - resr product ////
-
   function sumContador(mangaid) {
     const itemCart = cart.find((item) => item.mangaid === mangaid);
     if (itemCart.stockQty === itemCart.quantity + 1) {
@@ -143,7 +140,7 @@ export default function Cart() {
     <div>
       <NavBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <div className="flex flex-col  font-serif">
-        <div className="w-3/6 h-80 overflow-y-scroll rounded-md  self-center  mt-8 flex  justify-center ">
+        <div className="w-3/6 h-80 overflow-y-auto rounded-md  self-center  mt-8 flex  justify-center ">
           <Checkout
             payment={payment}
             setPaymet={setPaymet}

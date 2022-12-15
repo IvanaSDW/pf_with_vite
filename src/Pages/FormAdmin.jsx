@@ -20,7 +20,6 @@ export const FormAdmin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('Uploading file to storage...');
       const result = await uploadFile(file);
       setUrlStorage(result);
     } catch (e) {
@@ -42,7 +41,6 @@ export const FormAdmin = () => {
   };
 
   useEffect(() => {
-    console.log('image changed...uploading file..');
     saveNewImage(file);
   }, [file]);
 
@@ -136,11 +134,7 @@ export const FormAdmin = () => {
         }}
         onSubmit={(itemsValue, { resetForm }) => {
           resetForm();
-          console.log({
-            ...itemsValue,
-            genre: genresChoose.slice(1),
-            category: categoryChoose.slice(1),
-          });
+
           if (itemsValue.genre.length === 0) {
             swal('genre can not be empty');
             return;
@@ -470,10 +464,8 @@ export const FormAdmin = () => {
                 <div className="flex flex-col items-start">
                   <p className="text-1xl font-bold text-gray-700 flex flex-row">
                     Genres:
-                    {console.log(genresChoose)}
                     {!genresChoose.includes(values.genre) &&
                       setGenresChoose([...genresChoose, values.genre])}
-                    {console.log(genresChoose)}
                     {genresChoose?.slice(1).map((el) => (
                       <div className="flex flex-col">
                         <p className="pl-2 dark:text-gray-400 italic">{el}</p>

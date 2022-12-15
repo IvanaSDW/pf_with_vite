@@ -7,7 +7,7 @@ import { useCurrentUser } from '../domain/useCurrentUserHook';
 
 export default function Home() {
   const currentUser = useCurrentUser();
-  // console.log('currentUSer: ', currentUser);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [mangaState, setMangasState] = useState([]);
 
