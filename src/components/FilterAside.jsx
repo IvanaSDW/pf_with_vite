@@ -122,9 +122,9 @@ export default function FilterAside({
     dispatch(loading());
     const index = e.nativeEvent.target.selectedIndex;
     const target = e.nativeEvent.target[index].text;
-    if (target === 'New firts')
+    if (target === 'Newest first')
       dispatch(getMangaByEmisionDate('dateDesc', currentPage));
-    if (target === 'Clasic firts')
+    if (target === 'Classics first')
       dispatch(getMangaByEmisionDate('dateAsc', currentPage));
   }
 
@@ -134,9 +134,9 @@ export default function FilterAside({
     dispatch(loading());
     const index = e.nativeEvent.target.selectedIndex;
     const target = e.nativeEvent.target[index].text;
-    if (target === 'Price ASC.')
+    if (target === 'Lower price')
       dispatch(getMangaByPrice('priceAsc', currentPage));
-    if (target === 'Price DESC.')
+    if (target === 'Higher price')
       dispatch(getMangaByPrice('priceDesc', currentPage));
   }
 
@@ -228,8 +228,8 @@ export default function FilterAside({
                   name="Sort By Date"
                 >
                   <option defaultValue>Sort By Emision Date</option>
-                  <option value="dateAsc">New firts</option>
-                  <option value="dateDesc">Clasic firts</option>
+                  <option value="dateAsc">Newest first</option>
+                  <option value="dateDesc">Classics first</option>
                 </select>
               </div>
             </li>
@@ -247,8 +247,8 @@ export default function FilterAside({
                   name="Sort By Price"
                 >
                   <option defaultValue>Sort By Price</option>
-                  <option value="priceAsc">Price ASC.</option>
-                  <option value="priceDes">Price DESC.</option>
+                  <option value="priceAsc">Higher price</option>
+                  <option value="priceDes">Lower price</option>
                 </select>
               </div>
             </li>

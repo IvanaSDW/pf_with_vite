@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { MdLocalOffer } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
 import { BsFillBarChartFill } from 'react-icons/bs';
-import { postPromotion, getPromos, deletePromos } from '../Redux/actions';
 import { MdDisabledByDefault } from 'react-icons/md';
 import swal from 'sweetalert';
+import axios from 'axios';
+import { SERVER_URL } from '../domain/serverConfig';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPromos } from '../Redux/actions';
 
 function CmsPromos() {
-  const dispatch = useDispatch();
   const allCategories = useSelector((state) => state.categories);
-  const allPromos = useSelector((state) => state.promos);
+  const dispatch = useDispatch();
+
+  const [allPromos, setAllPromos] = useState([]);
+  const [refreshPromos, setRefreshPromos] = useState(true);
+
+  useEffect(() => {
+    if (refreshPromos) {
+      fetchPromos();
+      dispatch(getPromos());
+    }
+  }, [refreshPromos]);
 
   const [categoryChoose, setCategoryChoose] = useState([]); //1 Categorias
 
@@ -152,7 +163,8 @@ function CmsPromos() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log('Submit Called');
     e.preventDefault();
 
     if (
@@ -166,9 +178,15 @@ function CmsPromos() {
       setErrorSubmit('Missing parameters, all fields are required');
     } else {
       setErrorSubmit(false);
-      dispatch(postPromotion(inputs));
-      swal('Se creo de manera correcta!');
-      dispatch(getPromos());
+      // dispatch(postPromotion(inputs));
+      try {
+        const response = await axios.post(`${SERVER_URL}/promotion`, inputs);
+        console.log('response: ', response);
+        swal(response.data.message).then(() => {});
+        setRefreshPromos(true);
+      } catch (error) {
+        swal(error.response.data).then(() => {});
+      }
     }
   };
 
@@ -179,20 +197,22 @@ function CmsPromos() {
       ...inputs,
       categories: [],
     });
-    dispatch(getPromos());
   }
 
-  function deletePromo(e) {
-    dispatch(deletePromos(e));
+  async function deletePromo(e) {
+    console.log('🚀 ~ file: CmsPromos.jsx:198 ~ deletePromo ~ e', e);
+
+    await axios.delete(`${SERVER_URL}/promotion/${e}`);
+    swal('Se ha borrado con exito'); //Optimizar esto
+    setRefreshPromos(true);
   }
 
-  useEffect(() => {
-    dispatch(getPromos());
-  }, [deletePromo]);
-
-  useEffect(() => {
-    dispatch(getPromos());
-  }, []);
+  const fetchPromos = async () => {
+    const promos = await axios.get(`${SERVER_URL}/promotion`);
+    console.log('🚀 ~ file: CmsPromos.jsx:206 ~ fetchPromos ~ promos', promos);
+    setAllPromos(promos.data);
+    setRefreshPromos(false);
+  };
 
   const confirmDeletePromo = (e) => {
     //BOTON PARA DESACTIVA
@@ -364,7 +384,7 @@ function CmsPromos() {
 
             <div className="ml-20">
               <button className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursos-pointer bg-purple-400 hover:bg-purple-600 text-white cursor-pointer ">
-                <h3 className="font-bold text-gray-600">Apply</h3>
+                <h3 className="font-bold text-gray-600">Create</h3>
               </button>
               {errorSubmit && (
                 <p className="text-red-600  font-bold pr-2">{errorSubmit}</p>
@@ -387,70 +407,74 @@ function CmsPromos() {
           </div>
 
           <div>
-            {allPromos.map((e) => {
-              return (
-                <div className="pl-2 pb-2  mt-2  pt-2 rounded-md  duration-300 bg-gray-300">
-                  <div className="flex">
-                    {' '}
-                    <h2 className="text-gray-600  font-bold pr-2">
-                      Name:{' '}
-                    </h2>{' '}
-                    <h2 className="font-sans text-gray-600"> {e.name} </h2>{' '}
-                  </div>
-                  <div className="flex">
-                    {' '}
-                    <h2 className="text-gray-600  font-bold pr-2">
-                      DiscountRate:{' '}
-                    </h2>{' '}
-                    <h2 className="font-sans text-gray-600">
+            {allPromos ? (
+              allPromos.map((e) => {
+                return (
+                  <div className="pl-2 pb-2  mt-2  pt-2 rounded-md  duration-300 bg-gray-300">
+                    <div className="flex">
                       {' '}
-                      {e.discountRate}{' '}
-                    </h2>
-                  </div>
-                  <div className="flex">
-                    {' '}
-                    <h2 className="text-gray-600  font-bold pr-2">
-                      StartDate:{' '}
-                    </h2>{' '}
-                    <h2 className="font-sans text-gray-600"> {e.start} </h2>{' '}
-                  </div>
-                  <div className="flex">
-                    {' '}
-                    <h2 className="text-gray-600  font-bold pr-2">
-                      EndDate:
-                    </h2>{' '}
-                    <h2 className="font-sans text-gray-600"> {e.end} </h2>{' '}
-                  </div>
-                  <div className="flex">
-                    {' '}
-                    <h2 className="text-gray-600  font-bold pr-2">
-                      Categories:
-                    </h2>{' '}
-                    {e.categories.map((c) => {
-                      return (
-                        <div>
-                          {' '}
-                          <h2 className="pl-1 pr-1  mr-2 dark:text-gray-400 italic border-2 border-red-500 rounded-md text-gray-600">
+                      <h2 className="text-gray-600  font-bold pr-2">
+                        Name:{' '}
+                      </h2>{' '}
+                      <h2 className="font-sans text-gray-600"> {e.name} </h2>{' '}
+                    </div>
+                    <div className="flex">
+                      {' '}
+                      <h2 className="text-gray-600  font-bold pr-2">
+                        DiscountRate:{' '}
+                      </h2>{' '}
+                      <h2 className="font-sans text-gray-600">
+                        {' '}
+                        {e.discountRate}{' '}
+                      </h2>
+                    </div>
+                    <div className="flex">
+                      {' '}
+                      <h2 className="text-gray-600  font-bold pr-2">
+                        StartDate:{' '}
+                      </h2>{' '}
+                      <h2 className="font-sans text-gray-600"> {e.start} </h2>{' '}
+                    </div>
+                    <div className="flex">
+                      {' '}
+                      <h2 className="text-gray-600  font-bold pr-2">
+                        EndDate:
+                      </h2>{' '}
+                      <h2 className="font-sans text-gray-600"> {e.end} </h2>{' '}
+                    </div>
+                    <div className="flex">
+                      {' '}
+                      <h2 className="text-gray-600  font-bold pr-2">
+                        Categories:
+                      </h2>{' '}
+                      {e.categories.map((c) => {
+                        return (
+                          <div>
                             {' '}
-                            {c.title}{' '}
-                          </h2>{' '}
-                        </div>
-                      );
-                    })}
-                  </div>
+                            <h2 className="pl-1 pr-1  mr-2 dark:text-gray-400 italic border-2 border-red-500 rounded-md text-gray-600">
+                              {' '}
+                              {c.title}{' '}
+                            </h2>{' '}
+                          </div>
+                        );
+                      })}
+                    </div>
 
-                  <div className="text-gray-600 inline-block flex  justify-center mt-2">
-                    <button
-                      onClick={() => confirmDeletePromo(e.id)}
-                      className="p-1   object-contain rounded-full bg-red-400  cursor-pointer flex"
-                    >
-                      <MdDisabledByDefault className="mt-1" />
-                      <h2 className="text-gray-600 font-bold pr-2">Cancel</h2>
-                    </button>
+                    <div className="text-gray-600 inline-block flex  justify-center mt-2">
+                      <button
+                        onClick={() => confirmDeletePromo(e.id)}
+                        className="p-1   object-contain rounded-full bg-red-400  cursor-pointer flex"
+                      >
+                        <MdDisabledByDefault className="mt-1" />
+                        <h2 className="text-gray-600 font-bold pr-2">Cancel</h2>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         </div>
       </div>

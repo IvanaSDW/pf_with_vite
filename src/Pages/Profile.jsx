@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import firebase, {
+  disableUser,
   fetchUserData,
   logout,
   uploadFile,
@@ -72,8 +73,18 @@ const Profile = () => {
   const [myOrders, setMyOrders] = useState([]);
 
   const getMyOrders = async (userId) => {
-    const orders = await axios.get(`${SERVER_URL}/order/user/${userId}`);
-    setMyOrders(orders.data);
+    const response = await axios.get(`${SERVER_URL}/order/user/${userId}`);
+    const orders = response.data;
+    orders.sort((a, b) => {
+      if (a.createdAt < b.createdAt) {
+        return 1;
+      }
+      if (a.createdAt > b.createdAt) {
+        return -1;
+      }
+      return 0;
+    });
+    setMyOrders(orders);
   };
 
   const [view, setView] = useState(false);
@@ -206,6 +217,21 @@ const Profile = () => {
             console.log('err: ', err.response.data);
           });
       });
+  };
+
+  const confirmDeleteAccount = (id) => {
+    //BOTON PARA DESACTIVA
+    swal({
+      title: 'Delete your account!',
+      text: '¿Do you want to delete your account?',
+      icon: 'warning',
+      buttons: ['No', 'Si'],
+    }).then((r) => {
+      if (r) {
+        logout();
+        disableUser(id);
+      }
+    });
   };
 
   return (
@@ -377,7 +403,7 @@ const Profile = () => {
                             />
                           </div>
                         </div>
-                        <label>E-mail</label>
+                        {/* <label>E-mail</label>
                         <input
                           disabled={!editMode}
                           type="email"
@@ -390,7 +416,7 @@ const Profile = () => {
                           <p className="italic text-red-600 text-sm">
                             {fieldErrors.emailError}
                           </p>
-                        )}
+                        )} */}
                         <label>Number Phone</label>
                         <input
                           disabled={!editMode}
@@ -472,6 +498,12 @@ const Profile = () => {
                         </button>
                       </div>
                     </form>
+                    <div
+                      className="w-fit text-center text-red-600 px-6 bg-slate-300 m-auto mb-2 cursor-pointer"
+                      onClick={() => confirmDeleteAccount(firebaseUser.uid)}
+                    >
+                      Delete My Account
+                    </div>
                   </div>
                 </div>
               </div>

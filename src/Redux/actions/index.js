@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { MdReviews } from 'react-icons/md';
 import swal from 'sweetalert';
 import { SERVER_URL } from '../../domain/serverConfig';
 export const GET_MANGAS = 'GET_MANGAS';
@@ -43,6 +42,7 @@ export const GET_ORDER = 'GET_ORDER';
 export const GET_REVIEW = 'GET_REVIEW';
 // export const GET_USER_REVIEW = "GET_USER_REVIEW"
 export const GET_ALL_USER_ORDERS = 'GET_ALL_USER_ORDERS';
+export const SET_USER_ROLE = 'SET_USER_ROLE';
 
 export const getMangas = () => {
   return async function (dispatch) {
@@ -494,5 +494,12 @@ export const getAllUserOrders = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+export const setUserRole = (role) => {
+  return {
+    type: SET_USER_ROLE,
+    payload: role,
   };
 };
