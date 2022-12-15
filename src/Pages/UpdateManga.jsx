@@ -8,6 +8,8 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import axios from 'axios';
 import { uploadFile } from '../domain/userService'; //1
 import { SERVER_URL } from '../domain/serverConfig';
+import firebase, { fetchUserData } from '../domain/userService';
+import { setFirebaseUser } from '../Redux/actions';
 
 export default function Update() {
   const allGenres = useSelector((state) => state.genres);
@@ -20,6 +22,33 @@ export default function Update() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const firebaseUser = useSelector((state) => state.firebaseUser);
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    if (!firebase.auth().currentUser) {
+      navigate('/login');
+      swal('You need admin priviledges to edit products');
+    }
+    firebase.auth().onAuthStateChanged(async (user) => {
+      dispatch(setFirebaseUser(user));
+      if (user) {
+        const userData = await fetchUserData();
+        setUserData(userData);
+      }
+    });
+  }, [firebaseUser]);
+
+  useEffect(() => {
+    if (userData.role) {
+      if (!(userData.role == 'ADMIN' || userData.role === 'MASTER')) {
+        swal('You need admin priviledges to access CMS panel').then(() => {
+          navigate('/login');
+        });
+      }
+    }
+  }, [userData]);
 
   const [urlStorage, setUrlStorage] = useState(''); //2
   const [file, setFile] = useState();
@@ -46,7 +75,6 @@ export default function Update() {
   };
 
   useEffect(() => {
-    console.log('image changed...uploading file..');
     saveNewImage(file);
   }, [file]);
 
@@ -61,7 +89,6 @@ export default function Update() {
   };
 
   async function getData() {
-    console.log('called');
     try {
       const response = await axios.get(`${SERVER_URL}/manga/${id}`);
       setDetail(response.data);
@@ -539,10 +566,8 @@ export default function Update() {
                 <div className="flex flex-col items-start">
                   <p className="text-1xl font-bold text-gray-700 flex flex-row">
                     Genres:
-                    {console.log(genresChoose)}
                     {!genresChoose.includes(values.genre) &&
                       setGenresChoose([...genresChoose, values.genre])}
-                    {console.log(genresChoose)}
                     {genresChoose?.slice(1).map((el) => (
                       <div className="flex flex-col">
                         <p className="pl-2 dark:text-gray-400 italic">{el}</p>

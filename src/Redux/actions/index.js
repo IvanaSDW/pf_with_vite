@@ -62,7 +62,7 @@ export const getMangasDetail = () => {
   return async function (dispatch) {
     try {
       let response = await axios.get(`${SERVER_URL}/manga`);
-      console.log(response, 'RESPONSE DE LA ACTION ');
+
       return dispatch({
         type: GET_MANGAS_DETAIL,
         payload: response.data,
@@ -259,8 +259,6 @@ export const loading = () => {
 };
 
 export const addItemToCart = (item, type) => {
-  console.log(item, 'ITEM');
-  console.log(type, 'TYPEEEE');
   try {
     return {
       type: ADD_TO_CART,
@@ -322,11 +320,10 @@ export const setFirebaseUser = (firebaseUser) => {
 };
 
 export function updateManga(mangaid, data) {
-  console.log(data, 'DATSSSSSSSSSSSS');
   return async function (dispatch) {
     try {
       const json = await axios.put(`${SERVER_URL}/manga/${mangaid}`, data);
-      console.log(json, 'JAMEOSN');
+
       return dispatch({
         type: UPDATE_MANGA,
         payload: json.data,
@@ -342,7 +339,7 @@ export function postPromotion(payload) {
   return async function (dispatch) {
     try {
       const post = await axios.post(`${SERVER_URL}/promotion`, payload);
-      console.log('🚀 ~ file: index.js:341 ~ post', post);
+
       return post;
     } catch (error) {
       console.log(error);
@@ -426,7 +423,6 @@ export function getOrderList(userId) {
     try {
       const order1 = await axios.get(`${SERVER_URL}/order/user/${userId}`);
 
-      console.log(order1.data, 'asdasdasd');
       return dispatch({
         type: GET_ORDER,
         payload: order1.data,

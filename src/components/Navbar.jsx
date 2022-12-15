@@ -7,7 +7,6 @@ import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMangByName } from '../Redux/actions';
-import { BiBookAdd } from 'react-icons/bi';
 
 import firebase, { fetchUserData } from '../domain/userService';
 import { setFirebaseUser } from '../Redux/actions';

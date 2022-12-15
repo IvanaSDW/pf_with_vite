@@ -26,7 +26,7 @@ const CmsMangaDetail = ({ mangaid, showMangaDetail }) => {
   const navigate = useNavigate();
 
   const currentUser = useCurrentUser();
-  // console.log("current user: ", currentUser);
+
   useEffect(() => {
     dispatch(loading());
     dispatch(getMangasDetail());

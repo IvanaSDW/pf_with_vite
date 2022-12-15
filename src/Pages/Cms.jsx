@@ -1,12 +1,6 @@
 import React from 'react';
 import logo from '../components/assets/NavBar/ico3.png';
 import {
-  AiFillAppstore,
-  AiOutlineBook,
-  AiTwotoneAlert,
-  AiFillFileAdd,
-  AiOutlineLogout,
-  AiOutlineArrowDown,
   AiOutlineWhatsApp,
   AiOutlineShoppingCart,
   AiOutlineDatabase,
@@ -17,24 +11,54 @@ import { useState } from 'react';
 import DarkMode from '../components/assets/NavBar/darkMode';
 import CmsPromos from '../components/CmsPromos';
 import { MdKeyboardBackspace, MdOutlineLocalOffer } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAvailableUsers, getDisabledUsers } from '../Redux/actions'; //Ncesito el localhost back abierto
 import CmsUsers from '../components/CmsUsers';
 import CmsOrders from '../components/CmsOrders';
-import { FormAdmin } from './FormAdmin';
 import CmsProducts from '../components/CmsProducts';
+import firebase, { fetchUserData } from '../domain/userService';
+import { setFirebaseUser } from '../Redux/actions';
+import swal from 'sweetalert';
 
 function Cms() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const firebaseUser = useSelector((state) => state.firebaseUser);
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    if (!firebase.auth().currentUser) {
+      navigate('/login');
+      swal('You need to be logged in as ADMIN to access CMS panel');
+    }
+    firebase.auth().onAuthStateChanged(async (user) => {
+      dispatch(setFirebaseUser(user));
+      if (user) {
+        const userData = await fetchUserData();
+        setUserData(userData);
+      }
+    });
+  }, [firebaseUser]);
+
+  useEffect(() => {
+    if (userData.role) {
+      if (!(userData.role == 'ADMIN' || userData.role === 'MASTER')) {
+        swal('You need admin priviledges to access CMS panel').then(() => {
+          navigate('/login');
+        });
+      }
+    }
+  }, [userData]);
+
   const availableUsers = useSelector((state) => state.usersAvailable);
   const disabledUsers = useSelector((state) => state.disabledUsers);
 
   const [downdrop, setDowndrop] = useState(true);
-  const handleClickDrop = () => {
-    setDowndrop((downdrop) => !downdrop);
-  };
+  // const handleClickDrop = () => {
+  //   setDowndrop((downdrop) => !downdrop);
+  // };
   let toggleClass = downdrop ? 'hidden' : '';
 
   const [menuItem, setMenuItem] = useState('');

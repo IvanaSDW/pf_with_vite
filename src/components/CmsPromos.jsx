@@ -44,7 +44,6 @@ function CmsPromos() {
       ...inputs,
       [e.target.name]: e.target.value,
     });
-    console.log(inputs);
   };
 
   //Cat
@@ -60,7 +59,6 @@ function CmsPromos() {
       categories: [...inputs.categories, e.target.value],
     });
     setCategoryChoose([...categoryChoose, e.target.value]);
-    console.log(inputs.categories);
   };
 
   //description
@@ -77,7 +75,6 @@ function CmsPromos() {
       ...inputs,
       [e.target.name]: e.target.value,
     });
-    console.log(inputs);
   };
 
   //Descuento
@@ -94,7 +91,6 @@ function CmsPromos() {
       ...inputs,
       [e.target.name]: e.target.value,
     });
-    console.log(inputs);
   };
 
   //start
@@ -125,7 +121,6 @@ function CmsPromos() {
       ...inputs,
       [e.target.name]: e.target.value,
     });
-    console.log(inputs);
   };
 
   //End
@@ -155,7 +150,6 @@ function CmsPromos() {
       ...inputs,
       [e.target.name]: e.target.value,
     });
-    console.log(inputs);
   };
 
   const handleSubmit = (e) => {
