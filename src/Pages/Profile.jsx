@@ -403,7 +403,7 @@ const Profile = () => {
                             />
                           </div>
                         </div>
-                        <label>E-mail</label>
+                        {/* <label>E-mail</label>
                         <input
                           disabled={!editMode}
                           type="email"
@@ -416,7 +416,7 @@ const Profile = () => {
                           <p className="italic text-red-600 text-sm">
                             {fieldErrors.emailError}
                           </p>
-                        )}
+                        )} */}
                         <label>Number Phone</label>
                         <input
                           disabled={!editMode}
