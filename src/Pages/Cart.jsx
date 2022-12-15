@@ -24,11 +24,11 @@ export default function Cart() {
   const [currentPage, setCurrentPage] = useState(1);
   const cart = useSelector((state) => state.cart);
   const dateList = useSelector((state) => state.DateListMangas);
-  const latest10 = dateList
+  const latest12 = dateList
     .filter((manga) => {
       return manga.stockQty > 2;
     })
-    .slice(0, 5);
+    .slice(0, 12);
   const [quantity, setCurrent] = useState(window.localStorage.getItem('items'));
   const promotions = new Map(useSelector((state) => state.mangasOnSale));
   const setLocalStorage = (value) => {
@@ -297,7 +297,7 @@ export default function Cart() {
             {!payment && (
               <div className="flex justify-center ">
                 {dateList.length &&
-                  latest10.map((e) => {
+                  latest12.map((e) => {
                     return (
                       <Card
                         key={e.mangaid}

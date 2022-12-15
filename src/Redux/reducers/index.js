@@ -34,6 +34,7 @@ import {
   GET_REVIEW,
   // GET_USER_REVIEW,
   GET_ALL_USER_ORDERS,
+  SET_USER_ROLE,
 } from '../actions';
 
 const getCartLocalStorage = () => {
@@ -59,9 +60,9 @@ const initialState = {
   isLoading: false,
   cart: getCartLocalStorage(),
   firebaseUser: false,
+  userRole: false,
   currentPage: 1,
   totalNumberOfPages: 1,
-  promos: [],
   users: [],
   usersAvailable: [],
   disabledUsers: [],
@@ -382,11 +383,11 @@ const rootReducer = (state = initialState, action) => {
         reviews: action.payload,
       };
 
-    // case GET_USER_REVIEW:
-    //   return{
-    //     ...state,
-    //     usersReview: action.payload
-    //   }
+    case SET_USER_ROLE:
+      return {
+        ...state,
+        userRole: action.payload,
+      };
 
     default:
       return state;

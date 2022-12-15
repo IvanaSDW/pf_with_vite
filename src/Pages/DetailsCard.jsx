@@ -314,7 +314,7 @@ export default function Details() {
               </div>
             ) : (
               <p className="text-purple-800 text-6xl m-20 font-bold ">
-                This Manga hasn't reviews yet{' '}
+                No recent reviews posted for this item{' '}
               </p>
             )}
           </div>

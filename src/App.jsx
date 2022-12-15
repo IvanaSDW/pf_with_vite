@@ -1,13 +1,17 @@
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';
 import Details from './Pages/DetailsCard';
 import NotFound from './components/404';
 import LandingPage from './components/LandingPage';
 import './App.css';
 import { React, useEffect } from 'react';
-import { FormAdmin } from './Pages/FormAdmin';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllGenres, getAllCategories } from './Redux/actions';
+import {
+  getAllGenres,
+  getAllCategories,
+  setFirebaseUser,
+  setUserRole,
+} from './Redux/actions';
 import Login from './Pages/Login';
 import Cart from './Pages/Cart';
 import Profile from './Pages/Profile';
@@ -15,14 +19,25 @@ import AboutUs from './components/Aboutus';
 import Update from './Pages/UpdateManga';
 import About from './Pages/About';
 import Cms from './Pages/Cms';
-import { useCurrentUser } from './domain/useCurrentUserHook';
-import firebase from './domain/userService';
+import firebase, { fetchUserData } from './domain/userService';
 
 function App() {
   const dispatch = useDispatch();
-  const loggedUser = firebase.auth().currentUser;
-  const user = useCurrentUser();
-  const userRole = user.role;
+
+  const firebaseUser = useSelector((state) => state.firebaseUser);
+  const userRole = useSelector((state) => state.userRole);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(async (user) => {
+      dispatch(setFirebaseUser(user));
+      if (user) {
+        const userData = await fetchUserData();
+        dispatch(setUserRole(userData.role));
+      } else {
+        dispatch(setUserRole('loggedout'));
+      }
+    });
+  }, [firebaseUser]);
 
   useEffect(() => {
     dispatch(getAllCategories());
