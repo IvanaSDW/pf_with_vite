@@ -6,6 +6,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
 import { SERVER_URL } from './serverConfig';
 import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 
 const app = firebase.initializeApp(firebaseConfig);
 
@@ -107,7 +108,12 @@ export const disableUser = async (iduser) => {
               AuthToken: authToken,
             },
           })
-          .then((r) => {})
+          .then((r) => {
+            swal({
+              text: 'Your account has been succesfully deleted!',
+              icon: 'success',
+            });
+          })
           .catch((e) => {
             console.log(e);
           });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import DarkMode from './assets/NavBar/darkMode';
 import styles from './assets/NavBar/NavBar.module.css';
 import { Link } from 'react-router-dom';
@@ -8,9 +8,6 @@ import { MdAdminPanelSettings } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMangByName } from '../Redux/actions';
 
-import firebase, { fetchUserData } from '../domain/userService';
-import { setFirebaseUser } from '../Redux/actions';
-
 export default function Navbar({
   currentPage,
   setCurrentPage,
@@ -18,24 +15,13 @@ export default function Navbar({
   setMangasState,
 }) {
   const dispatch = useDispatch();
-
-  const [currentUser, setCurrentUser] = useState();
+  const userRole = useSelector((state) => state.userRole);
   const firebaseUser = useSelector((state) => state.firebaseUser);
 
   useEffect(() => {
     setCurrentPage(1);
     dispatch(getMangByName(mangaState, currentPage));
   }, [dispatch, mangaState]);
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(async (user) => {
-      dispatch(setFirebaseUser(user));
-      if (user) {
-        const userData = await fetchUserData();
-        setCurrentUser(userData);
-      }
-    });
-  }, [firebaseUser]);
 
   function onHandleinput(e) {
     setMangasState(e.target.value);
@@ -44,6 +30,7 @@ export default function Navbar({
 
   let count = 0;
   count = cart.length;
+
   return (
     <div>
       <div className={styles.navBar}>
@@ -69,7 +56,7 @@ export default function Navbar({
           </Link>
         </div>
         <div className={styles.buttons}>
-          {currentUser?.role === 'ADMIN' ? (
+          {userRole === 'ADMIN' ? (
             <>
               <Link to="/cms">
                 <button className={styles.iconBtn}>

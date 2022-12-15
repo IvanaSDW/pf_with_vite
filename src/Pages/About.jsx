@@ -37,11 +37,13 @@ const About = () => {
 
       <div className="flex justify-center pr-10 pl-10 pt-5">
         <h2 className="text-2xl font-serif">
-          This project was realized in the last stage of "Soy Henry" with the
-          objetive to incorporate new technologies and realize best practices.
-          And finally incorporate the new learning of this last months in the
-          career through team work, focus resolutive capacity and
-          responsability.
+          This product is the result of the final project of group 18-30B of
+          SoyHenry bootcamp. It was done using the PERN stack that we learned in
+          the past 4 months, while incorporating a plethora of technologies and
+          frameworks to consolidate a professional level application. The team
+          faced the challenge with commitment, industriousness and a coordinated
+          effort, working in an integrated way in GitHub repositories, using
+          SCRUM methodology and a kanban board for task management.
         </h2>
       </div>
 
